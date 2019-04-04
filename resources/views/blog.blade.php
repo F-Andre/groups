@@ -48,8 +48,10 @@
 					</div>
 					<div class="card-body">
 						<p class="card-text">{!! nl2br(e($post->contenu)) !!}</p>
-						@if (strlen($post->image) > 1 && Storage::exists($post->image))
-							<img class="col-12 mb-4" src="{!! Storage::url($post->image) !!}">
+                        @if (strlen($post->image) > 1 && Storage::exists($post->image))
+                            <div class="mb-4 text-center">
+                                <img class="image-blog" src="{!! Storage::url($post->image) !!}">
+                            </div>
 						@endif
 
 						@if (Auth::check())
