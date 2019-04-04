@@ -1,0 +1,52 @@
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+#image, #avatar {
+    opacity: 0;
+}
+
+#btnDeleteImage, #btnDeleteAvatar {
+    color: white;
+}
+
+#imageDeleted, #avatarDeleted {
+    display: none;
+}
+
+.avatar {
+    display:inline-block;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 128px;
+    width: 128px;
+    border-radius: 50%;
+    border: none;
+}
+
+.avatar_icon {
+    height: 56px;
+    width: 56px;
+}
+
+.comment {
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+.comment hr {
+    margin: 5px;
+}
