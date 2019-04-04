@@ -1,6 +1,36 @@
 @extends('template')
 
 @section('content')
+@auth
+    <aside class="col-2 py-4 ml-4">
+        <div class="dropdown">
+            <a id="authDropdown" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                {{ Auth::user()->name }} <span class="caret"></span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="authDropdown">
+                <a class="dropdown-item" href="{{ route('user_page.index') }}">
+                    Mon compte
+                </a>
+                <a class="dropdown-item" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                    Se déconnecter
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
+        </div>
+        <div class="mt-4">
+            <a class="nav-link btn btn-outline-primary" href="{{ route('blog.create') }}" role="button">Ecrire un article</a>
+        </div>
+        @if (Auth::user()->admin)
+            <div class="mt-4">
+                <a class="nav-link btn btn-outline-success" href="{{ route('admin.index') }}" role="button">page admin</a>
+            </div>
+        @endif
+    </aside>
+@endauth
 <article class="mx-auto col-lg-6">
 	@if (session()->has('ok'))
 	<div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -86,24 +116,28 @@
                                 <hr>
                                 <p>{{ $comment->comment }}</p>
                                 <div class="text-right">
-                                    @if (Auth::user()->admin or Auth::user()->id == $comment->user->id)
-                                        <form method="POST" action="{{ route('comment.destroy', ['id' => $comment->id]) }}">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm">Effacer</button>
-                                        </form>
-                                    @endif
+                                    @auth
+                                        @if (Auth::user()->admin or Auth::user()->id == $comment->user->id)
+                                            <form method="POST" action="{{ route('comment.destroy', ['id' => $comment->id]) }}">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-sm">Effacer</button>
+                                            </form>
+                                        @endif
+                                    @endauth
                                 </div>
                             </div>
                         @endforeach
-						<form method="POST" action="{{ route('comment.store', ['post_id' => $post->id, 'user_id' => Auth::user()->id]) }}">
-                            @csrf
-                            <div class="form-group mt-2">
-                              <label for="comment">Ajouter un commentaire</label>
-                              <textarea class="form-control" name="comment" id="comment" rows="2"></textarea>
-                            </div>
-							<button type="submit" class="btn btn-primary btn-sm float-right">Envoyer</button>
-						</form>
+                        @auth
+                            <form method="POST" action="{{ route('comment.store', ['post_id' => $post->id, 'user_id' => Auth::user()->id]) }}">
+                                @csrf
+                                <div class="form-group mt-2">
+                                <label for="comment">Ajouter un commentaire</label>
+                                <textarea class="form-control" name="comment" id="comment" rows="2"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-sm float-right">Envoyer</button>
+                            </form>
+                        @endauth
 					</div>
 			</div>
 			<br>

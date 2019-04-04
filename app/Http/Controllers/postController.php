@@ -61,8 +61,14 @@ class postController extends Controller
         {
             if ($request->image->isValid())
             {
+                if (Storage::exists('public/images/'. $request->user()->id) == false)
+                {
+                    mkdir('storage/images/'. $request->user()->id);
+                }
+
                 $fileExt = $request->image->getClientOriginalExtension();
                 $fileName = Str::random(15);
+
                 while (Storage::exists('public/images/'. $request->user()->id . '/' . $fileName . '.' . $fileExt))
                 {
                     $fileName = Str::random(15);
