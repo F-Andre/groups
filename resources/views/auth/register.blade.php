@@ -60,21 +60,6 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
-                        <div class="form-group row justify-content-center">
-                            <p>Administrateur:&nbsp;</p>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="admin" id="adminY" value="1" checked>
-                                Oui&nbsp;
-                            </label>
-                            </div>
-                            <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="admin" id="adminN" value="0">
-                                Non
-                                </label>
-                            </div>
-                        </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

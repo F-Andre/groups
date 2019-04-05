@@ -10553,7 +10553,7 @@ a.text-dark:focus {
 
 aside {
   position: fixed !important;
-  top: 20vh;
+  top: 15vh;
   border-radius: 5px;
   background-color: white;
   box-shadow: 2px 2px 2px gainsboro;

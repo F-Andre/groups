@@ -22,6 +22,11 @@ class UserRepository extends DataRepository
         return $this->model->find($id)->userPosts;
     }
 
+    public function nbreComments($id)
+    {
+        return $this->model->find($id)->userComments;
+    }
+
     public function search($request)
     {
         if ($this->model->where('name', 'like', '%' . $request . '%')->exists())

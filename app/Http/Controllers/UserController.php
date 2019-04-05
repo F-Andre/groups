@@ -7,6 +7,7 @@ use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -156,6 +157,7 @@ class UserController extends Controller
   {
     $user = $this->user->getById($id);
     $posts = $this->user->nbrePosts($user->id);
+    $comments = $this->user->nbreComments($user->id);
 
     $avatar = $user->avatar;
 
@@ -167,6 +169,11 @@ class UserController extends Controller
       Storage::delete($post->image);
       DB::table('posts')->where('user_id', $user->id)->delete();
     }
+
+    foreach ($comments as $comment) {
+        DB::table('comments')->where('user_id', $user->id)->delete();
+    }
+
     $user->delete();
 
     return redirect()->route('blog.index')->withOk('Le compte a bien été effacé');

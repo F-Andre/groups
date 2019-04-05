@@ -106,7 +106,7 @@
 					<div class="card-footer">
                         @foreach ($post->comments()->get() as $comment)
                             <div class="comment">
-                                <img class="avatar avatar-cmt" src="{{ Storage::url(DB::table('users')->where('id', $post->user_id)->first()->avatar) }}" />
+                                <img class="avatar avatar-cmt" src="{{ Storage::url(DB::table('users')->where('id', $comment->user_id)->first()->avatar) }}" />
                                 <small class="d-block col-8 float-right text-right">Commentaire de {{ $comment->user->name }}
                                     @if (time() - $comment->created_at->timestamp < 172800)
                                         {{ Date::parse($comment->created_at)->diffForHumans() }}
