@@ -93,54 +93,54 @@ class UserController extends Controller
     $retour = redirect(route('user_page.index'))->withOk('Vos informations ont été mises à jour.');
 
     if ($request->hasFile('avatar')) {
-        if ($request->avatar->isValid()) {
-            $oldImage = $user->avatar;
-
-            if (Storage::exists('public/avatar/' . $user->id) == false) {
-              mkdir('storage/avatar/' . $user->id);
-            }
-
-            $fileExt = $request->avatar->getClientOriginalExtension();
-            $fileName = Str::random(15);
-
-            while (Storage::exists('public/avatar/' . $user->id . '/' . $fileName . '.' . $fileExt)) {
-              $fileName = Str::random(15);
-            }
-
-            $path = 'public/avatar/' . $user->id . '/' . $fileName . '.' . $fileExt;
-
-            /* $path = $request->avatar->store('/public/avatar/'. $user->id); */
-
-            $pathUrl = Storage::url($path);
-            $imageMake = Image::make($request->avatar);
-            $imageMake->widen(256, function ($constraint) {
-              $constraint->upsize();
-            });
-            $imageMake->save('.' . $pathUrl);
-
-            $inputs = array_merge($request->all(), ['avatar' => $path]);
-            $user->update($inputs);
-
-            if ($oldImage != 'public/default/default_avatar.png') {
-                Storage::delete($oldImage);
-              }
-
-            return $retour;
-          }
-      }
-
-    if (strlen($user->avatar) > 1 && $request->avatarDeleted) {
+      if ($request->avatar->isValid()) {
         $oldImage = $user->avatar;
 
-        if ($oldImage != 'public/default/default_avatar.png') {
-            Storage::delete($oldImage);
-          }
+        if (Storage::exists('public/avatar/' . $user->id) == false) {
+          mkdir('storage/avatar/' . $user->id);
+        }
 
-        $inputs = array_merge($request->all(), ['avatar' => 'public/default/default_avatar.png']);
+        $fileExt = $request->avatar->getClientOriginalExtension();
+        $fileName = Str::random(15);
+
+        while (Storage::exists('public/avatar/' . $user->id . '/' . $fileName . '.' . $fileExt)) {
+          $fileName = Str::random(15);
+        }
+
+        $path = 'public/avatar/' . $user->id . '/' . $fileName . '.' . $fileExt;
+
+        /* $path = $request->avatar->store('/public/avatar/'. $user->id); */
+
+        $pathUrl = Storage::url($path);
+        $imageMake = Image::make($request->avatar);
+        $imageMake->widen(256, function ($constraint) {
+          $constraint->upsize();
+        });
+        $imageMake->save('.' . $pathUrl);
+
+        $inputs = array_merge($request->all(), ['avatar' => $path]);
         $user->update($inputs);
+
+        if ($oldImage != 'public/default/default_avatar.png') {
+          Storage::delete($oldImage);
+        }
 
         return $retour;
       }
+    }
+
+    if (strlen($user->avatar) > 1 && $request->avatarDeleted) {
+      $oldImage = $user->avatar;
+
+      if ($oldImage != 'public/default/default_avatar.png') {
+        Storage::delete($oldImage);
+      }
+
+      $inputs = array_merge($request->all(), ['avatar' => 'public/default/default_avatar.png']);
+      $user->update($inputs);
+
+      return $retour;
+    }
 
     $user->update($request->all());
 
@@ -162,8 +162,8 @@ class UserController extends Controller
     $avatar = $user->avatar;
 
     if ($avatar != 'public/default/default_avatar.png') {
-        Storage::delete($avatar);
-      }
+      Storage::delete($avatar);
+    }
 
     foreach ($posts as $post) {
       Storage::delete($post->image);
@@ -171,7 +171,7 @@ class UserController extends Controller
     }
 
     foreach ($comments as $comment) {
-        DB::table('comments')->where('user_id', $user->id)->delete();
+      DB::table('comments')->where('user_id', $user->id)->delete();
     }
 
     $user->delete();

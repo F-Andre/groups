@@ -188,6 +188,12 @@ class postController extends Controller
     $post = $this->post->getById($id);
     Storage::delete($post->image);
 
+    $comments = $this->post->getComments($id);
+    foreach ($comments as $comment)
+    {
+        DB::table('comments')->where('post_id', $post->id)->delete();
+    }
+
     $this->post->destroy($id);
 
     return redirect()->back()->withOk('Le post a bien été effacé');

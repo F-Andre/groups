@@ -20,7 +20,7 @@ class Comment extends Model
         return $this->belongsTo('App\Post');
     }
 
-    public function deleteComments($id)
+    public function deleteUserComments($id)
     {
         $this->model->dropForeign($id);
     }
