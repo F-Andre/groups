@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('content')
-<div class="container-fluid col-6 bx-auto">
+<div class="container-fluid col-lg-6 bx-auto">
     <div class="card">
         <div class="card-header">
             Edition d'un post

@@ -2,7 +2,7 @@
 
 @section('content')
     <div id="loadModal"></div>
-    <div class="container-fluid col-6 bx-auto">
+    <div class="container-fluid col-lg-6 bx-auto">
         <div class="card">
             <div class="card-header">
                 Créer un post

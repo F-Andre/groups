@@ -1,7 +1,7 @@
 @extends('user/user_template')
 
 @section('article')
-    <article class="col-8 mx-auto">
+    <article class="col-lg-8 mx-auto">
         <div class="card">
             <div class="card-header">
                 <p class="h4 text-center">Modifier vos informations:</p>
