@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import LoadModal from './loadModal';
 
 function ArticleTitre(props) {
@@ -45,7 +43,6 @@ export default class ArticleForm extends Component {
         this.handleChangeTitre = this.handleChangeTitre.bind(this);
         this.handleChangeText = this.handleChangeText.bind(this);
         this.handleChangeImage = this.handleChangeImage.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.fileInput = React.createRef();
     }
 
@@ -69,16 +66,6 @@ export default class ArticleForm extends Component {
             });
         };
         reader.readAsDataURL(file);
-    }
-
-    handleSubmit() {
-        if (document.getElementById('loadModalDiv')) {
-            document.getElementById('loadModalDiv').modal('show');
-        }
-        /* const element = <FontAwesomeIcon icon={faSpinner} pulse />
-        this.setState({
-            spinner: element,
-        }) */
     }
 
     render() {
@@ -105,8 +92,8 @@ export default class ArticleForm extends Component {
                     <div className="invalid-feedback">L'image doit être aux formats jpg, png ou gif et avoir une taille max de 4.5Mo.</div>
                     <label className="btn btn-success" htmlFor="image">Ajouter une image</label>
                 </div>
-                <button type="submit" onClick={this.handleSubmit} className={submitClass} disabled={disabledState}>Envoyer {this.state.spinner}</button>
                 <LoadModal />
+                <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Envoyer</button>
             </div>
         )
     }

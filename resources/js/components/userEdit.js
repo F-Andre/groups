@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import LoadModal from './loadModal';
 
 function Name(props) {
     return (
@@ -44,7 +43,6 @@ export default class UserEditForm extends Component {
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangeAvatar = this.handleChangeAvatar.bind(this);
         this.handleDeleteAvatar = this.handleDeleteAvatar.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.fileInput = React.createRef();
     }
 
@@ -85,13 +83,6 @@ export default class UserEditForm extends Component {
         })
     }
 
-    handleSubmit() {
-        const element = <FontAwesomeIcon icon={faSpinner} pulse />
-        this.setState({
-            spinner: element,
-        })
-    }
-
     render() {
         const imageSizeMax = 4718592
         const disabledState = !this.state.modified ? true : this.state.imgSize > imageSizeMax ? true : false
@@ -122,7 +113,8 @@ export default class UserEditForm extends Component {
                     </div>
                     <input id="avatarDeleted" type="text" className="disabled" name="avatarDeleted" value={this.state.imageDeleted} />
                 </div>
-                <button type="submit" onClick={this.handleSubmit} className={submitClass} disabled={disabledState}>Appliquer les modifications {this.state.spinner}</button>
+                <LoadModal />
+                <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Modifier</button>
             </div>
         )
     }

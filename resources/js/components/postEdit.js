@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import LoadModal from './loadModal';
 
 function ArticleTitre(props) {
     const titleClass = props.value.length <= 6 ? 'form-control is-invalid' : 'form-control'
@@ -48,7 +47,6 @@ export default class ArticleForm extends Component {
         this.handleChangeText = this.handleChangeText.bind(this);
         this.handleChangeImage = this.handleChangeImage.bind(this);
         this.handleDeleteImage = this.handleDeleteImage.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.fileInput = React.createRef();
     }
 
@@ -89,13 +87,6 @@ export default class ArticleForm extends Component {
         })
     }
 
-    handleSubmit() {
-        const element = <FontAwesomeIcon icon={faSpinner} pulse />
-        this.setState({
-            spinner: element,
-        })
-    }
-
     render() {
         const imageSizeMax = 4718592
         const disabledState = !this.state.modified ? true : this.state.titreValue.length <= 6 ? true : this.state.textValue.length <= 10 ? true : this.state.imgSize > imageSizeMax ? true : false
@@ -125,7 +116,8 @@ export default class ArticleForm extends Component {
                     <label htmlFor="image" className="btn btn-secondary m-0">Modifier l'image</label>
                     <a id="btnDeleteImage" className={disableDelete} onClick={this.handleDeleteImage}>Effacer l'image</a>
                 </div>
-                <button type="submit" onClick={this.handleSubmit} className={submitClass} disabled={disabledState}>Modifier {this.state.spinner}</button>
+                <LoadModal />
+                <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Modifier</button>
             </div>
         )
     }
