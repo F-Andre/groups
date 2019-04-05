@@ -30,7 +30,7 @@
             @endisset
         </div>
     </nav>
-    <section class="col-8 mx-auto">
+    <section class="col-lg-10 mx-auto">
         @yield('section')
     </section>
     @else
