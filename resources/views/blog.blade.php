@@ -2,10 +2,10 @@
 
 @section('content')
 @auth
-    <aside class="col-2 py-4 ml-4">
+    <aside class="col-2 ml-5 py-4">
         <div class="dropdown">
             <a id="authDropdown" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                {{ Auth::user()->name }} <span class="caret"></span>
+                    <img class="avatar avatar-btn float-left" src="{{ Storage::url(Auth::user()->avatar) }}" /> {{ Auth::user()->name }} <span class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="authDropdown">
                 <a class="dropdown-item" href="{{ route('user_page.index') }}">
@@ -22,11 +22,11 @@
             </div>
         </div>
         <div class="mt-4">
-            <a class="nav-link btn btn-outline-primary" href="{{ route('blog.create') }}" role="button">Ecrire un article</a>
+            <a class="btn btn-outline-primary" href="{{ route('blog.create') }}" role="button">Ecrire un article</a>
         </div>
         @if (Auth::user()->admin)
             <div class="mt-4">
-                <a class="nav-link btn btn-outline-success" href="{{ route('admin.index') }}" role="button">page admin</a>
+                <a class="btn btn-outline-success" href="{{ route('admin.index') }}" role="button">page admin</a>
             </div>
         @endif
     </aside>
@@ -106,7 +106,8 @@
 					<div class="card-footer">
                         @foreach ($post->comments()->get() as $comment)
                             <div class="comment">
-                                <small class="d-block text-right">Commentaire de {{ $comment->user->name }}
+                                <img class="avatar avatar-cmt" src="{{ Storage::url(DB::table('users')->where('id', $post->user_id)->first()->avatar) }}" />
+                                <small class="d-block col-8 float-right text-right">Commentaire de {{ $comment->user->name }}
                                     @if (time() - $comment->created_at->timestamp < 172800)
                                         {{ Date::parse($comment->created_at)->diffForHumans() }}
                                     @else

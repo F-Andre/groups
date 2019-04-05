@@ -40,6 +40,16 @@
     width: 56px;
 }
 
+.avatar-cmt {
+    height: 48px;
+    width: 48px;
+}
+
+.avatar-btn {
+    height: 32px;
+    width: 32px;
+}
+
 .comment {
     background-color: white;
     border-radius: 5px;
@@ -61,4 +71,20 @@ aside {
     border-radius: 5px;
     background-color: white;
     box-shadow: 2px 2px 2px gainsboro;
+}
+
+aside a {
+    width: 90%;
+}
+
+@media only screen and (max-width: 993px) {
+    aside {
+        visibility: hidden;
+    }
+}
+
+@media only screen and (min-width: 993px) {
+    #authBtn {
+        visibility: hidden;
+    }
 }

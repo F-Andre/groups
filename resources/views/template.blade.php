@@ -32,14 +32,41 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
+                    @auth
+                        <ul id="authBtn" class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('blog.create') }}" role="button">Ecrire un article</a>
+                            </li>
+                            @if (Auth::user()->admin)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.index') }}" role="button">page admin</a>
+                                </li>
+                            @endif
+                            <li class="nav-item dropdown">
+                                <a id="authDropdown" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="authDropdown">
+                                    <a class="dropdown-item" href="{{ route('user_page.index') }}">
+                                        Mon compte
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">
+                                        Se déconnecter
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    @endauth
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
+                    @guest
+                        <ul class="navbar-nav ml-auto">
+                            <!-- Authentication Links -->
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">Se connecter</a>
                             </li>
@@ -48,8 +75,8 @@
                                     <a class="nav-link" href="{{ route('register') }}">Créer un compte</a>
                                 </li>
                             @endif
-                        @endguest
-                    </ul>
+                        </ul>
+                    @endguest
                 </div>
             </div>
         </nav>
