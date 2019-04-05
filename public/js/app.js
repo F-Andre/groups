@@ -61196,7 +61196,7 @@ function (_Component) {
         "data-target": "#loadModalDiv",
         className: submitClass,
         disabled: disabledState
-      }, "Envoyer"));
+      }, "Poster l'article"));
     }
   }]);
 

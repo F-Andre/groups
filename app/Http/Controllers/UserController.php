@@ -97,7 +97,7 @@ class UserController extends Controller
         $oldImage = $user->avatar;
 
         if (Storage::exists('public/avatar/' . $user->id) == false) {
-          mkdir('storage/avatar/' . $user->id);
+          mkdir('storage/avatar/' . $user->id, 0777, true);
         }
 
         $fileExt = $request->avatar->getClientOriginalExtension();

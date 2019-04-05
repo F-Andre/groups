@@ -10548,7 +10548,8 @@ a.text-dark:focus {
 }
 
 .image-blog {
-  height: 50vh;
+  max-height: 50vh;
+  max-width: 100%;
 }
 
 aside {

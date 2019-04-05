@@ -93,7 +93,7 @@ export default class ArticleForm extends Component {
                     <label className="btn btn-success" htmlFor="image">Ajouter une image</label>
                 </div>
                 <LoadModal />
-                <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Envoyer</button>
+                <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Poster l'article</button>
             </div>
         )
     }
