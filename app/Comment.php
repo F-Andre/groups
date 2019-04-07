@@ -3,11 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Comment extends Model
 {
+    use Sortable;
+
     protected $fillable = [
         'comment', 'post_id', 'user_id'
+    ];
+
+    public $sortable = [
+        'comment'
     ];
 
     public function user()

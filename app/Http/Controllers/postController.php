@@ -9,10 +9,13 @@ use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NewPost;
+use Illuminate\Notifications\Notifiable;
+use App\User;
 
 class postController extends Controller
 {
-
   protected $post;
   protected $nbrPerPage = 10;
 
@@ -56,6 +59,12 @@ class postController extends Controller
   public function store(PostRequest $request)
   {
     $retour = redirect(route('blog.index'))->withOk('Le post "' . $request->titre . '" est enregistré.');
+    $users = User::all();
+    foreach ($users as $user) {
+      if ($user->id != $request->user()->id) {
+        $user->notify(new NewPost($request->user()));
+      }
+    }
 
     if ($request->hasFile('image')) {
       if ($request->image->isValid()) {
@@ -189,9 +198,8 @@ class postController extends Controller
     Storage::delete($post->image);
 
     $comments = $this->post->getComments($id);
-    foreach ($comments as $comment)
-    {
-        DB::table('comments')->where('post_id', $post->id)->delete();
+    foreach ($comments as $comment) {
+      DB::table('comments')->where('post_id', $post->id)->delete();
     }
 
     $this->post->destroy($id);
