@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
+use Illuminate\Notifications\Notifiable;
 
 class Comment extends Model
 {
-    use Sortable;
+    use Sortable, Notifiable;
 
     protected $fillable = [
         'comment', 'post_id', 'user_id'

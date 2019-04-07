@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\CommentRepository;
+use App\Post;
+use App\User;
+use App\Notifications\CommentNotification;
 
 class CommentController extends Controller
 {
@@ -44,6 +47,11 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+        $post = Post::find(1)->where('id', $request->post_id)->first();
+        $user = User::find(1)->where('id', $post->user_id)->first();
+
+        $user->notify(new CommentNotification($user, $post));
+
         $inputs = array_merge($request->all());
         $this->comment->store($inputs);
 
