@@ -32,7 +32,7 @@
         <td scope="row">{{ $post->titre }}</td>
         <td>{{ Date::parse($post->created_at)->format('d M Y') }} à {{ Date::parse($post->created_at)->format('H:i') }}</td>
         <td>{{ Date::parse($post->updated_at)->format('d M Y') }} à {{ Date::parse($post->updated_at)->format('H:i') }}</td>
-        <td><a name="edit" id="edit" class="btn btn-warning btn-sm" href="{{ route('blog.edit', ['id' => $post->id]) }}" role="button">Editer l'article</a></td>
+        <td><a name="edit" id="edit" class="btn btn-success btn-sm" href="{{ route('blog.edit', ['id' => $post->id]) }}" role="button">Voir l'article</a></td>
         <td>
           <form method="POST" action="{{ route('blog.destroy', ['id' => $post->id]) }}">
             @method('DELETE') @csrf

@@ -10,6 +10,7 @@
                 <script>
                     var name = {!! json_encode($user->name) !!};
                     var email = {!! json_encode($user->email) !!};
+                    var notifs = {!! json_encode($user->notifs) !!}
                     var avatar = {!! json_encode($avatarUrl) !!}
                     var defaultAvatar = {!! json_encode($defaultAvatar) !!}
                 </script>

@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'postsQty', 'avatar'
+        'name', 'email', 'password', 'postsQty', 'avatar', 'notifs'
     ];
 
     public $sortable = [
