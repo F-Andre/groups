@@ -42,7 +42,8 @@
     <div class="container">
       <div class="col-6 float-left">
         @if (Auth::user()->id == $post->user->id)
-        <a name="edit" id="edit" class="btn btn-warning btn-sm" href="{{ route('blog.edit', ['id' => $post->id]) }}" role="button">Editer l'article</a>        @endif
+          <a name="edit" id="edit" class="btn btn-warning btn-sm" href="{{ route('blog.edit', ['id' => $post->id]) }}" role="button">Editer l'article</a>
+        @endif
       </div>
       <div class="col-6 float-right text-right">
         @if (Auth::user()->admin or Auth::user()->id == $post->user->id)

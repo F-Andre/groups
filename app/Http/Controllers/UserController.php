@@ -62,8 +62,29 @@ class UserController extends Controller
    */
   public function show($id)
   {
+    $orderValue = 'created_at';
+    $ord = 'desc';
+
+    if (isset($_GET['tri'])) {
+      if ($_GET['tri'] == 'titre') {
+        $orderValue = 'titre';
+      } elseif ($_GET['tri'] == 'created-asc') {
+        $orderValue = 'created_at';
+        $ord = 'asc';
+      } elseif ($_GET['tri'] == 'created-desc') {
+        $orderValue = 'created_at';
+        $ord = 'desc';
+      } elseif ($_GET['tri'] == 'updated-asc') {
+        $orderValue = 'updated_at';
+        $ord = 'asc';
+      } elseif ($_GET['tri'] == 'created-desc') {
+        $orderValue = 'updated_at';
+        $ord = 'desc';
+      }
+    }
+
     $user = $this->user->getById($id);
-    $posts = $this->user->nbrePosts($user->id);
+    $posts = DB::table('posts')->orderBy($orderValue, $ord)->where('user_id', $user->id)->get();
     return view('user.user_posts', compact('user', 'posts'));
   }
 
