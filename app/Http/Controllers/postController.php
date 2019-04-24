@@ -69,7 +69,7 @@ class postController extends Controller
     if ($request->hasFile('image')) {
       if ($request->image->isValid()) {
         if (Storage::exists('public/images/' . $request->user()->id) == false) {
-          mkdir('storage/images/' . $request->user()->id, 0777, true);
+          mkdir('storage/images/' . $request->user()->id, 0775, true);
         }
 
         $fileExt = $request->image->getClientOriginalExtension();

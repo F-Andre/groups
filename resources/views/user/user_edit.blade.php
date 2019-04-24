@@ -19,6 +19,9 @@
                     @csrf
                     <div id="userEditForm"></div>
                 </form>
+                <a href={{ route('user_page.index') }} type="button" class="btn btn-primary">
+                    Annuler
+                </a>
                 <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#deleteAccount">
                     Supprimer votre compte
                 </button>

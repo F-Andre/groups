@@ -119,7 +119,7 @@ class UserController extends Controller
         $oldImage = $user->avatar;
 
         if (Storage::exists('public/avatar/' . $user->id) == false) {
-          mkdir('storage/avatar/' . $user->id, 0777, true);
+          mkdir('storage/avatar/' . $user->id, 0775, true);
         }
 
         $fileExt = $request->avatar->getClientOriginalExtension();
@@ -130,8 +130,6 @@ class UserController extends Controller
         }
 
         $path = 'public/avatar/' . $user->id . '/' . $fileName . '.' . $fileExt;
-
-        /* $path = $request->avatar->store('/public/avatar/'. $user->id); */
 
         $pathUrl = Storage::url($path);
         $imageMake = Image::make($request->avatar);

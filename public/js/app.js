@@ -61485,6 +61485,15 @@ function Email(props) {
   });
 }
 
+function Notifs(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "checkbox",
+    value: props.value,
+    checked: props.value,
+    onChange: props.onChange
+  });
+}
+
 var UserEditForm =
 /*#__PURE__*/
 function (_Component) {
@@ -61496,9 +61505,11 @@ function (_Component) {
     _classCallCheck(this, UserEditForm);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(UserEditForm).call(this, props));
+    notifs == 'false' ? notifs = false : notifs = true;
     _this.state = {
       nameValue: name,
       emailValue: email,
+      notifsValue: notifs,
       imgSrc: avatar,
       imgSize: 0,
       modified: false,
@@ -61507,6 +61518,7 @@ function (_Component) {
     _this.handleChangeName = _this.handleChangeName.bind(_assertThisInitialized(_this));
     _this.handleChangeEmail = _this.handleChangeEmail.bind(_assertThisInitialized(_this));
     _this.handleChangeAvatar = _this.handleChangeAvatar.bind(_assertThisInitialized(_this));
+    _this.handleChangeNotifs = _this.handleChangeNotifs.bind(_assertThisInitialized(_this));
     _this.handleDeleteAvatar = _this.handleDeleteAvatar.bind(_assertThisInitialized(_this));
     _this.fileInput = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     return _this;
@@ -61525,6 +61537,14 @@ function (_Component) {
     value: function handleChangeEmail(event) {
       this.setState({
         emailValue: event.target.value,
+        modified: true
+      });
+    }
+  }, {
+    key: "handleChangeNotifs",
+    value: function handleChangeNotifs(event) {
+      this.setState({
+        notifsValue: event.target.checked,
         modified: true
       });
     }
@@ -61564,8 +61584,8 @@ function (_Component) {
     value: function render() {
       var imageSizeMax = 4718592;
       var disabledState = !this.state.modified ? true : this.state.imgSize > imageSizeMax ? true : false;
-      var submitClass = !disabledState ? "btn btn-primary" : "btn btn-secondary disabled";
-      var disableDelete = this.state.imgSrc != '/storage/default/default_avatar.png' ? "btn btn-danger btn-sm" : "btn btn-danger btn-sm disabled";
+      var submitClass = !disabledState ? "btn btn-success btn-lg" : "btn btn-success btn-lg disabled";
+      var disableDelete = this.state.imgSrc != '/storage/default/default_avatar.png' ? "btn btn-outline-danger btn-sm" : "btn btn-outline-danger btn-sm disabled";
       var aStyle = {
         backgroundImage: 'url(' + this.state.imgSrc + ')'
       };
@@ -61573,26 +61593,49 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: "titre"
+        htmlFor: "nom"
       }, "Nom:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Name, {
         value: this.state.nameValue,
         onChange: this.handleChangeName
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: "contenu"
+        htmlFor: "titre"
       }, "Adresse e-mail:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Email, {
         value: this.state.emailValue,
         onChange: this.handleChangeEmail
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "notif-switch"
+      }, "Recevoir les notifications: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "switch ml-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Notifs, {
+        name: "notif-switch",
+        value: this.state.notifsValue,
+        onChange: this.handleChangeNotifs
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "slider round"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        name: "notifs",
+        type: "text",
+        value: this.state.notifsValue,
+        hidden: true
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "divAvatar",
         className: "form-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Avatar:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Avatar:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         id: "avatarLabel",
         htmlFor: "avatar",
-        className: "btn btn-outline-secondary m-0 avatar",
+        className: "btn btn-outline-secondary avatar",
         style: aStyle
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        id: "btnDeleteAvatar",
+        className: disableDelete,
+        onClick: this.handleDeleteAvatar
+      }, "Effacer l'image"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         id: "avatar",
         name: "avatar",
         className: imageClass,
@@ -61602,13 +61645,7 @@ function (_Component) {
         onChange: this.handleChangeAvatar
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "invalid-feedback"
-      }, "L'image doit \xEAtre aux formats jpg, png ou gif et avoir une taille max de 4.5Mo."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-group mt-4"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        id: "btnDeleteAvatar",
-        className: disableDelete,
-        onClick: this.handleDeleteAvatar
-      }, "Effacer l'image")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "L'image doit \xEAtre aux formats jpg, png ou gif et avoir une taille max de 4.5Mo.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         id: "avatarDeleted",
         type: "text",
         className: "disabled",
@@ -61620,7 +61657,7 @@ function (_Component) {
         "data-target": "#loadModalDiv",
         className: submitClass,
         disabled: disabledState
-      }, "Modifier"));
+      }, "Appliquer les modifications"));
     }
   }]);
 
@@ -61653,8 +61690,8 @@ if (document.getElementById('userEditForm')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/fab/laravel/blog/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/fab/laravel/blog/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/fab/laravel/authent/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/fab/laravel/authent/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
