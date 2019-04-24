@@ -13,7 +13,7 @@ class CommentNotification extends Notification
 {
   use Queueable;
 
-  private $fromUser;
+  private $user;
   private $post;
 
   /**
@@ -23,7 +23,7 @@ class CommentNotification extends Notification
    */
   public function __construct(User $user, Post $post)
   {
-    $this->fromUser = $user;
+    $this->user = $user;
     $this->post = $post;
   }
 
@@ -47,7 +47,7 @@ class CommentNotification extends Notification
   public function toMail($notifiable)
   {
     $greeting = sprintf('Bonjour %s', $notifiable->name);
-    $line = sprintf('%s vient de commenter votre article %s.', $this->fromUser->name, $this->post->titre);
+    $line = sprintf('%s vient de commenter votre article %s.', $this->user->name, $this->post->titre);
     return (new MailMessage)
       ->subject('Nouveau commentaire')
       ->greeting($greeting)

@@ -48,9 +48,10 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $post = Post::find(1)->where('id', $request->post_id)->first();
-        $user = User::find(1)->where('id', $post->user_id)->first();
+        $poster = User::find(1)->where('id', $post->user_id)->first();
+        $commenter = User::find(1)->where('id', $request->user_id)->first();
 
-        $user->notify(new CommentNotification($user, $post));
+        $poster->notify(new CommentNotification($commenter, $post));
 
         $inputs = array_merge($request->all());
         $this->comment->store($inputs);

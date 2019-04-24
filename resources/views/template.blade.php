@@ -21,8 +21,8 @@
 <body>
     <?php setlocale(LC_TIME, 'fr_FR'); ?>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
+            <div class="container mx-5">
                 <a class="navbar-brand" href="{{ url('/blog') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>

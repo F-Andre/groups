@@ -62,12 +62,12 @@
       <img class="avatar avatar-cmt" src="{{ Storage::url(DB::table('users')->where('id', $comment->user_id)->first()->avatar) }}"
       />
       <small class="d-block col-8 float-right text-right">Commentaire de {{ $comment->user->name }}
-                                    @if (time() - $comment->created_at->timestamp < 172800)
-                                        {{ Date::parse($comment->created_at)->diffForHumans() }}
-                                    @else
-                                        le {{ Date::parse($comment->created_at)->format('l d F Y') }} à {{ Date::parse($comment->created_at)->format('H:i') }}
-                                    @endif
-                                </small>
+            @if (time() - $comment->created_at->timestamp < 172800)
+                {{ Date::parse($comment->created_at)->diffForHumans() }}
+            @else
+                le {{ Date::parse($comment->created_at)->format('l d F Y') }} à {{ Date::parse($comment->created_at)->format('H:i') }}
+            @endif
+        </small>
       <hr>
       <p>{{ $comment->comment }}</p>
       <div class="text-right">
