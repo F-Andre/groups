@@ -11,7 +11,7 @@
 |
 */
 
-Route::resource('blog', 'postController', ['except' => 'show']);
+Route::resource('blog', 'postController', ['except' => 'show'])->middleware('verified');
 
 Route::resource('comment', 'CommentController');
 
@@ -22,6 +22,6 @@ Route::resource('user_page', 'UserController');
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');

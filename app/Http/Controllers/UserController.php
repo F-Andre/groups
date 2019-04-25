@@ -9,6 +9,7 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Post;
+use App\Comment;
 
 class UserController extends Controller
 {
@@ -85,7 +86,7 @@ class UserController extends Controller
     }
 
     if (isset($_GET['post-view'])) {
-        $post = Post::find(1)->where('id', $_GET['post-view'])->first();
+      $post = Post::find(1)->where('id', $_GET['post-view'])->first();
     }
 
     $user = $this->user->getById($id);
@@ -191,13 +192,19 @@ class UserController extends Controller
       Storage::delete($avatar);
     }
 
-    foreach ($posts as $post) {
-      Storage::delete($post->image);
-      DB::table('posts')->where('user_id', $user->id)->delete();
+
+    if (!is_null($posts)) {
+      foreach ($posts as $post) {
+        Storage::delete($post->image);
+        DB::table('comments')->where('post_id', $post->id)->delete();
+        DB::table('posts')->where('user_id', $user->id)->delete();
+      }
     }
 
-    foreach ($comments as $comment) {
-      DB::table('comments')->where('user_id', $user->id)->delete();
+    if (!is_null($comments)) {
+      foreach ($comments as $comment) {
+        DB::table('comments')->where('user_id', $user->id)->delete();
+      }
     }
 
     $user->delete();

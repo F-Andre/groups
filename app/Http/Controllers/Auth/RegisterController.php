@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\AccountCreate;
 
 class RegisterController extends Controller
 {
@@ -22,6 +25,7 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
+    use Notifiable;
 
     /**
      * Where to redirect users after registration.
@@ -63,6 +67,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $admins = \App\User::where('admin', true)->get();
+
+        Notification::send($admins, new AccountCreate($data['name'], $data['email']));
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
