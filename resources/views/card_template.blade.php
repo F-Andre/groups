@@ -4,27 +4,27 @@
       <div>
         <p class="h5">{{ $post->titre }}</p>
         <small>
-						Par <b>{{ $post->user->name }}</b>
-						@if (time() - $post->created_at->timestamp < 172800)
-							{{ Date::parse($post->created_at)->diffForHumans() }}
-							@if ($post->created_at != $post->updated_at)
-								@if (time() - $post->updated_at->timestamp < 172800)
-									| Modifié {{ Date::parse($post->updated_at)->diffForHumans() }}
-								@else
-									| Modifié le: {{ Date::parse($post->updated_at)->format('d F Y') }} à {{ Date::parse($post->updated_at)->format('H:i') }}
-								@endif
-							@endif
-						@else
-							le {{ Date::parse($post->created_at)->format('l d F Y') }} à {{ Date::parse($post->created_at)->format('H:i') }}
-							@if ($post->created_at != $post->updated_at)
-								@if (time() - $post->updated_at->timestamp < 172800)
-									| Modifié {{ Date::parse($post->updated_at)->diffForHumans() }}
-								@else
-									| Modifié le {{ Date::parse($post->updated_at)->format('d F Y') }} à {{ Date::parse($post->updated_at)->format('H:i')}}
-								@endif
-							@endif
-						@endif
-					</small>
+          Par <b>{{ $post->user->name }}</b>
+          @if (time() - $post->created_at->timestamp < 172800)
+            {{ Date::parse($post->created_at)->diffForHumans() }}
+            @if ($post->created_at != $post->updated_at)
+              @if (time() - $post->updated_at->timestamp < 172800)
+                | Modifié {{ Date::parse($post->updated_at)->diffForHumans() }}
+              @else
+                | Modifié le: {{ Date::parse($post->updated_at)->format('d F Y') }} à {{ Date::parse($post->updated_at)->format('H:i') }}
+              @endif
+            @endif
+          @else
+            le {{ Date::parse($post->created_at)->format('l d F Y') }} à {{ Date::parse($post->created_at)->format('H:i') }}
+            @if ($post->created_at != $post->updated_at)
+              @if (time() - $post->updated_at->timestamp < 172800)
+                | Modifié {{ Date::parse($post->updated_at)->diffForHumans() }}
+              @else
+                | Modifié le {{ Date::parse($post->updated_at)->format('d F Y') }} à {{ Date::parse($post->updated_at)->format('H:i')}}
+              @endif
+            @endif
+          @endif
+        </small>
       </div>
       <div>
         <img class="avatar avatar_icon" src="{{ Storage::url(DB::table('users')->where('id', $post->user_id)->first()->avatar) }}"
@@ -42,8 +42,7 @@
     <div class="container">
       <div class="col-6 float-left">
         @if (Auth::user()->id == $post->user->id)
-          <a name="edit" id="edit" class="btn btn-warning btn-sm" href="{{ route('blog.edit', ['id' => $post->id]) }}" role="button">Editer l'article</a>
-        @endif
+        <a name="edit" id="edit" class="btn btn-warning btn-sm" href="{{ route('blog.edit', ['id' => $post->id]) }}" role="button">Editer l'article</a>        @endif
       </div>
       <div class="col-6 float-right text-right">
         @if (Auth::user()->admin or Auth::user()->id == $post->user->id)

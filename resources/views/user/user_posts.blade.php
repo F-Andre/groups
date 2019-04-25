@@ -2,7 +2,7 @@
 @section('article')
 <article class="col-lg-8 mx-auto">
   @if (count($posts) > 0)
-  <form method="GET" action={{ route( 'user_page.show', [ 'id'=> $user->id]) }}>
+  <form method="GET" action={{ route( 'user_page.show', ['id'=> $user->id]) }}>
     <div class="form-group my-4">
       <label for="tri">Trier les posts:</label>
       <select id="tri" name="tri">
@@ -16,25 +16,32 @@
       <button type="submit" class="btn btn-primary">Trier</button>
     </div>
   </form>
-  <table class="table table-hover table-responsive-md table-posts">
+  <table class="table table-hover table-responsive-md table-posts mb-5">
     <thead class="thead-dark">
       <tr>
         <th>Titre</th>
         <th>Crée le:</th>
         <th>Modifié le:</th>
+        <th>Commentaires:</th>
         <th></th>
         <th></th>
       </tr>
     </thead>
-    @foreach ($posts as $post)
+    @foreach ($posts as $postList)
     <tbody>
       <tr>
-        <td scope="row">{{ $post->titre }}</td>
-        <td>{{ Date::parse($post->created_at)->format('d M Y') }} à {{ Date::parse($post->created_at)->format('H:i') }}</td>
-        <td>{{ Date::parse($post->updated_at)->format('d M Y') }} à {{ Date::parse($post->updated_at)->format('H:i') }}</td>
-        <td><a name="edit" id="edit" class="btn btn-success btn-sm" href="{{ route('blog.edit', ['id' => $post->id]) }}" role="button">Voir l'article</a></td>
+        <td scope="row">{{ $postList->titre }}</td>
+        <td>{{ Date::parse($postList->created_at)->format('d M Y') }} à {{ Date::parse($postList->created_at)->format('H:i') }}</td>
+        <td>{{ Date::parse($postList->updated_at)->format('d M Y') }} à {{ Date::parse($postList->updated_at)->format('H:i') }}</td>
+        <td>{{ DB::table('comments')->where('post_id', $postList->id)->count() }}</td>
         <td>
-          <form method="POST" action="{{ route('blog.destroy', ['id' => $post->id]) }}">
+          <form method="GET" action={{ route( 'user_page.show', ['id'=> $user->id]) }}>
+            <input type="text" name="post-view" value={{ $postList->id }} hidden>
+            <input type="submit" class="btn btn-success btn-sm" value="Voir l'article">
+          </form>
+        </td>
+        <td>
+          <form method="POST" action="{{ route('blog.destroy', ['id' => $postList->id]) }}">
             @method('DELETE') @csrf
             <button type="submit" class="btn btn-danger btn-sm">Effacer l'article</button>
           </form>
@@ -48,5 +55,10 @@
     <p class="h4 justify-content-center mt-5">Vous n'avez aucun article!</p>
   </div>
   @endif
+  @isset($post)
+    <div class="col-lg-8 mx-auto">
+      @include('card_template')
+    </div>
+  @endisset
 </article>
 @endsection
