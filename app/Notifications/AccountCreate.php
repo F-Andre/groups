@@ -48,6 +48,7 @@ class AccountCreate extends Notification
     $greeting = sprintf('Bonjour %s', $notifiable->name);
     $line = sprintf('%s vient de créer un compte avec l\'adresse email %s', $this->name, $this->email);
     return (new MailMessage)
+      ->from('test@example.com', 'Blog')
       ->subject('Nouveau compte')
       ->greeting($greeting)
       ->line($line)
