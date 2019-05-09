@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>iFrame</title>
+  <style>
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #editContent,
+    #results {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      height: 30vh;
+      width: 100%;
+    }
+
+    #editContent {
+      z-index: 900;
+    }
+
+    nav {
+      display: flex;
+      height: 50px;
+    }
+
+    #text-form,
+    #text-position {
+      margin-right: 10px;
+    }
+
+    #special-chars {
+      display: flex;
+    }
+
+    #special-chars div {
+      width: 55px;
+    }
+
+    nav button {
+      height: 50px;
+      width: 55px;
+      font-size: 1.5rem;
+      padding: 0;
+    }
+
+    #emojis,
+    #maths {
+      display: none;
+      position: relative;
+      flex-wrap: wrap;
+      width: 500px !important;
+      z-index: 950;
+    }
+
+    .spl-char {
+      font-size: 1.5rem;
+      width: 50px;
+      height: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div id="text-form">
+      <button id="bold" active="false"><b>B</b></button><button id="italic" active="false"><i>I</i></button><button
+        id="underline" active="false"><u>U</u></button>
+    </div>
+    <div id="text-position">
+      <button id="left" active="false">L</button><button id="center" active="false">C</button><button id="right"
+        active="false">R</button>
+    </div>
+    <div id="special-chars">
+      <div>
+        <button id="toggleEmojis">&#x1F600;</button>
+        <div id="emojis" class="nav-button" hidden="true"></div>
+      </div>
+      <div>
+        <button id="toggleMath">&#x221A;</button>
+        <div id="maths" class="nav-button" hidden="true"></div>
+      </div>
+    </div>
+  </nav>
+  <div id="editContent" contenteditable="true" spellcheck="false"></div>
+  <script>
+    // addEventListener support for IE8
+    function bindEvent(element, eventName, eventHandler) {
+      if (element.addEventListener) {
+        element.addEventListener(eventName, eventHandler, false);
+      } else if (element.attachEvent) {
+        element.attachEvent('on' + eventName, eventHandler);
+      }
+    }
+
+    function $(element) {
+      return document.getElementById(element);
+    }
+
+    function editCommand(comName, comArg = '') {
+      document.execCommand(comName, false, comArg);
+      $('editContent').focus();
+    }
+
+    // Send a message to the parent
+    var sendMessage = function (msg) {
+      // Make sure you are sending a string, and to stringify JSON
+      window.parent.postMessage(msg, '*');
+    };
+
+    //listen to message of the parent
+    bindEvent(window, 'message', function (e) {
+      console.log(e.data);
+      $('editContent').innerHTML = e.data;
+      caretAtEnd();
+    });
+
+    var emojiFaceSmiling = ['1F600', '1F603', '1F604', '1F601', '1F606', '1F605', '1F923', '1F602', '1F642', '1F643',
+      '1F609', '1F60A', '1F607'
+    ];
+
+    var mathSymbols = ['2200', '2202', '2203', '2205', '2208', '2209', '220B', '220F', '2211', '2212', '2217', '221A',
+      '221D', '221E', '2220', '2227', '2228', '2229', '222A', '222B', '2234', '223C', '2245', '2248', '2260', '2264',
+      '2265', '2282', '2283', '2284', '2286', '2287'
+    ];
+
+    function splChars(array, parent) {
+      array.forEach(char => {
+        let icon = document.createElement('button');
+        icon.innerHTML = '&#x' + char + ';';
+        icon.value = '&#x' + char + ';';
+        icon.className = 'spl-char';
+        parent.appendChild(icon);
+        bindEvent(icon, 'click', function (e) {
+          let spanSplChar = document.createElement('span');
+          spanSplChar.className = 'span-splchar';
+          spanSplChar.innerHTML = icon.value;
+          $('editContent').appendChild(spanSplChar);
+          sendMessage($('editContent').innerHTML);
+          caretAtEnd();
+          toggleMenu(parent);
+        });
+      });
+    }
+
+    splChars(emojiFaceSmiling, $('emojis'));
+    splChars(mathSymbols, $('maths'));
+
+    function caretAtEnd() {
+      let l = editContent.childNodes.length;
+      l > 0 ? document.getSelection().collapse(editContent, l) : '';
+      window.setTimeout(function () {
+        let l = editContent.childNodes.length;
+        l > 0 ? document.getSelection().collapse(editContent, l) : '';
+      }, 1);
+    }
+
+    function toggleMenu(element) {
+      if (element.getAttribute('hidden') == "true") {
+        let navButtons = document.getElementsByClassName('nav-button');
+        for (let i = 0; i < navButtons.length; i++) {
+          if (navButtons[i].getAttribute('hidden') == "false") {
+            navButtons[i].setAttribute('hidden', 'true');
+            navButtons[i].style.display = 'none';
+          }
+        }
+        element.setAttribute('hidden', 'false');
+        element.style.display = 'flex';
+      } else {
+        element.setAttribute('hidden', 'true');
+        element.style.display = 'none';
+      }
+    }
+
+    bindEvent($('toggleEmojis'), 'click', function () {
+      toggleMenu($('emojis'))
+    });
+
+    bindEvent($('toggleMath'), 'click', function () {
+      toggleMenu($('maths'))
+    });
+
+    bindEvent($('bold'), 'click', function () {
+      editCommand('bold');
+    });
+
+    bindEvent($('italic'), 'click', function () {
+      editCommand('italic');
+    });
+
+    bindEvent($('underline'), 'click', function () {
+      editCommand('underline');
+    });
+
+    bindEvent($('left'), 'click', function () {
+      editCommand('justifyLeft');
+    });
+
+    bindEvent($('center'), 'click', function () {
+      editCommand('justifyCenter');
+    });
+
+    bindEvent($('right'), 'click', function () {
+      editCommand('justifyRight');
+    });
+
+    bindEvent($('editContent'), 'input', function (e) {
+      sendMessage(editContent.innerHTML);
+    });
+  </script>
+</body>
+
+</html>

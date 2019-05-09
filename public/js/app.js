@@ -61302,6 +61302,21 @@ function (_Component) {
   }
 
   _createClass(ArticleForm, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      setTimeout(function () {
+        document.querySelector('#editor_iframe').contentWindow.postMessage(contenu, '*');
+        window.addEventListener('message', function (e) {
+          _this2.setState({
+            textValue: e.data,
+            modified: true
+          });
+        }, 500);
+      });
+    }
+  }, {
     key: "handleChangeTitre",
     value: function handleChangeTitre(event) {
       this.setState({
@@ -61320,7 +61335,7 @@ function (_Component) {
   }, {
     key: "handleChangeImage",
     value: function handleChangeImage() {
-      var _this2 = this;
+      var _this3 = this;
 
       var reader = new FileReader();
       var file = this.fileInput.current.files[0];
@@ -61330,7 +61345,7 @@ function (_Component) {
       reader.onload = function (e) {
         fileSrc = e.target.result;
 
-        _this2.setState({
+        _this3.setState({
           imgSrc: fileSrc,
           imgSize: fileSize,
           modified: true
@@ -61372,6 +61387,11 @@ function (_Component) {
       }, "Ecrivez votre texte:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ArticleText, {
         value: this.state.textValue,
         onChange: this.handleChangeText
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("iframe", {
+        id: "editor_iframe",
+        height: "500",
+        width: "800",
+        src: "/editor_iframe.html"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "invalid-feedback"
       }, "Ecrivez un texte d'au moins 10 caract\xE8res.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -61690,8 +61710,8 @@ if (document.getElementById('userEditForm')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/fab/laravel/authent/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/fab/laravel/authent/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/fab/laravel/blog/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/fab/laravel/blog/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
