@@ -2,68 +2,65 @@
 
 @section('section')
 <div class="card mt-4">
-    <div class="card-header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-10">
-                    <h3>{{ $user->name }}</h3>
-                    <p class="card-title">{{ $user->email }}</p>
-                    @if ($user->admin == 1)
-                    <p class="card-title">Administrateur</p>
-                    @endif
-                </div>
-                <div class="col-2">
-                    @if (Auth::user()->name != $user->name)
-                        <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#deleteAccount">
-                            Supprimer
-                        </button>
-                    @endif
-                    @if (Auth::user()->name == $user->name)
-                        <form method="POST" action="{{ route('admin.edit', ['user']) }}">
-                            @csrf
-                            <button type="submit" class="btn btn-warning mt-5 float-right">Editer</button>
-                        </form>
-                    @endif
-                </div>
-            </div>
-        </div>
+  <div class="card-header d-flex justify-content-between">
+    <div>
+      <h3>{{ $user->name }}</h3>
+      <p class="card-title">{{ $user->email }}</p>
+      @if ($user->admin == 1)
+      <p class="card-title">Administrateur</p>
+      @endif
     </div>
-    @foreach ($posts as $post)
-        <div class="card-body">
-            <div class="card">
-                <div class="card-header">
-                    <p class="h5 card-title">{{ $post->titre }}</p>
-                </div>
-                <div class="card-body">
-                    <p class="card-texte">{{ $post->contenu }}</p>
-                    @if (strlen($post->image) > 0)
-                        <img src = "{{ Storage::url($post->image) }}"/>
-                    @endif
-                </div>
-            </div>
-        </div>
-    @endforeach
-</div>
-<!-- Modal -->
-<div class="modal fade" id="deleteAccount" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Supprimer un compte</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-            </div>
-            <div class="modal-body">
-                <p class="h4 my-3">ATTENTION!<br>En supprimant cet utilisateur, tous ses articles seront aussi supprimés!</p>
-                <form method="POST" action="{{ route('admin.destroy', ['id' => $user->id]) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger float-right">Continuer</button>
-                </form>
-                <button type="button" class="btn btn-success" data-dismiss="modal">Annuler</button>
-            </div>
-        </div>
+    <div>
+      @if (Auth::user()->name != $user->name)
+      <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#deleteAccount">
+        Supprimer le compte
+      </button>
+      @endif
+      @if (Auth::user()->name == $user->name)
+        <a class="btn btn-warning" href="{{ route('user_page.edit', ['id' => $user->id]) }}">Editer</a>
+      @endif
     </div>
+  </div>
+  <form method="GET" action={{ route( 'admin.show', ['id'=> $user->id]) }}>
+    <div class="form-group my-4 ml-4">
+      <label for="tri">Trier les posts:</label>
+      <select id="tri" name="tri">
+        <option value="">--choix--</option>
+        <option value="titre">Par titre</option>
+        <option value="created-desc">Date de création (le + récent)</option>
+        <option value="created-asc">Date de création (le + vieux)</option>
+      </select>
+      <button type="submit" class="btn btn-primary">Trier</button>
+    </div>
+  </form>
+  <table class="col-lg-11 mx-auto table table-striped table-inverse">
+    <thead class="thead-dark">
+      <tr class="text-center">
+        <th>Titre</th>
+        <th>Créé le</th>
+        <th>Nbr Cmt</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach ($posts as $post)
+      <tr>
+        <td>{{ $post->titre }}</td>
+        <td class="text-center">le {{ Date::parse($post->created_at)->format('d F Y') }} à
+          {{ Date::parse($post->created_at)->format('H:i') }}</td>
+        <td class="text-center">{{ DB::table('comments')->where('post_id', $post->id)->count() }}</td>
+        <td class="text-right"><a class="btn btn-success" href="{{ route('blog.index', '#'.$post->id) }}">Voir l'article</a></td>
+        <td class="text-right">
+          <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#deletePost">
+            Supprimer
+          </button>
+        </td>
+      </tr>
+      @include('templates/modal_delete_post')
+      @endforeach
+    </tbody>
+  </table>
 </div>
+@include('templates/modal_delete_user')
 @endsection

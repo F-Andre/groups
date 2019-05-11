@@ -47,9 +47,9 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        $post = Post::find(1)->where('id', $request->post_id)->first();
-        $poster = User::find(1)->where('id', $post->user_id)->first();
-        $commenter = User::find(1)->where('id', $request->user_id)->first();
+        $post = Post::where('id', $request->post_id)->first();
+        $poster = User::where('id', $post->user_id)->first();
+        $commenter = User::where('id', $request->user_id)->first();
 
         $poster->notify(new CommentNotification($commenter, $post));
 

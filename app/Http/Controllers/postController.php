@@ -5,13 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Repositories\PostRepository;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Notification;
 use App\Notifications\NewPost;
-use Illuminate\Notifications\Notifiable;
 use App\User;
 
 class postController extends Controller

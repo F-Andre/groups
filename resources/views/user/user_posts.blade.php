@@ -16,7 +16,7 @@
       <button type="submit" class="btn btn-primary">Trier</button>
     </div>
   </form>
-  <table class="table table-hover table-responsive-md table-posts mb-5">
+  <table class="table table-hover table-posts mb-5">
     <thead class="thead-dark">
       <tr>
         <th>Titre</th>
@@ -27,38 +27,40 @@
         <th></th>
       </tr>
     </thead>
-    @foreach ($posts as $postList)
     <tbody>
+    @foreach ($posts as $post)
       <tr>
-        <td scope="row">{{ $postList->titre }}</td>
-        <td>{{ Date::parse($postList->created_at)->format('d M Y') }} à {{ Date::parse($postList->created_at)->format('H:i') }}</td>
-        <td>{{ Date::parse($postList->updated_at)->format('d M Y') }} à {{ Date::parse($postList->updated_at)->format('H:i') }}</td>
-        <td>{{ DB::table('comments')->where('post_id', $postList->id)->count() }}</td>
+        <td scope="row">{{ $post->titre }}</td>
+        <td>{{ Date::parse($post->created_at)->format('d M Y') }} à {{ Date::parse($post->created_at)->format('H:i') }}
+        </td>
+        <td>{{ Date::parse($post->updated_at)->format('d M Y') }} à {{ Date::parse($post->updated_at)->format('H:i') }}
+        </td>
+        <td>{{ DB::table('comments')->where('post_id', $post->id)->count() }}</td>
         <td>
           <form method="GET" action={{ route( 'user_page.show', ['id'=> $user->id]) }}>
-            <input type="text" name="post-view" value={{ $postList->id }} hidden>
+            <input type="text" name="post-view" value={{ $post->id }} hidden>
             <input type="submit" class="btn btn-success btn-sm" value="Voir l'article">
           </form>
         </td>
         <td>
-          <form method="POST" action="{{ route('blog.destroy', ['id' => $postList->id]) }}">
-            @method('DELETE') @csrf
-            <button type="submit" class="btn btn-danger btn-sm">Effacer l'article</button>
-          </form>
+          <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#deletePost">
+            Supprimer l'article
+          </button>
         </td>
       </tr>
-    </tbody>
+      @include('templates/modal_delete_post')
     @endforeach
+  </tbody>
   </table>
   @else
   <div class="text-center mt-5">
     <p class="h4 justify-content-center mt-5">Vous n'avez aucun article!</p>
   </div>
   @endif
-  @isset($post)
-    <div class="col-lg-8 mx-auto">
-      @include('card_template')
-    </div>
+  @isset($postView)
+  <div class="col-lg-8 mx-auto">
+    @include('templates/post_light_template', ['post' => $postView])
+  </div>
   @endisset
 </article>
 @endsection

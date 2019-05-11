@@ -86,13 +86,13 @@ class UserController extends Controller
     }
 
     if (isset($_GET['post-view'])) {
-      $post = Post::find(1)->where('id', $_GET['post-view'])->first();
+      $postView = Post::where('id', $_GET['post-view'])->first();
     }
 
     $user = $this->user->getById($id);
-    $posts = DB::table('posts')->orderBy($orderValue, $ord)->where('user_id', $user->id)->get();
+    $posts = Post::where('user_id', $user->id)->orderBy($orderValue, $ord)->get();
 
-    return isset($post) ?  view('user.user_posts', compact('user', 'posts', 'post')) : view('user.user_posts', compact('user', 'posts'));
+    return isset($postView) ?  view('user.user_posts', compact('user', 'posts', 'postView')) : view('user.user_posts', compact('user', 'posts'));
   }
 
   /**

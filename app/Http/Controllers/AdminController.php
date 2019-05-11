@@ -8,6 +8,7 @@ use App\Http\Requests\SearchRequest;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Post;
 
 class AdminController extends Controller
 {
@@ -63,8 +64,30 @@ class AdminController extends Controller
    */
   public function show($id)
   {
+    $orderValue = 'created_at';
+    $ord = 'desc';
+
+    if (isset($_GET['tri'])) {
+      if ($_GET['tri'] == 'titre') {
+        $orderValue = 'titre';
+        $ord = 'asc';
+      } elseif ($_GET['tri'] == 'created-asc') {
+        $orderValue = 'created_at';
+        $ord = 'asc';
+      } elseif ($_GET['tri'] == 'created-desc') {
+        $orderValue = 'created_at';
+        $ord = 'desc';
+      } elseif ($_GET['tri'] == 'updated-asc') {
+        $orderValue = 'updated_at';
+        $ord = 'asc';
+      } elseif ($_GET['tri'] == 'created-desc') {
+        $orderValue = 'updated_at';
+        $ord = 'desc';
+      }
+    }
+
     $user = $this->user->getById($id);
-    $posts = $this->user->nbrePosts($user->id);
+    $posts = Post::where('user_id', $user->id)->orderBy($orderValue, $ord)->get();
     return view('admin.admin_user', compact('user', 'posts'));
   }
 
@@ -109,7 +132,7 @@ class AdminController extends Controller
 
     foreach ($posts as $post) {
       Storage::delete($post->image);
-      DB::table('posts')->where('user_id', $user->id)->delete();
+      Post::where('user_id', $user->id)->delete();
     }
     $user->delete();
 
