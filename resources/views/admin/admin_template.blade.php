@@ -2,7 +2,7 @@
 
 @section('content')
 @if (Auth::check() and Auth::user()->admin)
-<nav class="navbar navbar-expand-sm navbar-dark bg-success">
+<nav class="navbar navbar-expand-sm navbar-dark bg-secondary">
   <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
     aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -26,7 +26,7 @@
             @endforeach
         </datalist>
       </div>
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+      <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Rechercher</button>
     </form>
     @endisset
   </div>
