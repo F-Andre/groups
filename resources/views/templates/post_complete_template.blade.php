@@ -40,18 +40,22 @@
     @endif
     @if (Auth::check())
       <div class="container">
-        <div class="col-6 float-left">
-        @if (Auth::user()->id == $post->user->id)
-          <a name="edit" id="edit" class="btn btn-warning btn-sm" href="{{ route('blog.edit', ['id' => $post->id]) }}" role="button">Editer l'article</a>
-        @endif
-        </div>
         <div class="col-6 float-right text-right">
         @if (Auth::user()->admin or Auth::user()->id == $post->user->id)
-          <form method="POST" action="{{ route('blog.destroy', ['id' => $post->id]) }}">
-            @method('DELETE')
-            @csrf
-            <button type="submit" class="btn btn-danger btn-sm">Effacer l'article</button>
-          </form>
+        <div class="dropdown">
+          <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-ellipsis-h"></i>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            @if (Auth::user()->id == $post->user->id)
+              <a name="edit" id="edit" class="dropdown-item" href="{{ route('blog.edit', ['id' => $post->id]) }}" role="button">Editer l'article</a>
+            @endif
+            <button type="button" class="dropdown-item text-danger" data-toggle="modal" data-target="#deletePost">
+              Supprimer l'article
+            </button>
+          </div>
+        </div>
+        @include('templates/modal_delete_post')
         @endif
         </div>
       </div>

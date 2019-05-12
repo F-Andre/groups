@@ -15,7 +15,7 @@
           @method('DELETE')
           <button type="submit" class="btn btn-danger float-right">Continuer</button>
         </form>
-        <button type="button" class="btn btn-success" data-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-success float-left" data-dismiss="modal">Annuler</button>
       </div>
     </div>
   </div>
