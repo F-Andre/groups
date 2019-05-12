@@ -15,7 +15,7 @@
           @endif
         </div>
         <div class="card-footer">
-          @foreach ($post->comments()->get() as $comment)
+          @foreach ($post->comments()->orderBy('created_at', 'desc')->get() as $comment)
           <div class="comment">
             <img class="avatar avatar-cmt"
               src="{{ Storage::url(DB::table('users')->where('id', $comment->user_id)->first()->avatar) }}" />
