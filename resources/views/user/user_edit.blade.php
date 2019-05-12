@@ -1,7 +1,7 @@
 @extends('user/user_template')
 
 @section('article')
-    <article class="col-lg-8 mx-auto">
+    <article class="col-lg-8 mx-auto mt-4">
         <div class="card">
             <div class="card-header">
                 <p class="h4 text-center">Modifier vos informations:</p>
@@ -26,11 +26,6 @@
                     Supprimer votre compte
                 </button>
             </div>
-            @if ($user->admin == 1)
-                <div class="card-footer text-muted">
-                    Vous êtes administrateur du site
-                </div>
-            @endif
         </div>
     </article>
     <div class="modal fade" id="deleteAccount" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
