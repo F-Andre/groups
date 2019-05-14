@@ -59,8 +59,8 @@ export default class ArticleForm extends Component {
           textValue: e.data,
           modified: true
         })
-      }, 800)
-    })
+      })
+    }, 500)
   }
 
   handleChangeTitre(event) {
