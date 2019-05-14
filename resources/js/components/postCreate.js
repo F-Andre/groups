@@ -26,6 +26,7 @@ function ArticleText(props) {
             value={props.value}
             onChange={props.onChange}
             className={contenuClass}
+            hidden
         />
     );
 }
@@ -45,6 +46,17 @@ export default class ArticleForm extends Component {
         this.handleChangeImage = this.handleChangeImage.bind(this);
         this.fileInput = React.createRef();
     }
+
+    componentDidMount() {
+        setTimeout(() => {
+          window.addEventListener('message', (e) => {
+            this.setState({
+              textValue: e.data,
+              modified: true
+            })
+          }, 500)
+        })
+      }
 
     handleChangeTitre(event) {
         this.setState({ titreValue: event.target.value })
@@ -84,6 +96,7 @@ export default class ArticleForm extends Component {
                 <div className="form-group">
                     <label htmlFor="contenu">Ecrivez votre texte:</label>
                     <ArticleText value={this.state.textValue} onChange={this.handleChangeText} />
+                    <iframe id="editor_iframe" className="postIframe" src="/editor_iframe.html"></iframe>
                     <div className="invalid-feedback">Ecrivez un texte d'au moins 10 caractères.</div>
                 </div>
                 <div id="divImage" className="form-group">

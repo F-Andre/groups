@@ -4,20 +4,24 @@
 <head>
   <meta charset="UTF-8">
   <title>iFrame</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      width: 100%;
-      height: 100%;
     }
 
-    #editContent,
-    #results {
+    #editContent {
+      font-family: 'Nunito', sans-serif;
+      color: #495057;
+      font-size: 1.2rem;
       position: fixed;
-      top: 70px;
+      top: 33px;
       left: 0;
-      height: 30vh;
-      width: 100%;
+      height: 100vh;
+      width: 100vw;
+      padding: 10px;
     }
 
     #editContent {
@@ -26,192 +30,355 @@
 
     nav {
       display: flex;
-      height: 50px;
+      justify-content: start;
+      height: 31px;
+      border-bottom: 2px solid gainsboro;
+      padding-top: 1px;
     }
 
-    #text-form,
-    #text-position {
-      margin-right: 10px;
+    .separator {
+      margin: 0 10px 0 10px;
+      border-right: 1px solid gainsboro;
     }
 
-    #special-chars {
+    .group-button {
       display: flex;
+      justify-content: space-between;
+      text-align: center;
+      line-height: 30px;
+      font-size: 1.3rem;
     }
 
-    #special-chars div {
-      width: 55px;
+    .spl-chars-button {
+      width: 32px;
+      height: 30px;
     }
 
-    nav button {
-      height: 50px;
-      width: 55px;
-      font-size: 1.5rem;
+    .mef {
+      font-size: 1.1rem;
+      background-color: white;
+      border: none;
+      border-radius: 3px;
+      height: 30px;
+      width: 32px;
       padding: 0;
+      margin-left: 1px;
+    }
+
+    .mef:hover,
+    .spl-chars-button:hover {
+      cursor: pointer;
+      background-color: gainsboro;
+    }
+
+    .clicked {
+      background-color: gainsboro;
     }
 
     #emojis,
-    #maths {
+    #maths,
+    #greek {
+      background-color: rgba(255, 255, 255, 0.7);
       display: none;
       position: relative;
+      left: -100px;
+      width: 400px !important;
       flex-wrap: wrap;
-      width: 500px !important;
       z-index: 950;
     }
 
+    .nav-button,
+    .nav-button div {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      text-align: center;
+      line-height: 30px;
+    }
+
+    .nav-button {
+      margin-top: 5px;
+    }
+
     .spl-char {
+      width: 30px;
+      height: 30px;
+      align-self: center;
+      justify-self: center;
+      border-radius: 3px;
+    }
+
+    .spl-char:hover {
+      cursor: pointer;
+      background-color: gainsboro;
       font-size: 1.5rem;
-      width: 50px;
-      height: 50px;
+    }
+
+    .spl-chars-button {
+      border-radius: 3px;
+      margin-left: 1px;
+    }
+
+    .open {
+      background-color: gainsboro;
     }
   </style>
 </head>
 
 <body>
   <nav>
-    <div id="text-form">
-      <button id="bold" active="false"><b>B</b></button><button id="italic" active="false"><i>I</i></button><button
-        id="underline" active="false"><u>U</u></button>
+    <div id="text-form" class="group-button">
+      <button id="bold" class="mef deco" title="Gras"><b>G</b></button>
+      <button id="italic" class="mef deco" title="Italique"><i>I</i></button>
+      <button id="underline" class="mef deco" title="Souligné"><u>S</u></button>
     </div>
-    <div id="text-position">
-      <button id="left" active="false">L</button><button id="center" active="false">C</button><button id="right"
-        active="false">R</button>
+    <span class="separator"></span>
+    <div id="text-position" class="group-button">
+      <button id="left" class="mef align clicked" title="Texte à gauche"><i class="fas fa-align-left"></i></button>
+      <button id="center" class="mef align" title="Texte centré"><i class="fas fa-align-center"></i></button>
+      <button id="right" class="mef align" title="Texte à droite"><i class="fas fa-align-right"></i></button>
+      <button id="justify" class="mef align" title="Texte justifié"><i class="fas fa-align-justify"></i></button>
     </div>
-    <div id="special-chars">
-      <div>
-        <button id="toggleEmojis">&#x1F600;</button>
+    <span class="separator"></span>
+    <div id="text-list" class="group-button">
+      <button id="unorderedList" class="mef liste" title="Liste à puces"><i class="fas fa-list-ul"></i></button>
+      <button id="orderedList" class="mef liste" title="Liste ordonnée"><i class="fas fa-list-ol"></i></button>
+    </div>
+    <span class="separator"></span>
+    <div id="text-indice" class="group-button">
+      <button id="superscript" class="mef indice" title="Exposant"><i class="fas fa-superscript"></i></button>
+      <button id="subscript" class="mef indice" title="Subscription"><i class="fas fa-subscript"></i></button>
+    </div>
+    <span class="separator"></span>
+    <div id="special-chars" class="group-button">
+      <div id="toggleEmojis" class="spl-chars-button" title="Emojis">
+        <span>&#x1F642;</span>
         <div id="emojis" class="nav-button" hidden="true"></div>
       </div>
-      <div>
-        <button id="toggleMath">&#x221A;</button>
+      <div id="toggleMath" class="spl-chars-button" title="Symboles mathématiques">
+        <span>&#x221A;</span>
         <div id="maths" class="nav-button" hidden="true"></div>
+      </div>
+      <div id="toggleGreek" class="spl-chars-button" title="Alphabet Grec">
+        <span>&#x03B1;</span>
+        <div id="greek" class="nav-button" hidden="true"></div>
       </div>
     </div>
   </nav>
   <div id="editContent" contenteditable="true" spellcheck="false"></div>
   <script>
     // addEventListener support for IE8
-    function bindEvent(element, eventName, eventHandler) {
-      if (element.addEventListener) {
-        element.addEventListener(eventName, eventHandler, false);
-      } else if (element.attachEvent) {
-        element.attachEvent('on' + eventName, eventHandler);
+    function bindEvent( element, eventName, eventHandler ) {
+      if ( element.addEventListener ) {
+        element.addEventListener( eventName, eventHandler, false );
+      } else if ( element.attachEvent ) {
+        element.attachEvent( 'on' + eventName, eventHandler );
       }
     }
 
-    function $(element) {
-      return document.getElementById(element);
+    function $( element ) {
+      return document.getElementById( element );
     }
 
-    function editCommand(comName, comArg = '') {
-      document.execCommand(comName, false, comArg);
-      $('editContent').focus();
+    function editCommand( comName, comArg = '' ) {
+      document.execCommand( comName, false, comArg );
+      $( 'editContent' ).focus();
     }
 
+    function caretAtEnd() {
+      let l = editContent.childNodes.length;
+      l > 0 ? document.getSelection().collapse( editContent, l ) : '';
+      window.setTimeout( function () {
+        let l = editContent.childNodes.length;
+        l > 0 ? document.getSelection().collapse( editContent, l ) : '';
+      }, 1 );
+    }
     // Send a message to the parent
-    var sendMessage = function (msg) {
+    var sendMessage = function ( msg ) {
       // Make sure you are sending a string, and to stringify JSON
-      window.parent.postMessage(msg, '*');
+      window.parent.postMessage( msg, '*' );
     };
-
-    //listen to message of the parent
-    bindEvent(window, 'message', function (e) {
-      console.log(e.data);
-      $('editContent').innerHTML = e.data;
-      caretAtEnd();
-    });
-
-    var emojiFaceSmiling = ['1F600', '1F603', '1F604', '1F601', '1F606', '1F605', '1F923', '1F602', '1F642', '1F643',
-      '1F609', '1F60A', '1F607'
+    var emojiFaceSmiling = [
+      ['1F642', '1F643', '1F609', '1F60A', '1F607', '1F600', '1F604', '1F606', '1F605', '1F923', '1F602'],
+      ['1F970', '1F60D', '1F929', '1F618', '1F617', '1F61A', '1F619'],
+      ['1F60B', '1F61B', '1F61C', '1F92A', '1F61D', '1F911'],
+      ['1F917', '1F92D', '1F92B', '1F914'],
+      ['1F910', '1F928', '1F610', '1F611', '1F636', '1F60F', '1F612', '1F644', '1F62C', '1F925'],
+      ['1F60C', '1F614', '1F62A', '1F924', '1F634'],
     ];
-
     var mathSymbols = ['2200', '2202', '2203', '2205', '2208', '2209', '220B', '220F', '2211', '2212', '2217', '221A',
       '221D', '221E', '2220', '2227', '2228', '2229', '222A', '222B', '2234', '223C', '2245', '2248', '2260', '2264',
       '2265', '2282', '2283', '2284', '2286', '2287'
     ];
+    var greek = [
+      ['0391', '0392', '0393', '0394', '0395', '0396', '0397', '0398', '0399', '039A', '039B', '039C', '039D',
+        '039E', '039F', '03A0', '03A1', '03A3', '03A4', '03A5', '03A6', '03A7', '03A8', '03A9'
+      ],
+      ['03B1', '03B2', '03B3', '03B4', '03B5', '03B6', '03B7', '03B8', '03B9', '03BA', '03BB', '03BC', '03BD',
+        '03BE', '03BF', '03C0', '03C1', '03C3', '03C4', '03C5', '03C6', '03C7', '03C8', '03C9'
+      ]
+    ];
 
-    function splChars(array, parent) {
-      array.forEach(char => {
-        let icon = document.createElement('button');
-        icon.innerHTML = '&#x' + char + ';';
-        icon.value = '&#x' + char + ';';
-        icon.className = 'spl-char';
-        parent.appendChild(icon);
-        bindEvent(icon, 'click', function (e) {
-          let spanSplChar = document.createElement('span');
-          spanSplChar.className = 'span-splchar';
-          spanSplChar.innerHTML = icon.value;
-          $('editContent').appendChild(spanSplChar);
-          sendMessage($('editContent').innerHTML);
-          caretAtEnd();
-          toggleMenu(parent);
-        });
-      });
+    function splChars( array, parent ) {
+      array.forEach( char => {
+        if ( Array.isArray( char ) ) {
+          let subDiv = document.createElement( 'div' );
+          char.forEach( subGroup => {
+            let icon = document.createElement( 'span' );
+            icon.innerHTML = '&#x' + subGroup + ';';
+            icon.value = '&#x' + subGroup + ';';
+            icon.className = 'spl-char';
+            subDiv.appendChild( icon );
+            bindEvent( icon, 'click', function ( e ) {
+              let spanSplChar = document.createElement( 'span' );
+              spanSplChar.className = 'span-splchar';
+              spanSplChar.innerHTML = icon.value;
+              spanSplChar.style.fontFamily = 'Nunito';
+              $( 'editContent' ).appendChild( spanSplChar );
+              sendMessage( $( 'editContent' ).innerHTML );
+              caretAtEnd();
+            } );
+          } );
+          parent.appendChild( subDiv );
+        } else {
+          let icon = document.createElement( 'span' );
+          icon.innerHTML = '&#x' + char + ';';
+          icon.value = '&#x' + char + ';';
+          icon.className = 'spl-char';
+          parent.appendChild( icon );
+          bindEvent( icon, 'click', function ( e ) {
+            let spanSplChar = document.createElement( 'span' );
+            spanSplChar.className = 'span-splchar';
+            spanSplChar.innerHTML = icon.value;
+            $( 'editContent' ).appendChild( spanSplChar );
+            sendMessage( $( 'editContent' ).innerHTML );
+            caretAtEnd();
+          } );
+        }
+      } );
     }
+    splChars( emojiFaceSmiling, $( 'emojis' ) );
+    splChars( mathSymbols, $( 'maths' ) );
+    splChars( greek, $( 'greek' ) );
 
-    splChars(emojiFaceSmiling, $('emojis'));
-    splChars(mathSymbols, $('maths'));
-
-    function caretAtEnd() {
-      let l = editContent.childNodes.length;
-      l > 0 ? document.getSelection().collapse(editContent, l) : '';
-      window.setTimeout(function () {
-        let l = editContent.childNodes.length;
-        l > 0 ? document.getSelection().collapse(editContent, l) : '';
-      }, 1);
-    }
-
-    function toggleMenu(element) {
-      if (element.getAttribute('hidden') == "true") {
-        let navButtons = document.getElementsByClassName('nav-button');
-        for (let i = 0; i < navButtons.length; i++) {
-          if (navButtons[i].getAttribute('hidden') == "false") {
-            navButtons[i].setAttribute('hidden', 'true');
+    function toggleMenu( element ) {
+      if ( element.getAttribute( 'hidden' ) == "true" ) {
+        let navButtons = document.getElementsByClassName( 'nav-button' );
+        for ( let i = 0; i < navButtons.length; i++ ) {
+          if ( navButtons[i].getAttribute( 'hidden' ) == "false" ) {
+            navButtons[i].setAttribute( 'hidden', 'true' );
             navButtons[i].style.display = 'none';
+            navButtons[i].parentNode.classList.contains( 'open' ) ? navButtons[i].parentNode.classList.remove( 'open' ) : '';
           }
         }
-        element.setAttribute('hidden', 'false');
+        element.setAttribute( 'hidden', 'false' );
         element.style.display = 'flex';
+        element.parentNode.classList.add( 'open' );
       } else {
-        element.setAttribute('hidden', 'true');
+        element.setAttribute( 'hidden', 'true' );
         element.style.display = 'none';
+        element.parentNode.classList.remove( 'open' );
       }
     }
 
-    bindEvent($('toggleEmojis'), 'click', function () {
-      toggleMenu($('emojis'))
-    });
+    function toggleButton( elements ) {
+      for ( var i in elements ) {
+        if ( elements[i].classList ) {
+          elements[i].classList.contains( 'clicked' ) ? elements[i].classList.remove( 'clicked' ) : '';
+        }
+      }
+    }
 
-    bindEvent($('toggleMath'), 'click', function () {
-      toggleMenu($('maths'))
-    });
+    bindEvent( $( 'toggleEmojis' ), 'click', function () {
+      toggleMenu( $( 'emojis' ) );
+    } );
+    bindEvent( $( 'toggleMath' ), 'click', function () {
+      toggleMenu( $( 'maths' ) );
+    } );
+    bindEvent( $( 'toggleGreek' ), 'click', function () {
+      toggleMenu( $( 'greek' ) );
+    } );
+    bindEvent( $( 'bold' ), 'click', function () {
+      editCommand( 'bold' );
+      $( 'bold' ).classList.toggle( 'clicked' );
+    } );
+    bindEvent( $( 'italic' ), 'click', function () {
+      editCommand( 'italic' );
+      $( 'italic' ).classList.toggle( 'clicked' );
+    } );
+    bindEvent( $( 'underline' ), 'click', function () {
+      editCommand( 'underline' );
+      $( 'underline' ).classList.toggle( 'clicked' );
+    } );
+    var liste = document.getElementsByClassName( 'liste' );
+    bindEvent( $( 'unorderedList' ), 'click', function () {
+      editCommand( 'insertUnorderedList' );
+      $( 'orderedList' ).classList.contains('clicked') ? $( 'orderedList' ).classList.remove('clicked') : '';
+      $( 'unorderedList' ).classList.toggle( 'clicked' );
+    } );
+    bindEvent( $( 'orderedList' ), 'click', function () {
+      editCommand( 'insertOrderedList' );
+      $( 'unorderedList' ).classList.contains('clicked') ? $( 'unorderedList' ).classList.remove('clicked') : '';
+      $( 'orderedList' ).classList.toggle( 'clicked' );
+    } );
+    var indice = document.getElementsByClassName( 'indice' );
+    bindEvent( $( 'superscript' ), 'click', function () {
+      editCommand( 'superscript' );
+      $( 'subscript' ).classList.contains('clicked') ? $( 'subscript' ).classList.remove('clicked') : '';
+      $( 'superscript' ).classList.toggle( 'clicked' );
+    } );
+    bindEvent( $( 'subscript' ), 'click', function () {
+      editCommand( 'subscript' );
+      $( 'superscript' ).classList.contains('clicked') ? $( 'superscript' ).classList.remove('clicked') : '';
+      $( 'subscript' ).classList.toggle( 'clicked' );
+    } );
+    var align = document.getElementsByClassName( 'align' );
+    bindEvent( $( 'left' ), 'click', function () {
+      editCommand( 'justifyLeft' );
+      toggleButton(align);
+      $( 'left' ).classList.toggle( 'clicked' );
+    } );
+    bindEvent( $( 'center' ), 'click', function () {
+      editCommand( 'justifyCenter' );
+      toggleButton(align);
+      $( 'center' ).classList.toggle( 'clicked' );
+    } );
+    bindEvent( $( 'right' ), 'click', function () {
+      editCommand( 'justifyRight' );
+      toggleButton(align);
+      $( 'right' ).classList.toggle( 'clicked' );
+    } );
+    bindEvent( $( 'justify' ), 'click', function () {
+      editCommand( 'justifyFull' );
+      toggleButton(align);
+      $( 'justify' ).classList.toggle( 'clicked' );
+    } );
 
-    bindEvent($('bold'), 'click', function () {
-      editCommand('bold');
-    });
+    bindEvent( $( 'editContent' ), 'input', function () {
+      sendMessage( $( 'editContent' ).innerHTML );
+      let select = window.getSelection();
+      let deco = document.getElementsByClassName( 'deco' );
+      let indice = document.getElementsByClassName( 'indice' );
+      for ( let i in deco ) {
+        if ( deco[i].classList ) {
+          if ( select.focusNode.parentElement == $( 'editContent' ) && deco[i].classList.contains( 'clicked' ) ) {
+            deco[i].classList.remove( 'clicked' );
+          }
+        }
+      }
+      for ( let i in indice ) {
+        if ( indice[i].classList ) {
+          if ( select.focusNode.parentElement == $( 'editContent' ) && indice[i].classList.contains( 'clicked' ) ) {
+            indice[i].classList.remove( 'clicked' );
+          }
+        }
+      }
+    } );
 
-    bindEvent($('italic'), 'click', function () {
-      editCommand('italic');
-    });
-
-    bindEvent($('underline'), 'click', function () {
-      editCommand('underline');
-    });
-
-    bindEvent($('left'), 'click', function () {
-      editCommand('justifyLeft');
-    });
-
-    bindEvent($('center'), 'click', function () {
-      editCommand('justifyCenter');
-    });
-
-    bindEvent($('right'), 'click', function () {
-      editCommand('justifyRight');
-    });
-
-    bindEvent($('editContent'), 'input', function (e) {
-      sendMessage(editContent.innerHTML);
-    });
+    bindEvent( window, 'message', function ( e ) {
+      $( 'editContent' ).innerHTML = e.data;
+      caretAtEnd();
+    } );
   </script>
 </body>
 

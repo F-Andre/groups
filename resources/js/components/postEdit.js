@@ -28,6 +28,7 @@ function ArticleText(props) {
       rows="5"
       value={valueContenu}
       onChange={props.onChange}
+      hidden
     />
   );
 }
@@ -116,7 +117,7 @@ export default class ArticleForm extends Component {
         <div className="form-group">
           <label htmlFor="contenu">Ecrivez votre texte:</label>
           <ArticleText value={this.state.textValue} onChange={this.handleChangeText} />
-          <iframe id="editor_iframe" height="500" width="800" src="/editor_iframe.html"></iframe>
+          <iframe id="editor_iframe" className="postIframe" src="/editor_iframe.html"></iframe>
           <div className="invalid-feedback">Ecrivez un texte d'au moins 10 caractères.</div>
         </div>
         <div id="divImage" className="form-group">
