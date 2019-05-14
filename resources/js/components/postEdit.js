@@ -59,7 +59,7 @@ export default class ArticleForm extends Component {
           textValue: e.data,
           modified: true
         })
-      }, 500)
+      }, 800)
     })
   }
 
