@@ -46,21 +46,19 @@ export default class ArticleForm extends Component {
     }
     this.handleChangeTitre = this.handleChangeTitre.bind(this);
     this.handleChangeText = this.handleChangeText.bind(this);
+    this.handleLoad = this.handleLoad.bind(this);
     this.handleChangeImage = this.handleChangeImage.bind(this);
     this.handleDeleteImage = this.handleDeleteImage.bind(this);
     this.fileInput = React.createRef();
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      document.querySelector('#editor_iframe').contentWindow.postMessage(contenu, '*');
-      window.addEventListener('message', (e) => {
-        this.setState({
-          textValue: e.data,
-          modified: true
-        })
+    window.addEventListener('message', (e) => {
+      this.setState({
+        textValue: e.data,
+        modified: true
       })
-    }, 500)
+    })
   }
 
   handleChangeTitre(event) {
@@ -75,6 +73,10 @@ export default class ArticleForm extends Component {
       textValue: event.target.value,
       modified: true
     })
+  }
+
+  handleLoad() {
+    document.querySelector('#editor_iframe').contentWindow.postMessage(contenu, '*');
   }
 
   handleChangeImage() {
@@ -117,7 +119,7 @@ export default class ArticleForm extends Component {
         <div className="form-group">
           <label htmlFor="contenu">Ecrivez votre texte:</label>
           <ArticleText value={this.state.textValue} onChange={this.handleChangeText} />
-          <iframe id="editor_iframe" className="postIframe" src="/editor_iframe.html"></iframe>
+          <iframe id="editor_iframe" className="postIframe" src="/editor_iframe.html" onLoad={this.handleLoad}></iframe>
           <div className="invalid-feedback">Ecrivez un texte d'au moins 10 caractères.</div>
         </div>
         <div id="divImage" className="form-group">

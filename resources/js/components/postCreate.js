@@ -22,7 +22,6 @@ function ArticleText(props) {
         <textarea
             name="contenu"
             id="contenu"
-            rows="5"
             value={props.value}
             onChange={props.onChange}
             className={contenuClass}
@@ -48,13 +47,11 @@ export default class ArticleForm extends Component {
     }
 
     componentDidMount() {
-        setTimeout(() => {
-          window.addEventListener('message', (e) => {
-            this.setState({
-              textValue: e.data,
-              modified: true
-            })
-          }, 500)
+        window.addEventListener('message', (e) => {
+          this.setState({
+            textValue: e.data,
+            modified: true
+          })
         })
       }
 
