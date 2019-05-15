@@ -45,11 +45,12 @@
       display: flex;
       justify-content: space-between;
       text-align: center;
-      line-height: 30px;
+      line-height: 35px;
       font-size: 1.3rem;
     }
 
     .spl-chars-button {
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
       width: 32px;
       height: 30px;
     }
@@ -101,6 +102,7 @@
     }
 
     .spl-char {
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
       width: 30px;
       height: 30px;
       align-self: center;
@@ -233,7 +235,6 @@
               let spanSplChar = document.createElement('span');
               spanSplChar.className = 'span-splchar';
               spanSplChar.innerHTML = icon.value;
-              spanSplChar.style.fontFamily = 'Nunito';
               $('editContent').appendChild(spanSplChar);
               sendMessage($('editContent').innerHTML);
               caretAtEnd();
