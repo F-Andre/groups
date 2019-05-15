@@ -232,10 +232,7 @@
             icon.className = 'spl-char';
             subDiv.appendChild(icon);
             bindEvent(icon, 'click', function (e) {
-              let spanSplChar = document.createElement('span');
-              spanSplChar.className = 'span-splchar';
-              spanSplChar.innerHTML = icon.value;
-              $('editContent').appendChild(spanSplChar);
+              $('editContent').innerHTML += icon.value;
               sendMessage($('editContent').innerHTML);
               caretAtEnd();
             });
@@ -248,10 +245,7 @@
           icon.className = 'spl-char';
           parent.appendChild(icon);
           bindEvent(icon, 'click', function (e) {
-            let spanSplChar = document.createElement('span');
-            spanSplChar.className = 'span-splchar';
-            spanSplChar.innerHTML = icon.value;
-            $('editContent').appendChild(spanSplChar);
+            $('editContent').innerHTML += icon.value;
             sendMessage($('editContent').innerHTML);
             caretAtEnd();
           });
