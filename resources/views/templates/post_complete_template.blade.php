@@ -64,17 +64,17 @@
   <div class="card-footer">
     @foreach ($post->comments()->orderBy('created_at', 'desc')->get() as $comment)
     <div class="comment">
-      <img class="avatar avatar-cmt"
-        src="{{ Storage::url(DB::table('users')->where('id', $comment->user_id)->first()->avatar) }}" />
-      <small class="d-block col-8 float-right text-right">Commentaire de {{ $comment->user->name }}
-        @if (time() - $comment->created_at->timestamp < 172800)
-          {{ Date::parse($comment->created_at)->diffForHumans() }}
-        @else
-          le {{ Date::parse($comment->created_at)->format('l d F Y') }} à {{ Date::parse($comment->created_at)->format('H:i') }}
-        @endif
-      </small>
-      <hr>
-      <p>{!! $comment->comment !!}</p>
+      <div class="comment-head d-flex border-bottom">
+      <img class="avatar avatar-cmt" src="{{ Storage::url(DB::table('users')->where('id', $comment->user_id)->first()->avatar) }}" />
+        <small class="d-block col-lg-8 float-right text-right">Commentaire de {{ $comment->user->name }}
+          @if (time() - $comment->created_at->timestamp < 172800)
+            {{ Date::parse($comment->created_at)->diffForHumans() }}
+          @else
+            le {{ Date::parse($comment->created_at)->format('l d F Y') }} à {{ Date::parse($comment->created_at)->format('H:i') }}
+          @endif
+        </small>
+      </div>
+      <div class="my-3">{!! $comment->comment !!}</div>
       <div class="text-right">
         @auth
           @if (Auth::user()->admin or Auth::user()->id == $comment->user->id)
