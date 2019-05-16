@@ -32,7 +32,7 @@
     </div>
   </div>
   <div class="card-body">
-    <p class="card-text">{!! $post->contenu !!}</p>
+    <div class="card-text">{!! $post->contenu !!}</div>
     @if (strlen($post->image) > 1 && Storage::exists($post->image))
       <div class="mb-4 text-center">
         <img class="image-blog" src="{!! Storage::url($post->image) !!}">
