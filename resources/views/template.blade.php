@@ -13,6 +13,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://twemoji.maxcdn.com/2/twemoji.min.js?12.0.0"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -87,6 +88,6 @@
 
 
 	<!-- Optional JavaScript -->
-
+    <script>twemoji.parse(document.body);</script>
 </body>
 </html>
