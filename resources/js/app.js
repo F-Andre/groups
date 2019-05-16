@@ -16,5 +16,6 @@ require('./components/loadModal');
 require('./components/postCreate');
 require('./components/postEdit');
 require('./components/userEdit');
+require('./components/commentCreate');
 
 

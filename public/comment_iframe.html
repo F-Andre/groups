@@ -15,17 +15,14 @@
     }
 
     #editContent {
-      color: #495057;
-      font-size: 1.2rem;
-      position: fixed;
-      top: 33px;
-      left: 0;
-      height: calc(100vh - 53px);
-      width: calc(100vw - 20px);
-      border-bottom-right-radius: 5px;
-      border-bottom-left-radius: 5px;
-      padding: 10px;
-    }
+        color: #495057;
+        font-size: 1.2rem;
+        height: calc(100vh - 53px);
+        width: calc(100vw - 20px);
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        padding: 5px;
+      }
 
     #editContent {
       z-index: 900;
@@ -35,8 +32,8 @@
       display: flex;
       justify-content: start;
       height: 31px;
-      border-bottom: 2px solid gainsboro;
-      padding-top: 1px;
+      border-top: 2px solid gainsboro;
+      padding-top: 4px;
     }
 
     nav .emoji {
@@ -62,18 +59,6 @@
       height: 30px;
     }
 
-    .mef {
-      font-size: 1.1rem;
-      background-color: white;
-      border: none;
-      border-radius: 3px;
-      height: 30px;
-      width: 32px;
-      padding: 0;
-      margin-left: 1px;
-    }
-
-    .mef:hover,
     .spl-chars-button:hover {
       cursor: pointer;
       background-color: gainsboro;
@@ -89,10 +74,11 @@
       background-color: rgba(245, 245, 245, 0.7);
       display: none;
       position: fixed;
-      top: 33px;
-      left: calc(100vw - 410px);
+      top: calc(30vh - 33px);
+      left: 1px;
       width: 70vw !important;
-      max-height: 70vh;
+      overflow-y: scroll;
+      max-height: 60vh;
       flex-wrap: wrap;
       z-index: 950;
     }
@@ -147,30 +133,8 @@
 </head>
 
 <body>
+  <div id="editContent" contenteditable="true"></div>
   <nav>
-    <div id="text-form" class="group-button">
-      <button id="bold" class="mef deco" title="Gras"><b>G</b></button>
-      <button id="italic" class="mef deco" title="Italique"><i>I</i></button>
-      <button id="underline" class="mef deco" title="Souligné"><u>S</u></button>
-    </div>
-    <span class="separator"></span>
-    <div id="text-position" class="group-button">
-      <button id="left" class="mef align clicked" title="Texte à gauche"><i class="fas fa-align-left"></i></button>
-      <button id="center" class="mef align" title="Texte centré"><i class="fas fa-align-center"></i></button>
-      <button id="right" class="mef align" title="Texte à droite"><i class="fas fa-align-right"></i></button>
-      <button id="justify" class="mef align" title="Texte justifié"><i class="fas fa-align-justify"></i></button>
-    </div>
-    <span class="separator"></span>
-    <div id="text-list" class="group-button">
-      <button id="unorderedList" class="mef liste" title="Liste à puces"><i class="fas fa-list-ul"></i></button>
-      <button id="orderedList" class="mef liste" title="Liste ordonnée"><i class="fas fa-list-ol"></i></button>
-    </div>
-    <span class="separator"></span>
-    <div id="text-indice" class="group-button">
-      <button id="superscript" class="mef indice" title="Exposant"><i class="fas fa-superscript"></i></button>
-      <button id="subscript" class="mef indice" title="Subscription"><i class="fas fa-subscript"></i></button>
-    </div>
-    <span class="separator"></span>
     <div id="special-chars" class="group-button">
       <div id="toggleEmojis" class="spl-chars-button" title="Emojis">
         <span>&#x1F642;</span>
@@ -186,7 +150,6 @@
       </div>
     </div>
   </nav>
-  <div id="editContent" contenteditable="true"></div>
   <script>
     // addEventListener support for IE8
     function bindEvent( element, eventName, eventHandler ) {
@@ -313,61 +276,6 @@
     bindEvent( $( 'toggleGreek' ), 'click', function () {
       toggleMenu( $( 'greek' ) );
     } );
-    bindEvent( $( 'bold' ), 'click', function () {
-      editCommand( 'bold' );
-      $( 'bold' ).classList.toggle( 'clicked' );
-    } );
-    bindEvent( $( 'italic' ), 'click', function () {
-      editCommand( 'italic' );
-      $( 'italic' ).classList.toggle( 'clicked' );
-    } );
-    bindEvent( $( 'underline' ), 'click', function () {
-      editCommand( 'underline' );
-      $( 'underline' ).classList.toggle( 'clicked' );
-    } );
-    var liste = document.getElementsByClassName( 'liste' );
-    bindEvent( $( 'unorderedList' ), 'click', function () {
-      editCommand( 'insertUnorderedList' );
-      $( 'orderedList' ).classList.contains( 'clicked' ) ? $( 'orderedList' ).classList.remove( 'clicked' ) : '';
-      $( 'unorderedList' ).classList.toggle( 'clicked' );
-    } );
-    bindEvent( $( 'orderedList' ), 'click', function () {
-      editCommand( 'insertOrderedList' );
-      $( 'unorderedList' ).classList.contains( 'clicked' ) ? $( 'unorderedList' ).classList.remove( 'clicked' ) : '';
-      $( 'orderedList' ).classList.toggle( 'clicked' );
-    } );
-    var indice = document.getElementsByClassName( 'indice' );
-    bindEvent( $( 'superscript' ), 'click', function () {
-      editCommand( 'superscript' );
-      $( 'subscript' ).classList.contains( 'clicked' ) ? $( 'subscript' ).classList.remove( 'clicked' ) : '';
-      $( 'superscript' ).classList.toggle( 'clicked' );
-    } );
-    bindEvent( $( 'subscript' ), 'click', function () {
-      editCommand( 'subscript' );
-      $( 'superscript' ).classList.contains( 'clicked' ) ? $( 'superscript' ).classList.remove( 'clicked' ) : '';
-      $( 'subscript' ).classList.toggle( 'clicked' );
-    } );
-    var align = document.getElementsByClassName( 'align' );
-    bindEvent( $( 'left' ), 'click', function () {
-      editCommand( 'justifyLeft' );
-      toggleButton( align );
-      $( 'left' ).classList.toggle( 'clicked' );
-    } );
-    bindEvent( $( 'center' ), 'click', function () {
-      editCommand( 'justifyCenter' );
-      toggleButton( align );
-      $( 'center' ).classList.toggle( 'clicked' );
-    } );
-    bindEvent( $( 'right' ), 'click', function () {
-      editCommand( 'justifyRight' );
-      toggleButton( align );
-      $( 'right' ).classList.toggle( 'clicked' );
-    } );
-    bindEvent( $( 'justify' ), 'click', function () {
-      editCommand( 'justifyFull' );
-      toggleButton( align );
-      $( 'justify' ).classList.toggle( 'clicked' );
-    } );
 
     bindEvent( $( 'editContent' ), 'click', function () {
       let splChars = document.getElementsByClassName( 'spl-chars-div' );
@@ -386,25 +294,9 @@
     bindEvent( $( 'editContent' ), 'input', function () {
       sendMessage( $( 'editContent' ).innerHTML );
       let select = window.getSelection();
-      let deco = document.getElementsByClassName( 'deco' );
-      let indice = document.getElementsByClassName( 'indice' );
       if ( select.focusNode.innerHTML == '' ) {
         if ( select.focusNode !== $( 'editContent' ) ) {
           select.focusNode.parentElement.removeChild( select.focusNode );
-        }
-      }
-      for ( let i in deco ) {
-        if ( deco[i].classList ) {
-          if ( select.focusNode.parentElement == $( 'editContent' ) && deco[i].classList.contains( 'clicked' ) ) {
-            deco[i].classList.remove( 'clicked' );
-          }
-        }
-      }
-      for ( let i in indice ) {
-        if ( indice[i].classList ) {
-          if ( select.focusNode.parentElement == $( 'editContent' ) && indice[i].classList.contains( 'clicked' ) ) {
-            indice[i].classList.remove( 'clicked' );
-          }
         }
       }
     } );

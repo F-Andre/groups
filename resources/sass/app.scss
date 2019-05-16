@@ -166,6 +166,13 @@ aside a {
     border-radius: 5px;
 }
 
-.span-splchar {
-    font-family: "Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji, "Segoe UI Symbol", "Android Emoji", EmojiSymbols, "EmojiOne Mozilla" !important;
+.commentIframe {
+    width: 100%;
+    border: 2px solid gainsboro;
+    border-radius: 5px;
+}
+
+.card-text .emoji, .comment .emoji {
+    height: 1.2rem;
+    vertical-align: middle;
 }

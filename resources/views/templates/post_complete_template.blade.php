@@ -74,7 +74,7 @@
         @endif
       </small>
       <hr>
-      <p>{{ $comment->comment }}</p>
+      <p>{!! $comment->comment !!}</p>
       <div class="text-right">
         @auth
           @if (Auth::user()->admin or Auth::user()->id == $comment->user->id)
@@ -91,11 +91,7 @@
     @auth
     <form method="POST" action="{{ route('comment.store', ['post_id' => $post->id, 'user_id' => Auth::user()->id]) }}">
       @csrf
-      <div class="form-group mt-2">
-        <label for="comment">Ajouter un commentaire</label>
-        <textarea class="form-control" name="comment" id="comment" rows="2"></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary btn-sm float-right">Envoyer</button>
+      <div id="commentForm"></div>
     </form>
     @endauth
   </div>
