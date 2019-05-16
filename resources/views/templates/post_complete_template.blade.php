@@ -64,9 +64,9 @@
   <div class="card-footer">
     @foreach ($post->comments()->orderBy('created_at', 'desc')->get() as $comment)
     <div class="comment">
-      <div class="comment-head d-flex border-bottom">
-      <img class="avatar avatar-cmt" src="{{ Storage::url(DB::table('users')->where('id', $comment->user_id)->first()->avatar) }}" />
-        <small class="d-block col-lg-8 float-right text-right">Commentaire de {{ $comment->user->name }}
+      <div class="comment-head d-flex justify-content-between border-bottom">
+        <img class="avatar avatar-cmt mr-3" src="{{ Storage::url(DB::table('users')->where('id', $comment->user_id)->first()->avatar) }}" />
+        <small class="align-self-end">Commentaire de {{ $comment->user->name }}
           @if (time() - $comment->created_at->timestamp < 172800)
             {{ Date::parse($comment->created_at)->diffForHumans() }}
           @else
