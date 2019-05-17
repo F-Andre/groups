@@ -62,7 +62,8 @@
     @endif
   </div>
   <div class="card-footer">
-    @foreach ($post->comments()->orderBy('created_at', 'desc')->get() as $comment)
+    <?php $comments = $post->comments()->orderBy('created_at', 'desc')->get(); ?>
+    @foreach ($comments as $comment)
     <div class="comment">
       <div class="comment-head d-flex justify-content-between border-bottom">
         <img class="avatar avatar-cmt mr-3" src="{{ Storage::url(DB::table('users')->where('id', $comment->user_id)->first()->avatar) }}" />
@@ -91,7 +92,7 @@
     @auth
     <form method="POST" action="{{ route('comment.store', ['post_id' => $post->id, 'user_id' => Auth::user()->id]) }}">
       @csrf
-      <div id="commentForm"></div>
+      <div class="commentForm"></div>
     </form>
     @endauth
   </div>

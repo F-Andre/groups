@@ -60,6 +60,9 @@ export default class CommentForm extends Component {
   }
 }
 
-if ( document.getElementById( 'commentForm' ) ) {
-  ReactDOM.render( <CommentForm />, document.getElementById( 'commentForm' ) );
+if ( document.getElementsByClassName( 'commentForm' ) ) {
+  const form = document.getElementsByClassName( 'commentForm' );
+  for (let i in form) {
+    form[i].nodeType == 1 ? ReactDOM.render( <CommentForm />, form[i] ) : '';
+  }
 }

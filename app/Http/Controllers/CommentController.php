@@ -56,7 +56,7 @@ class CommentController extends Controller
         $inputs = array_merge($request->all());
         $this->comment->store($inputs);
 
-        return redirect(route('blog.index'))->withOk('Le commentaire est enregistré.');
+        return redirect(route('blog.index', '#'.$post->id));
     }
 
     /**
