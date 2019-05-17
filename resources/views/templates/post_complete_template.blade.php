@@ -2,7 +2,7 @@
   <div class="card-header">
     <div class="d-flex flex-row justify-content-between">
       <div>
-        <p class="h5">{{ $post->titre }}</p>
+        <p class="h3">{{ $post->titre }}</p>
         <small>
           Par <b>{{ $post->user->name }}</b>
           @if (time() - $post->created_at->timestamp < 172800) {{ Date::parse($post->created_at)->diffForHumans() }}
@@ -63,18 +63,25 @@
     @endif
   </div>
   <div class="card-footer">
+    <p><b>Commentaires:</b></p>
     <?php $comments = $post->comments()->orderBy('created_at', 'desc')->get(); ?>
     @foreach ($comments as $comment)
     <div class="comment">
       <div class="comment-head d-flex justify-content-between border-bottom">
         <img class="avatar avatar-cmt mr-3"
           src="{{ Storage::url(DB::table('users')->where('id', $comment->user_id)->first()->avatar) }}" />
-        <small class="align-self-end">Commentaire de {{ $comment->user->name }}
+        <small class="align-self-end">
+          <b>{{ $comment->user->name }}</b>
           @if (time() - $comment->created_at->timestamp < 172800)
-            {{ Date::parse($comment->created_at)->diffForHumans() }} @else le
-            {{ Date::parse($comment->created_at)->format('l d F Y') }} à
-            {{ Date::parse($comment->created_at)->format('H:i') }} @endif </small> </div> <div class="my-3">{!!
-            $comment->comment !!}</div>
+            {{ Date::parse($comment->created_at)->diffForHumans() }}
+          @else
+            le {{ Date::parse($comment->created_at)->format('l d F Y') }} à {{ Date::parse($comment->created_at)->format('H:i') }}
+          @endif
+        </small>
+      </div>
+      <div class="my-3">
+        {!! $comment->comment !!}
+      </div>
       <div class="text-right">
         @auth
         @if (Auth::user()->admin or Auth::user()->id == $comment->user->id)
