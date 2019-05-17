@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { isString } from 'util';
 
 function CommentText ( props ) {
   const contenuClass = 'form-control'
@@ -28,8 +29,9 @@ export default class CommentForm extends Component {
 
   componentDidMount () {
     window.addEventListener( 'message', ( e ) => {
+      const text = isString(e.data) ? e.data : '';
       this.setState( {
-        commentValue: e.data,
+        commentValue: text,
         modified: true
       } )
     } )

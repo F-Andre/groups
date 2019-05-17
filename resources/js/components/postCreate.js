@@ -48,8 +48,9 @@ export default class ArticleForm extends Component {
 
   componentDidMount () {
     window.addEventListener( 'message', ( e ) => {
+      const text = isString(e.data) ? e.data : '';
       this.setState( {
-        textValue: e.data,
+        textValue: text,
         modified: true
       } )
     } )

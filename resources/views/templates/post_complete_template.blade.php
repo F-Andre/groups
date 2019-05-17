@@ -1,4 +1,4 @@
-<div class="card" id="{{ $post->id }}">
+<div class="card post" id="{{ $post->id }}">
   <div class="card-header">
     <div class="d-flex flex-row justify-content-between">
       <div>
@@ -46,7 +46,7 @@
             id="dropdownPost{{ $post->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-ellipsis-h"></i>
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownPost{{ $post->id }}">
+          <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownPost{{ $post->id }}">
             @if (Auth::user()->id == $post->user->id)
             <a name="edit" id="edit" class="dropdown-item" href="{{ route('blog.edit', ['id' => $post->id]) }}"
               role="button">Editer l'article</a>
@@ -90,7 +90,7 @@
             id="dropdownComment{{ $comment->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-ellipsis-h"></i>
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownComment{{ $comment->id }}">
+          <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownComment{{ $comment->id }}">
             <form method="POST" action="{{ route('comment.destroy', ['id' => $comment->id]) }}">
               @method('DELETE')
               @csrf
