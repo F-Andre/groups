@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class WelcomeController extends Controller
 {
-    public function index()
-    {
-        if (Auth::check()) {
-            return redirect('blog');
-        }
-
-        return view('welcome');
+  public function index()
+  {
+    if (Auth::check()) {
+      return redirect('blog');
     }
+
+    return view('welcome');
+  }
 }

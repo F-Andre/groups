@@ -18,16 +18,12 @@
     opacity: 0;
 }
 
-#btnDeleteImage {
+#btnDeleteImage, #btnDeleteAvatar:hover {
     color: white;
 }
 
 #btnDeleteAvatar {
     color: #e3342f;
-}
-
-#btnDeleteAvatar:hover {
-    color: white;
 }
 
 #imageDeleted,
@@ -65,10 +61,6 @@
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 5px;
-}
-
-.comment hr {
-    margin: 5px;
 }
 
 .image-blog {
@@ -175,4 +167,8 @@ aside a {
 .card-text .emoji, .comment .emoji {
     height: 1.2rem;
     vertical-align: middle;
+}
+
+.edit-button {
+  border: none !important;
 }

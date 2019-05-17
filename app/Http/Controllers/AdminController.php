@@ -142,18 +142,18 @@ class AdminController extends Controller
   public function searchResult(SearchRequest $result)
   {
     if ($this->user->search($result->user) != false) {
-        $user = $this->user->search($result->user);
+      $user = $this->user->search($result->user);
 
-        if ($user instanceof Collection) {
-            $users = $user;
-            $links = null;
+      if ($user instanceof Collection) {
+        $users = $user;
+        $links = null;
 
-            return view('admin.admin_home', compact('users', 'links'));
-          }
-
-        $posts = $this->user->nbrePosts($user->id);
-        return view('admin.admin_user', compact('user', 'posts'));
+        return view('admin.admin_home', compact('users', 'links'));
       }
+
+      $posts = $this->user->nbrePosts($user->id);
+      return view('admin.admin_user', compact('user', 'posts'));
+    }
 
     return redirect(route('admin.index'))->withOk("Le terme recherché n'existe pas: " . $result->user);
   }

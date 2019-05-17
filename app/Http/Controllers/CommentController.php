@@ -11,98 +11,98 @@ use App\Notifications\CommentNotification;
 class CommentController extends Controller
 {
 
-    protected $comment;
+  protected $comment;
 
-    public function __construct(CommentRepository $comment)
-    {
-        $this->middleware('auth');
-        $this->comment = $comment;
-    }
+  public function __construct(CommentRepository $comment)
+  {
+    $this->middleware('auth');
+    $this->comment = $comment;
+  }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function index()
+  {
+    //
+  }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+  /**
+   * Show the form for creating a new resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function create()
+  {
+    //
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $post = Post::where('id', $request->post_id)->first();
-        $poster = User::where('id', $post->user_id)->first();
-        $commenter = User::where('id', $request->user_id)->first();
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function store(Request $request)
+  {
+    $post = Post::where('id', $request->post_id)->first();
+    $poster = User::where('id', $post->user_id)->first();
+    $commenter = User::where('id', $request->user_id)->first();
 
-        $poster->notify(new CommentNotification($commenter, $post));
+    $poster->notify(new CommentNotification($commenter, $post));
 
-        $inputs = array_merge($request->all());
-        $this->comment->store($inputs);
+    $inputs = array_merge($request->all());
+    $this->comment->store($inputs);
 
-        return redirect(route('blog.index', '#'.$post->id));
-    }
+    return redirect(route('blog.index', '#' . $post->id));
+  }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+  /**
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function show($id)
+  {
+    //
+  }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function edit($id)
+  {
+    //
+  }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function update(Request $request, $id)
+  {
+    //
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $this->comment->destroy($id);
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function destroy($id)
+  {
+    $this->comment->destroy($id);
 
-        return redirect()->back()->withOk('Le commentaire a bien été effacé');
-    }
+    return redirect()->back()->withOk('Le commentaire a bien été effacé');
+  }
 }
