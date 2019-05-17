@@ -44,7 +44,7 @@ export default class CommentForm extends Component {
   }
 
   render () {
-    const disabledState = this.state.commentValue.length <= 10 ? true : false
+    const disabledState = this.state.commentValue.length <= 3 ? true : false
     const submitClass = !disabledState ? "btn btn-primary float-right" : "btn btn-secondary float-right disabled"
 
     return (
