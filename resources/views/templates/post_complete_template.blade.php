@@ -2,7 +2,7 @@
   <div class="card-header">
     <div class="d-flex flex-row justify-content-between">
       <div>
-        <p class="h3">{{ $post->titre }}</p>
+        <p class="h4">{{ $post->titre }}</p>
         <small>
           Par <b>{{ $post->user->name }}</b>
           @if (time() - $post->created_at->timestamp < 172800) {{ Date::parse($post->created_at)->diffForHumans() }}

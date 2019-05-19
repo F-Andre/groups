@@ -2,7 +2,7 @@
   <div class="card-header">
     <div class="d-flex flex-row justify-content-between">
       <div>
-        <p class="h5">{{ $post->titre }}</p>
+        <p class="h4">{{ $post->titre }}</p>
       </div>
     </div>
   </div>

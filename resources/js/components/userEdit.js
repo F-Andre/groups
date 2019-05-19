@@ -6,7 +6,7 @@ function Name ( props ) {
   return (
     <input
       type="text"
-      className="form-control col-6"
+      className="form-control col-lg-6"
       name="name"
       id="name"
       value={props.value}
@@ -19,7 +19,7 @@ function Email ( props ) {
   return (
     <input
       type="email"
-      className="form-control col-6"
+      className="form-control col-lg-6"
       name="email"
       id="email"
       value={props.value}

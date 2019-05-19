@@ -9,10 +9,10 @@
     <div class="card-body">
       <script>
         var name = {!! json_encode($user->name) !!};
-                    var email = {!! json_encode($user->email) !!};
-                    var notifs = {!! json_encode($user->notifs) !!}
-                    var avatar = {!! json_encode($avatarUrl) !!}
-                    var defaultAvatar = {!! json_encode($defaultAvatar) !!}
+        var email = {!! json_encode($user->email) !!};
+        var notifs = {!! json_encode($user->notifs) !!};
+        var avatar = {!! json_encode($avatarUrl) !!};
+        var defaultAvatar = {!! json_encode($defaultAvatar) !!};
       </script>
       <form class="my-5" method="POST" action={{ route('user_page.update', ['id' => $user->id]) }}
         enctype="multipart/form-data">
@@ -20,35 +20,20 @@
         @csrf
         <div id="userEditForm"></div>
       </form>
-      <a href={{ route('user_page.index') }} type="button" class="btn btn-primary">
-        Annuler
-      </a>
-      <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#deleteAccount">
-        Supprimer votre compte
-      </button>
+      <div class="d-flex justify-content-sm-between justify-content-center flex-wrap">
+        <div class="mb-2 mr-1">
+          <a href={{ route('user_page.index') }} type="button" class="btn btn-primary">
+            Annuler
+          </a>
+        </div>
+        <div class="mb-2 ml-1">
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccount">
+            Supprimer votre compte
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </article>
-<div class="modal fade" id="deleteAccount" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Supprimer votre compte</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p class="h4 my-3">ATTENTION!<br>En supprimant votre compte, tous vos articles seront aussi supprimés!</p>
-        <form method="POST" action="{{ route('user_page.destroy', ['id' => $user->id]) }}">
-          @csrf
-          @method('DELETE')
-          <button type="submit" class="btn btn-danger float-right">Continuer</button>
-        </form>
-        <button type="button" class="btn btn-success" data-dismiss="modal">Annuler</button>
-      </div>
-    </div>
-  </div>
-</div>
+@include('templates/modal_delete_user')
 @endsection

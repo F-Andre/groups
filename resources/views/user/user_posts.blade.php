@@ -16,7 +16,7 @@
       <button type="submit" class="btn btn-primary">Trier</button>
     </div>
   </form>
-  <table class="table table-hover table-posts mb-5">
+  <table class="table table-hover table-responsive table-posts mb-5">
     <thead class="thead-dark">
       <tr>
         <th>Titre</th>
@@ -35,7 +35,7 @@
         </td>
         <td>{{ Date::parse($post->updated_at)->format('d M Y') }} à {{ Date::parse($post->updated_at)->format('H:i') }}
         </td>
-        <td>{{ DB::table('comments')->where('post_id', $post->id)->count() }}</td>
+        <td class="text-center">{{ DB::table('comments')->where('post_id', $post->id)->count() }}</td>
         <td>
           <form method="GET" action={{ route( 'user_page.show', ['id'=> $user->id]) }}>
             <input type="text" name="post-view" value={{ $post->id }} hidden>
@@ -43,7 +43,7 @@
           </form>
         </td>
         <td>
-          <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#deletePost">
+          <button type="button" class="btn btn-danger btn-sm float-right" data-toggle="modal" data-target="#deletePost">
             Supprimer l'article
           </button>
         </td>
