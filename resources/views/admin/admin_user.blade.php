@@ -2,12 +2,12 @@
 
 @section('section')
 <div class="card mt-4">
-  <div class="card-header d-flex justify-content-between">
+  <div class="card-header d-flex justify-content-between flex-wrap">
     <div>
       <h3>{{ $user->name }}</h3>
       <p class="card-title">{{ $user->email }}</p>
       @if ($user->admin == 1)
-      <p class="card-title">Administrateur</p>
+      <p class="card-title text-danger">Administrateur</p>
       @endif
     </div>
     <div>
@@ -30,10 +30,10 @@
         <option value="created-desc">Date de création (le + récent)</option>
         <option value="created-asc">Date de création (le + vieux)</option>
       </select>
-      <button type="submit" class="btn btn-primary">Trier</button>
+      <button type="submit" class="btn btn-primary btn-sm">Trier</button>
     </div>
   </form>
-  <table class="col-lg-11 mx-auto table table-striped table-inverse">
+  <table class="col-lg-11 mx-auto table table-striped table-inverse table-responsive text-nowrap">
     <thead class="thead-dark">
       <tr class="text-center">
         <th>Titre</th>
