@@ -35,7 +35,7 @@
         </td>
         <td>{{ Date::parse($post->updated_at)->format('d M Y') }} à {{ Date::parse($post->updated_at)->format('H:i') }}
         </td>
-        <td class="text-center">{{ DB::table('comments')->where('post_id', $post->id)->count() }}</td>
+        <td class="text-center">{{ $post->comments()->count() }}</td>
         <td>
           <form method="GET" action={{ route( 'user_page.show', ['id'=> $user->id]) }}>
             <input type="text" name="post-view" value={{ $post->id }} hidden>

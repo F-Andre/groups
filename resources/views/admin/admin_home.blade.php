@@ -13,12 +13,12 @@
     <table class="table table-striped table-inverse table-responsive">
         <thead class="thead-inverse">
             <tr>
-                <th>@sortablelink('name', 'Nom')</th>
-                <th>@sortablelink('email', 'E-mail')</th>
-                <th>@sortablelink('postsQty', 'Nbre de posts')</th>
-                <th>@sortablelink('comment.user', 'Nbre de commentaires')</th>
-                <th>@sortablelink('admin', 'Admin')</th>
-                <th>@sortablelink('created_at', 'Date de création')</th>
+                <th>Nom</th>
+                <th>e-mail</th>
+                <th>Nbre de posts</th>
+                <th>Nbre de commentaires</th>
+                <th>Admin?</th>
+                <th>Date de création</th>
             </tr>
         </thead>
             <tbody>
@@ -26,8 +26,8 @@
                     <tr>
                         <td><a href="{{ route('admin.show', [$user]) }}">{{ $user->name }}</a></td>
                         <td>{{ $user->email }}</td>
-                        <td class="text-center">{{ $user->postsQty }}</td>
-                        <td class="text-center">{{ count($user->userComments()->get()) }}</td>
+                        <td class="text-center">{{ $user->userPosts()->count() }}</td>
+                        <td class="text-center">{{ $user->userComments()->count() }}</td>
                         <td class="text-center">{{ $user->admin }}</td>
                         <td>{{ Date::parse($user->created_at)->format('d F Y') }}</td>
                     </tr>
