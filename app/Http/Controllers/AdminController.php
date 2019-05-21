@@ -9,6 +9,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Post;
+use App\Comment;
+use App\User;
 
 class AdminController extends Controller
 {
@@ -29,6 +31,17 @@ class AdminController extends Controller
   public function index()
   {
     $order = 'name';
+
+    if (isset($_GET['tri'])) {
+      if ($_GET['tri'] == 'name') {
+        $order = 'name';
+      } elseif ($_GET['tri'] == 'email') {
+        $order = 'email';
+      } elseif ($_GET['tri'] == 'admin') {
+        $order = 'admin';
+      }
+    }
+
     $users = $this->user->getPaginate($this->nbrPerPage, $order);
     $links = $users->render();
 

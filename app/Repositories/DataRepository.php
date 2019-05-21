@@ -8,7 +8,7 @@ abstract class DataRepository
 
     public function getId()
     {
-        return $this->model->pluck('id');
+        return $this->model->firstOrFail();
     }
 
     public function store($inputs)

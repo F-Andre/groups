@@ -9,27 +9,50 @@
   </button>
 </div>
 @endif
+<form method="GET" action={{ route( 'admin.index' ) }}>
+    <div class="form-group my-4">
+      <label for="tri">Trier les utilisateurs:</label>
+      <select id="tri" name="tri">
+        <option value="">--choix--</option>
+        <option value="nom">Par nom</option>
+        <option value="email">Par e-mail</option>
+        <option value="admin">Admin</option>
+        <option value="created-asc">Date de creation</option>
+      </select>
+      <button type="submit" class="btn btn-primary btn-sm">Trier</button>
+    </div>
+  </form>
 {{ $links }}
 <table class="table table-striped table-inverse table-responsive text-nowrap">
   <thead class="thead-dark">
     <tr>
       <th>Nom</th>
       <th>e-mail</th>
-      <th>Nbre de posts</th>
+      <th>Nbre d'articles</th>
       <th>Nbre de commentaires</th>
-      <th>Admin?</th>
+      <th>Admin</th>
       <th>Date de création</th>
     </tr>
   </thead>
   <tbody>
     @foreach ($users as $user)
+    <?php
+      $postsQ = $user->userPosts()->count();
+      $commentsQ = $user->userComments()->count();
+    ?>
     <tr>
       <td><a href="{{ route('admin.show', [$user]) }}">{{ $user->name }}</a></td>
       <td>{{ $user->email }}</td>
-      <td class="text-center">{{ $user->userPosts()->count() }}</td>
-      <td class="text-center">{{ $user->userComments()->count() }}</td>
-      <td class="text-center">{{ $user->admin }}</td>
+      <td class="text-center">
+        @if ($user->admin == 1)
+        Oui
+        @else
+        Non
+        @endif
+      </td>
       <td>{{ Date::parse($user->created_at)->format('d F Y') }}</td>
+      <td class="text-center">{{ $postsQ }}</td>
+      <td class="text-center">{{ $commentsQ }}</td>
     </tr>
     @endforeach
   </tbody>
