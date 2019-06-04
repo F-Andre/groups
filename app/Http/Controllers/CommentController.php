@@ -51,7 +51,10 @@ class CommentController extends Controller
     $poster = User::where('id', $post->user_id)->first();
     $commenter = User::where('id', $request->user_id)->first();
 
-    $poster->notify(new CommentNotification($commenter, $post));
+    if ($poster->id != $commenter->id)
+    {
+      $poster->notify(new CommentNotification($commenter, $post));
+    }
 
     $inputs = array_merge($request->all());
     $this->comment->store($inputs);
