@@ -1,5 +1,6 @@
 @extends('template')
-@section('content') @auth
+@section('content')
+@auth
 <aside class="col-2 ml-5 py-4">
   <div class="dropdown">
     <a id="authDropdown" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown"
