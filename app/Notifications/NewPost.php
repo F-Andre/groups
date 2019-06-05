@@ -42,7 +42,7 @@ class NewPost extends Notification
    */
   public function toMail($notifiable)
   {
-    $greeting = sprintf('Bonjour %s', $notifiable->name);
+    $greeting = sprintf('Bonjour %s,', $notifiable->name);
     $line = sprintf('%s vient de poster un nouvel article.', $this->fromUser->name);
     return (new MailMessage)
       ->from('test@example.com', 'Blog')
