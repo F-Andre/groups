@@ -219,7 +219,7 @@
       // Make sure you are sending a string, and to stringify JSON
       window.parent.postMessage( msg, '*' );
     };
-    var emojiFaceSmiling = [
+    var emojiFace = [
       ['1F642', '1F643', '1F609', '1F60A', '1F607', '1F600', '1F604', '1F606', '1F605', '1F923', '1F602'],
       ['1F970', '1F60D', '1F929', '1F618', '1F617', '1F61A', '1F619'],
       ['1F615', '1F61F', '1F641', '1F62E', '1F62F', '1F632', '1F633', '1F97A', '1F626', '1F627', '1F628', '1F630', '1F625', '1F622', '1F62D', '1F631', '1F616', '1F623', '1F61E', '1F613', '1F629', '1F62B'],
@@ -276,7 +276,7 @@
         }
       } );
     }
-    splChars( emojiFaceSmiling, $( 'emojis' ) );
+    splChars( emojiFace, $( 'emojis' ) );
     splChars( mathSymbols, $( 'maths' ) );
     splChars( greek, $( 'greek' ) );
     twemoji.parse( document.body );
