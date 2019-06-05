@@ -41,7 +41,7 @@ export default class CommentForm extends Component {
     this.setState( { commentValue: event.target.value } )
   }
 
-  handleSubmit ( event ) {
+  handleSubmit () {
       this.setState({ spinner: <i class="fas fa-spinner fa-spin"></i>})
   }
 

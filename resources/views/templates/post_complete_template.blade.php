@@ -34,7 +34,7 @@
     <div class="card-text">{!! $post->contenu !!}</div>
     @if (strlen($post->image) > 1 && Storage::exists($post->image))
     <div class="my-4 text-center">
-      <img class="image-blog" src="{!! Storage::url($post->image) !!}">
+      <img class="image-blog" data-src="{!! Storage::url($post->image) !!}">
     </div>
     @endif
     @if (Auth::check())
