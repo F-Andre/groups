@@ -64,7 +64,7 @@
   </div>
   <div class="card-footer">
     <p><b>Commentaires:</b></p>
-    <?php $comments = $post->comments()->orderBy('created_at', 'desc')->get(); ?>
+    <?php $comments = $post->comments()->orderBy('created_at', 'asc')->get(); ?>
     @foreach ($comments as $comment)
     <div class="comment">
       <div class="comment-head d-flex justify-content-between border-bottom">
