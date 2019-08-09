@@ -2,7 +2,7 @@
 
 @section('article')
 @if (session()->has('ok'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+<div class="col-lg-6 mx-auto mt-4 alert alert-success alert-dismissible fade show" role="alert">
   {{ session('ok') }}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
