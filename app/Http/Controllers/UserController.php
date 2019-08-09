@@ -169,6 +169,13 @@ class UserController extends Controller
       return $retour;
     }
 
+    if ($user->email != $request->email && $this->user->entryExist('email', $request->email))
+    {
+      return redirect()->back()->with('error', 'Cet email est déjà utilisé.');
+    } elseif ($user->name != $request->name && $this->user->entryExist('name', $request->name)) {
+      return redirect()->back()->with('error', 'Ce nom est déjà utilisé.');
+    }
+
     $user->update($request->all());
 
     return $retour;

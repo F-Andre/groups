@@ -40,4 +40,14 @@ class UserRepository extends DataRepository
 
     return false;
   }
+
+  public function entryExist($entry, $request)
+  {
+    
+    if ($this->model->where($entry, $request)->exists()) {
+      return true;
+    }
+    
+    return false;
+  }
 }

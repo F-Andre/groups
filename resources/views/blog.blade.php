@@ -5,7 +5,7 @@
   <div class="dropdown">
     <a id="authDropdown" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false" v-pre>
-      <img class="avatar avatar-btn float-left" src="{{ Storage::url(Auth::user()->avatar) }}" />
+      <span class="avatar avatar-btn float-left" style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></span>
       {{ Auth::user()->name }}
       <span class="caret"></span>
     </a>

@@ -44,7 +44,7 @@ function rafScroll() {
 
 function initImg() {
   var asyLoadElmt = document.querySelectorAll('.post');
-  for (var i = 0, aLoadElLength = asyLoadElmt.length; i < aLoadElLength; i++) {
+  for (let i = 0, aLoadElLength = asyLoadElmt.length; i < aLoadElLength; i++) {
     if (asyLoadElmt[i].children[1].childElementCount == 3) {
       let img = asyLoadElmt[i].children[1].children[1].children[0];
       let imgSrc = img.getAttribute('data-src');

@@ -26,7 +26,7 @@
         </small>
       </div>
       <div>
-        <img class="avatar avatar_icon" src="{{ Storage::url(DB::table('users')->where('id', $post->user_id)->first()->avatar) }}" />
+        <span class="avatar avatar_icon" style="background-image: url({{ Storage::url(DB::table('users')->where('id', $post->user_id)->first()->avatar) }})"></span>
       </div>
     </div>
   </div>

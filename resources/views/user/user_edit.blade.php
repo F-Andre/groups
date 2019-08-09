@@ -1,6 +1,15 @@
 @extends('user/user_template')
 
 @section('article')
+@if (session()->has('error'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <i class="fas fa-exclamation-triangle"></i>
+  {{ session('error') }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+@endif
 <article class="col-lg-8 mx-auto mt-4">
   <div class="card">
     <div class="card-header">
