@@ -11,26 +11,26 @@
     },
     "devDependencies": {
         "@babel/preset-react": "^7.0.0",
-        "axios": "^0.18",
+        "axios": "^0.18.1",
         "babel-preset-react": "^6.23.0",
-        "bootstrap": "^4.0.0",
+        "bootstrap": "^4.3.1",
         "cross-env": "^5.1",
-        "jquery": "^3.3.1",
-        "laravel-mix": "^4.0.15",
-        "lodash": "^4.17.5",
-        "popper.js": "^1.14.6",
-        "react": "^16.2.0",
-        "react-dom": "^16.2.0",
-        "resolve-url-loader": "^2.3.1",
-        "sass": "^1.15.2",
-        "sass-loader": "^7.1.0",
-        "vue-template-compiler": "^2.5.22"
+        "jquery": "^3.4.1",
+        "laravel-mix": "^4.1.2",
+        "lodash": "^4.17.15",
+        "popper.js": "^1.15.0",
+        "react": "^16.9.0",
+        "react-dom": "^16.9.0",
+        "resolve-url-loader": "^2.3.2",
+        "sass": "^1.22.9",
+        "sass-loader": "^7.2.0",
+        "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^1.2.17",
-        "@fortawesome/free-solid-svg-icons": "^5.8.1",
+        "@fortawesome/fontawesome-svg-core": "^1.2.21",
+        "@fortawesome/free-solid-svg-icons": "^5.10.1",
         "@fortawesome/react-fontawesome": "^0.1.4",
         "i": "^0.3.6",
-        "npm": "^6.9.0"
+        "npm": "^6.10.3"
     }
 }

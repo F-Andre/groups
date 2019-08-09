@@ -32,6 +32,10 @@
   display: none;
 }
 
+#avatarLabel:hover {
+  background-blend-mode: soft-light;
+}
+
 .avatar {
   display: inline-block;
   background-size: cover;
