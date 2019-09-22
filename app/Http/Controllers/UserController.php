@@ -9,7 +9,7 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Post;
-use App\Comment;
+use App\Group;
 
 class UserController extends Controller
 {
@@ -32,7 +32,14 @@ class UserController extends Controller
   public function index()
   {
     $user = auth()->user();
-    return view('user.user_home', compact('user'));
+    $groupsArray = explode(",", Group::query('users_id')->get());
+
+    $groups = array_filter($groupsArray, function ($k) {
+      $user = auth()->user();
+      return $k == $user->id;
+    });
+
+    return view('user.user_home', compact('user', 'groups'));
   }
 
   /**
@@ -127,12 +134,10 @@ class UserController extends Controller
 
         if (Storage::exists('public/avatar/' . $user->id) == false) {
           mkdir('storage/avatar/' . $user->id, 0775, true);
-        }
-        else
-        {
+        } else {
           $files = Storage::files('public/avatar/' . $user->id);
           Storage::delete($files);
-        } 
+        }
 
         $fileExt = $request->avatar->getClientOriginalExtension();
         $fileName = Str::random(15);
@@ -174,12 +179,9 @@ class UserController extends Controller
       return $retour;
     }
 
-    if ($user->email != $request->email && $this->user->entryExist('email', $request->email))
-    {
+    if ($user->email != $request->email && $this->user->entryExist('email', $request->email)) {
       return redirect()->back()->with('error', 'Cet email est déjà utilisé.');
-    } 
-    elseif ($user->name != $request->name && $this->user->entryExist('name', $request->name)) 
-    {
+    } elseif ($user->name != $request->name && $this->user->entryExist('name', $request->name)) {
       return redirect()->back()->with('error', 'Ce nom est déjà utilisé.');
     }
 

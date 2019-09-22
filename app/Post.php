@@ -10,12 +10,17 @@ class Post extends Model
     use Notifiable;
 
     protected $fillable = [
-        'titre', 'contenu', 'user_id', 'image'
+        'titre', 'contenu', 'image', 'user_id', 'group_id'
     ];
 
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function group()
+    {
+        return $this->belongsTo('App\Group');
     }
 
     public function comments()

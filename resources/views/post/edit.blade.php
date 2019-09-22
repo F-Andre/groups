@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('content')
-<div class="container-fluid col-lg-6 bx-auto">
+<div class="container-fluid col-lg-6 bx-auto py-4">
   <div class="card">
     <div class="card-header">
       Editer un article

@@ -48,7 +48,7 @@
           </button>
           <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownPost{{ $post->id }}">
             @if (Auth::user()->id == $post->user->id)
-            <a name="edit" id="edit" class="dropdown-item" href="{{ route('blog.edit', ['id' => $post->id]) }}"
+            <a name="edit" id="edit" class="dropdown-item" href="{{ route('blog.edit', ['id' => $post->id, 'group' => $groupName]) }}"
               role="button">Editer l'article</a>
             @endif
             <button type="button" class="dropdown-item text-danger" data-toggle="modal" data-target="#deletePost">
@@ -68,8 +68,7 @@
     @foreach ($comments as $comment)
     <div class="comment">
       <div class="comment-head d-flex justify-content-between border-bottom">
-        <img class="avatar avatar-cmt mr-3"
-          src="{{ Storage::url(DB::table('users')->where('id', $comment->user_id)->first()->avatar) }}" />
+          <span class="avatar avatar-cmt mr-3" style="background-image: url({{ Storage::url(DB::table('users')->where('id', $comment->user_id)->first()->avatar) }})"></span>
         <small class="align-self-end">
           <b>{{ $comment->user->name }}</b>
           @if (time() - $comment->created_at->timestamp < 172800)
@@ -91,7 +90,7 @@
             <i class="fas fa-ellipsis-h"></i>
           </button>
           <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownComment{{ $comment->id }}">
-            <form method="POST" action="{{ route('comment.destroy', ['id' => $comment->id]) }}">
+            <form method="POST" action="{{ route('comment.destroy', ['id' => $comment->id, 'group' => $groupName]) }}">
               @method('DELETE')
               @csrf
               <button type="submit" class="dropdown-item">Effacer</button>
@@ -104,7 +103,7 @@
     </div>
     @endforeach
     @auth
-    <form method="POST" action="{{ route('comment.store', ['post_id' => $post->id, 'user_id' => Auth::user()->id]) }}">
+    <form method="POST" action="{{ route('comment.store', ['post_id' => $post->id, 'user_id' => Auth::user()->id, 'group' => $groupName]) }}">
       @csrf
       <div class="commentForm"></div>
     </form>

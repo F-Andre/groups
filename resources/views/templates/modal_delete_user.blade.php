@@ -11,7 +11,7 @@
       <div class="modal-body">
         <p class="h4 text-center my-3"><b>ATTENTION!</b><br>Le compte de cet utilisateur ainsi que ses articles et commentaires seront
           supprimés définitivement!<br></p>
-        <form method="POST" action="{{ route('admin.destroy', ['id' => $user->id]) }}">
+        <form method="POST" action="{{ route('user_page.destroy', ['id' => $user->id]) }}">
           @csrf
           @method('DELETE')
           <button type="submit" class="btn btn-danger float-right">Continuer</button>

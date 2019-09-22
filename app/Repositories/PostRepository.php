@@ -23,6 +23,11 @@ class PostRepository extends DataRepository
         return $this->model->find($id)->user;
     }
 
+    public function findGroup($id)
+    {
+        return $this->model->find($id)->group;
+    }
+
     public function getComments($id)
     {
         return $this->model->find($id)->comments;

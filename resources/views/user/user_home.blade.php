@@ -15,16 +15,31 @@
       <p class="h4 text-center">{{ $user->name }}</p>
     </div>
     <div class="card-body">
-      <p class="avatar" style={{"background-image:url(".Storage::url($user->avatar).")"}}></p>
-      <p class="card-text">Compte créé le: {{ Date::parse($user->created_at)->format('d F Y') }}</p>
-      <p class="card-text">Votre adresse e-mail: {{ $user->email }}</p>
-      @if ($user->notifs == 'true')
-        <p class="card-text">Vous recevez les notifications par mail</p>
+      <div class="my-4">
+      <p class="h2">Mes groupes</p>
+      @if (count($groups) > 0)
+        @foreach ($groups as $group)
+          {{ $group }}
+        @endforeach
       @else
-        <p class="card-text">Vous ne recevez pas les notifications par mail</p>
+        <p>Vous n'êtes inscrit dans aucun groupe.<br>Cliquez pour en rejoindre ou en créer un: </p>
+        <a role="button" class="btn btn-info"
+        href="{{ route('group.index') }}">Groupes</a>
       @endif
+      </div>
+      <div>
+        <p class="h2">Mes infos</p>
+        <p class="avatar" style={{"background-image:url(".Storage::url($user->avatar).")"}}></p>
+        <p class="card-text">Compte créé le: {{ Date::parse($user->created_at)->format('d F Y') }}</p>
+        <p class="card-text">Votre adresse e-mail: {{ $user->email }}</p>
+        @if ($user->notifs == 'true')
+        <p class="card-text">Vous recevez les notifications par mail</p>
+        @else
+        <p class="card-text">Vous ne recevez pas les notifications par mail</p>
+        @endif
         <a role="button" class="btn btn-warning float-right"
           href="{{ route('user_page.edit', ['id' => $user->id]) }}">Editer mes informations</a>
+      </div>
     </div>
     @if ($user->admin == 1)
     <div class="card-footer text-danger">

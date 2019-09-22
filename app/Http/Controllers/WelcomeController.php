@@ -10,7 +10,7 @@ class WelcomeController extends Controller
   public function index()
   {
     if (Auth::check()) {
-      return redirect('blog');
+      return redirect('group');
     }
 
     return view('welcome');

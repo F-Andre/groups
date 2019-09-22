@@ -10,6 +10,7 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
 use App\Notifications\NewPost;
 use App\User;
+use App\Group;
 
 class postController extends Controller
 {
@@ -18,7 +19,7 @@ class postController extends Controller
 
   public function __construct(PostRepository $post)
   {
-    $this->middleware('auth', ['except' => 'index']);
+    $this->middleware('auth');
 
     $this->post = $post;
   }
@@ -28,13 +29,32 @@ class postController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index($groupName)
   {
-    $posts = $this->post->getPaginate($this->nbrPerPage, 'nom');
-    $links = $posts->render();
+    if (isset($groupName))
+    {
+      $posts = $this->post->getPaginate($this->nbrPerPage, 'nom');
 
+      $group = Group::where('name', $groupName)->first();
+      $groupId = $group->id;
+      $groupUsers = explode(" , ", $group->users_id);
 
-    return view('blog', compact('posts', 'links'));
+      $nbrPosts = $group->posts()->count();
+      $links = $posts->render();
+
+      if (in_array(auth()->user()->id, $groupUsers))
+      {
+        return view('blog', compact('posts', 'links', 'groupName', 'groupId', 'nbrPosts'));
+      }
+      else
+      {
+        return redirect(route('group.index'));
+      }
+    } 
+    else
+    {
+      return redirect(route('group.index'));
+    }
   }
 
   /**
@@ -42,9 +62,9 @@ class postController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function create()
+  public function create($groupName)
   {
-    return view('post.create');
+    return view('post.create', ['groupName' => $groupName]);
   }
 
   /**
@@ -53,10 +73,12 @@ class postController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(PostRequest $request)
+  public function store(PostRequest $request, $groupName)
   {
-    $retour = redirect(route('blog.index'))->withOk('Le post "' . $request->titre . '" est enregistré.');
+    $retour = redirect(route('blog.index', $groupName))->withOk('Le post "' . $request->titre . '" est enregistré.');
     $users = User::all();
+    $group = Group::where('name', $groupName)->first();
+
     foreach ($users as $user) {
       if ($user->id != $request->user()->id) {
         $user->notify(new NewPost($request->user()));
@@ -85,7 +107,7 @@ class postController extends Controller
         });
         $imageMake->save('.' . $pathUrl);
 
-        $inputs = array_merge($request->all(), ['user_id' => $request->user()->id, 'image' => $path]);
+        $inputs = array_merge($request->all(), ['user_id' => $request->user()->id, 'image' => $path, 'group_id' => $group->id]);
         $this->post->store($inputs);
 
         DB::table('users')->where('id', $request->user()->id)->increment('postsQty');
@@ -94,7 +116,7 @@ class postController extends Controller
       }
     }
 
-    $inputs = array_merge($request->all(), ['user_id' => $request->user()->id]);
+    $inputs = array_merge($request->all(), ['user_id' => $request->user()->id, 'group_id' => $group->id]);
     $this->post->store($inputs);
     DB::table('users')->where('id', $request->user()->id)->increment('postsQty');
 

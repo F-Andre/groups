@@ -1,0 +1,82 @@
+@extends('template')
+
+@section('content')
+@auth
+<aside class="col-2 ml-5 py-4">
+  <div class="dropdown">
+    <a id="authDropdown" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false" v-pre>
+      <span class="avatar avatar-btn float-left" style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></span>
+      {{ Auth::user()->name }}
+      <span class="caret"></span>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="authDropdown">
+      <a class="dropdown-item" href="{{ route('user_page.index') }}">
+        Mon compte
+      </a>
+      <a class="dropdown-item" href="{{ route('logout') }}"
+        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        Se déconnecter
+      </a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+      </form>
+    </div>
+  </div>
+  @if (Auth::user()->admin)
+  <div class="mt-4">
+    <a class="btn btn-outline-success" href="{{ route('admin.index') }}" role="button">page admin</a>
+  </div>
+  @endif
+</aside>
+@endauth
+<div class="container-fluid col-lg-6 bx-auto mt-4">
+  @if (session()->has('fail'))
+    <div class="col-lg-8 mx-auto mt-4 alert alert-warning alert-dismissible fade show" role="alert">
+      <i class="fas fa-exclamation-triangle"></i>
+      {{ session('fail') }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  @endif
+  <div class="card">
+    <div class="card-header">
+      Choisir un groupe
+    </div>
+    <div class="card-body">
+      <div>
+        @isset($groups)
+        <p>Mes groupes:</p>
+        @foreach ($groups as $group)
+          @php
+            $userArray = explode(" , ", $group->users_id);
+          @endphp
+          @if (in_array(auth()->user()->id, $userArray))
+            <a href="{{ route('blog.index', $group->name) }}">{{ $group->name }}</a><br>
+          @endif
+        @endforeach
+        <hr>
+        <p>Rechercher un groupe:</p>
+        <form class="form-inline my-2 my-lg-0" method="POST" action="{{ route('group.searchResult', ['groupSearch']) }}">
+          @csrf
+          <div class="form-group">
+            <input class="form-control mr-sm-2" list="groups" name="groupSearch" id="groupSearch" type="text"
+              placeholder="Entrez le nom d'un groupe" autocomplete="off" />
+            <datalist id="groups">
+              @foreach ($groups as $group)
+                <option value="{{ $group->name }}">
+              @endforeach
+            </datalist>
+          </div>
+          <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Rechercher</button>
+        </form>
+        @endisset
+      </div>
+      <hr>
+      <div class="my-4">
+        <a class="btn btn-primary" href={{ route('group.create') }} role="button">Créer un groupe</a>
+      </div>
+    </div>
+  </div>
+  @endsection

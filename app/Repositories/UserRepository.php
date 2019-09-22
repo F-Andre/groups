@@ -17,6 +17,11 @@ class UserRepository extends DataRepository
       ->paginate($n);
   }
 
+  public function nbreGroups($id)
+  {
+    return $this->model->find($id)->userGroups;
+  }
+
   public function nbrePosts($id)
   {
     return $this->model->find($id)->userPosts;

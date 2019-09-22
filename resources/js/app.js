@@ -17,5 +17,6 @@ require('./components/postCreate');
 require('./components/postEdit');
 require('./components/userEdit');
 require('./components/commentCreate');
+require('./components/groupCreate.js');
 
 

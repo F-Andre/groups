@@ -43,6 +43,8 @@
     <tr>
       <td><a href="{{ route('admin.show', [$user]) }}">{{ $user->name }}</a></td>
       <td>{{ $user->email }}</td>
+      <td class="text-center">{{ $postsQ }}</td>
+      <td class="text-center">{{ $commentsQ }}</td>
       <td class="text-center">
         @if ($user->admin == 1)
         Oui
@@ -51,8 +53,6 @@
         @endif
       </td>
       <td>{{ Date::parse($user->created_at)->format('d F Y') }}</td>
-      <td class="text-center">{{ $postsQ }}</td>
-      <td class="text-center">{{ $commentsQ }}</td>
     </tr>
     @endforeach
   </tbody>

@@ -38,9 +38,11 @@
             <!-- Left Side Of Navbar -->
             @auth
             <ul id="authBtn" class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="{{ route('blog.create') }}" role="button">Ecrire un article</a>
-              </li>
+              @isset($groupName)
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ route('blog.create', $groupName) }}" role="button">Ecrire un article</a>
+                </li>
+              @endisset
               @if (Auth::user()->admin)
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.index') }}" role="button">Page Admin</a>
@@ -83,7 +85,7 @@
           </div>
         </div>
       </nav>
-      <main class="py-4">
+      <main>
         @yield('content')
       </main>
     </div>

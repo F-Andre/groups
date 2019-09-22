@@ -14,13 +14,15 @@ class CreatePostsTable extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('titre');
             $table->longText('contenu');
             $table->string('image')->default('0');
-            $table->timestamps();
-            $table->integer('user_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict')->onUpdate('restrict');
+            $table->bigInteger('group_id')->unsigned();
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('restrict')->onUpdate('restrict');
+            $table->timestamps();
         });
     }
 
@@ -33,6 +35,7 @@ class CreatePostsTable extends Migration
     {
         Schema::table('posts', function(Blueprint $table) {
             $table->dropForeign('posts_user_id_foreign');
+            $table->dropForeign('posts_group_id_foreign');
         });
         Schema::dropIfExists('posts');
     }
