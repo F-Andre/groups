@@ -14,7 +14,7 @@
       </div>
     @endif
     <div class="float-right">
-      <a name="edit" id="edit" class="btn btn-warning btn-sm" href="{{ route('blog.edit', ['id' => $post->id]) }}" role="button">Editer l'article</a>
+      <a name="edit" id="edit" class="btn btn-warning btn-sm" href="{{ route('posts.edit', ['id' => $post->id]) }}" role="button">Editer l'article</a>
     </div>
   </div>
   <div class="card-footer">

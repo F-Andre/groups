@@ -26,7 +26,7 @@
     <div id="app">
       <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
         <div class="container col-11">
-          <a class="navbar-brand" href="{{ url('/blog') }}">
+          <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -40,7 +40,7 @@
             <ul id="authBtn" class="navbar-nav ml-auto">
               @isset($groupName)
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ route('blog.create', $groupName) }}" role="button">Ecrire un article</a>
+                  <a class="nav-link" href="{{ route('posts.create', $groupName) }}" role="button">Ecrire un article</a>
                 </li>
               @endisset
               @if (Auth::user()->admin)

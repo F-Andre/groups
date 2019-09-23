@@ -50,7 +50,7 @@
         <td class="text-center">le {{ Date::parse($post->created_at)->format('d F Y') }} à
           {{ Date::parse($post->created_at)->format('H:i') }}</td>
         <td class="text-center">{{ $post->comments()->count() }}</td>
-        <td class="text-right"><a class="btn btn-success btn-sm" href="{{ route('blog.index', '#'.$post->id) }}">Voir l'article</a></td>
+        <td class="text-right"><a class="btn btn-success btn-sm" href="{{ route('posts.index', '#'.$post->id) }}">Voir l'article</a></td>
         <td class="text-right">
           <button type="button" class="btn btn-danger btn-sm float-right" data-toggle="modal" data-target="#deletePost">
             Supprimer

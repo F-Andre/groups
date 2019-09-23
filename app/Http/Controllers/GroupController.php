@@ -49,6 +49,10 @@ class GroupController extends Controller
    */
   public function store(Request $request)
   {
+    if (preg_match('/[a-zA-Z0-9._-]*/', $request->name) == false)
+    {
+      return redirect(route('groupe.create'))->with('error', 'Le nom du groupe n\'est pas correct');
+    }
 
     $inputs = array_merge($request->all(), ['users_id' => $request->user_id, 'admins_id' => $request->user_id, 'active_at' => now()]);
     $this->group->store($inputs);

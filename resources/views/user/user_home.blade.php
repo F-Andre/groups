@@ -17,13 +17,15 @@
     <div class="card-body">
       <div class="my-4">
       <p class="h2">Mes groupes</p>
-      @if (count($groups) > 0)
-        @foreach ($groups as $group)
-          {{ $group }}
+      @if (count($userGroups) > 0)
+      <ul>
+        @foreach ($userGroups as $group)
+          <li><a href="{{ route('posts.index', $group->name) }}">{{ $group->name }}</a></li>
         @endforeach
+      </ul>
       @else
-        <p>Vous n'êtes inscrit dans aucun groupe.<br>Cliquez pour en rejoindre ou en créer un: </p>
-        <a role="button" class="btn btn-info"
+        <p>Vous n'êtes inscrit dans aucun groupe.<br><br>Cliquez pour en rejoindre ou en créer un: </p>
+        <a role="button" class="btn btn-primary"
         href="{{ route('group.index') }}">Groupes</a>
       @endif
       </div>

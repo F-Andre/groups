@@ -12,7 +12,7 @@
 */
 
 /* Route::get('blog/{group}', 'postController@index')->name('blog.index')->middleware('verified'); */
-Route::resource('{group}/blog', 'postController')->middleware('verified');
+Route::resource('{group}/posts', 'postController')->middleware('verified');
 
 Route::resources([
   'comment'=> 'CommentController',

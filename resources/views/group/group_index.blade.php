@@ -53,7 +53,7 @@
             $userArray = explode(" , ", $group->users_id);
           @endphp
           @if (in_array(auth()->user()->id, $userArray))
-            <a href="{{ route('blog.index', $group->name) }}">{{ $group->name }}</a><br>
+            <a href="{{ route('posts.index', $group->name) }}">{{ $group->name }}</a><br>
           @endif
         @endforeach
         <hr>

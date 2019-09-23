@@ -13,7 +13,7 @@
           </div>
           @endif
           <p>Vous êtes connecté!</p>
-          <a role="button" class="btn btn-success float-center" href="{{ route('blog.index') }}">Voir les articles</a>
+          <a role="button" class="btn btn-success float-center" href="{{ route('posts.index') }}">Voir les articles</a>
         </div>
       </div>
     </div>

@@ -37,7 +37,7 @@
     </div>
   </div>
   <div class="mt-4">
-    <a class="btn btn-outline-primary" href="{{ route('blog.create', $groupName) }}" role="button">Ecrire un article</a>
+    <a class="btn btn-outline-primary" href="{{ route('posts.create', $groupName) }}" role="button">Ecrire un article</a>
   </div>
   @if (Auth::user()->admin)
   <div class="mt-4">
@@ -68,7 +68,7 @@
   <div class="mt-5 text-center">
     <p class="h2">Il n'y encore aucun article</p>
     <p class="h3">Lancez-vous!</p>
-    <a class="btn btn-outline-success mt-5" href="{{ route('blog.create', $groupName) }}" role="button">Ecrire un
+    <a class="btn btn-outline-success mt-5" href="{{ route('posts.create', $groupName) }}" role="button">Ecrire un
       article</a>
   </div>
   @endif

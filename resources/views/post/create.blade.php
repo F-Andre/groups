@@ -8,7 +8,7 @@
       Créer un post
     </div>
     <div class="card-body">
-      <form method="POST" action="{{ route('blog.store', $groupName) }}" enctype="multipart/form-data">
+      <form method="POST" action="{{ route('posts.store', $groupName) }}" enctype="multipart/form-data">
         @csrf
         <div id="articleForm"></div>
       </form>
