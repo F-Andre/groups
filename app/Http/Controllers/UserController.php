@@ -80,9 +80,13 @@ class UserController extends Controller
     $ord = 'desc';
 
     if (isset($_GET['tri'])) {
-      if ($_GET['tri'] == 'titre') {
+      if ($_GET['tri'] == 'group_id') {
+        $orderValue = 'group_id';
+        $ord = 'asc';
+      } elseif ($_GET['tri'] == 'titre') {
         $orderValue = 'titre';
-      } elseif ($_GET['tri'] == 'created-asc') {
+        $ord = 'asc';
+      }elseif ($_GET['tri'] == 'created-asc') {
         $orderValue = 'created_at';
         $ord = 'asc';
       } elseif ($_GET['tri'] == 'created-desc') {

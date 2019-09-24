@@ -54,7 +54,7 @@ export default class ArticleForm extends Component {
 
   componentDidMount() {
     window.addEventListener('message', (e) => {
-      const text = isString(e.data) ? e.data : '';
+      const text = typeof e.data == "string" ? e.data : '';
       this.setState({
         textValue: text,
         modified: true
@@ -104,11 +104,10 @@ export default class ArticleForm extends Component {
   }
 
   render() {
-    const imageSizeMax = 4718592
-    const disabledState = !this.state.modified ? true : this.state.titreValue.length <= 6 ? true : this.state.textValue.length <= 10 ? true : this.state.imgSize > imageSizeMax ? true : false
+    const disabledState = !this.state.modified ? true : this.state.titreValue.length <= 6 ? true : this.state.textValue.length <= 10 ? true : false
     const submitClass = !disabledState ? "btn btn-primary" : "btn btn-secondary disabled"
     const disableDelete = this.state.imgSrc.length > 1 ? "btn btn-danger float-right" : "btn btn-danger float-right disabled"
-    const imageClass = this.state.imgSize > imageSizeMax ? 'form-control is-invalid' : 'form-control'
+    const imageClass = 'form-control'
 
     return (
       <div>

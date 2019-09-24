@@ -45,7 +45,6 @@ class NewPost extends Notification
     $greeting = sprintf('Bonjour %s,', $notifiable->name);
     $line = sprintf('%s vient de poster un nouvel article.', $this->fromUser->name);
     return (new MailMessage)
-      ->from('test@example.com', 'Blog')
       ->subject('Nouveau post')
       ->greeting($greeting)
       ->line($line)

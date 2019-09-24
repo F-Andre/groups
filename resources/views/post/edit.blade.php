@@ -12,7 +12,7 @@
         var contenu = {!! json_encode($contenu) !!};
         var image = {!! json_encode($imageUrl) !!};
       </script>
-      <form method="POST" action="{{ route('posts.update', ['id' => $id]) }}" enctype="multipart/form-data">
+      <form method="POST" action="{{ route('posts.update', ['id' => $id, 'group' => $groupName]) }}" enctype="multipart/form-data">
         @method('PUT')
         @csrf
         <div id="postEditForm"></div>

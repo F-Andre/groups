@@ -68,7 +68,7 @@
     @foreach ($comments as $comment)
     <div class="comment">
       <div class="comment-head d-flex justify-content-between border-bottom">
-          <span class="avatar avatar-cmt mr-3" style="background-image: url({{ Storage::url(DB::table('users')->where('id', $comment->user_id)->first()->avatar) }})"></span>
+          <span class="avatar avatar-cmt mb-1" style="background-image: url({{ Storage::url(DB::table('users')->where('id', $comment->user_id)->first()->avatar) }})"></span>
         <small class="align-self-end">
           <b>{{ $comment->user->name }}</b>
           @if (time() - $comment->created_at->timestamp < 172800)

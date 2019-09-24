@@ -7,6 +7,7 @@
       <label for="tri">Trier les posts:</label>
       <select id="tri" name="tri">
         <option value="">--choix--</option>
+        <option value="group_id">Par groupe</option>
         <option value="titre">Par titre</option>
         <option value="created-desc">Date de création (le + récent)</option>
         <option value="created-asc">Date de création (le + vieux)</option>
@@ -20,17 +21,23 @@
     <table class="table table-hover table-responsive text-nowrap mb-5">
       <thead class="thead-dark">
         <tr>
+          <th>Groupe</th>
           <th>Titre</th>
           <th>Crée le:</th>
           <th>Modifié le:</th>
-          <th>Commentaires:</th>
+          <th>Nbre commentaires:</th>
           <th></th>
           <th></th>
         </tr>
       </thead>
       <tbody>
       @foreach ($posts as $post)
+      @php
+          $postGroup = $post->find($post->group_id)->group;
+          $groupName= $postGroup->name;
+      @endphp
         <tr>
+          <td scope="row">{{ $groupName }}</td>
           <td scope="row">{{ $post->titre }}</td>
           <td>{{ Date::parse($post->created_at)->format('d M Y') }} à {{ Date::parse($post->created_at)->format('H:i') }}
           </td>

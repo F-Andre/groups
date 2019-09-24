@@ -6,11 +6,9 @@ use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
 use App\Http\Requests\SearchRequest;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Post;
-use App\Comment;
-use App\User;
+use App\Group;
 
 class AdminController extends Controller
 {
@@ -19,7 +17,6 @@ class AdminController extends Controller
 
   public function __construct(UserRepository $user)
   {
-    $this->middleware('admin');
     $this->user = $user;
   }
 
@@ -28,24 +25,18 @@ class AdminController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index($groupName)
   {
     $order = 'name';
 
-    if (isset($_GET['tri'])) {
-      if ($_GET['tri'] == 'name') {
-        $order = 'name';
-      } elseif ($_GET['tri'] == 'email') {
-        $order = 'email';
-      } elseif ($_GET['tri'] == 'admin') {
-        $order = 'admin';
-      }
-    }
+    $group = Group::where('name', $groupName)->first();
+    $groupAdmins = explode(",", $group->admins_id);
+    $groupUsers = explode(",", $group->users_id);
 
     $users = $this->user->getPaginate($this->nbrPerPage, $order);
     $links = $users->render();
 
-    return view('admin.admin_home', compact('users', 'links'));
+    return view('admin.admin_home', compact('groupName', 'groupAdmins', 'users', 'groupUsers', 'links'));
   }
 
   /**
@@ -75,8 +66,8 @@ class AdminController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show($id)
-  {
+  public function show($id, $groupName)
+  { 
     $orderValue = 'created_at';
     $ord = 'desc';
 
@@ -99,9 +90,11 @@ class AdminController extends Controller
       }
     }
 
+    $group = Group::where('name', $groupName)->first();
+    $groupAdmins = explode(",", $group->admins_id);
     $user = $this->user->getById($id);
     $posts = Post::where('user_id', $user->id)->orderBy($orderValue, $ord)->get();
-    return view('admin.admin_user', compact('user', 'posts'));
+    return view('admin.admin_user', compact('groupName', 'groupAdmins', 'user', 'posts'));
   }
 
   /**
@@ -152,7 +145,7 @@ class AdminController extends Controller
     return redirect()->route('admin.index')->withOk('Le compte a bien été effacé');
   }
 
-  public function searchResult(SearchRequest $result)
+  public function searchResult(SearchRequest $result, $groupName)
   {
     if ($this->user->search($result->user) != false) {
       $user = $this->user->search($result->user);
@@ -161,11 +154,11 @@ class AdminController extends Controller
         $users = $user;
         $links = null;
 
-        return view('admin.admin_home', compact('users', 'links'));
+        return view('admin.admin_home', compact('users', 'links', 'groupName'));
       }
 
       $posts = $this->user->nbrePosts($user->id);
-      return view('admin.admin_user', compact('user', 'posts'));
+      return view('admin.admin_user', compact('user', 'posts', 'groupName'));
     }
 
     return redirect(route('admin.index'))->withOk("Le terme recherché n'existe pas: " . $result->user);

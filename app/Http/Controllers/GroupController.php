@@ -110,12 +110,12 @@ class GroupController extends Controller
 
   public function searchResult(GroupSearchRequest $result)
   {
-    if ($this->group->search($result->groupSearch) !== null) {
+    if ($this->group->search($result->groupSearch)) {
       $group = $this->group->search($result->groupSearch);
       return redirect(route('group.show', ['name' => $group->name]));
     }
 
-    return redirect(route('group.index'))->with('fail', "Le groupe recherché n'existe pas: " . $result->groupSearch);
+    return redirect(route('group.index'))->with('fail', "Le groupe '" . $result->groupSearch . "' n'existe pas.");
   }
 
   public function join($groupName, $userId)

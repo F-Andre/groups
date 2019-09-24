@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('content')
-@if (Auth::check() and Auth::user()->admin)
+@if (Auth::check() and in_array(auth()->user()->id, $groupAdmins))
 <nav class="navbar navbar-expand-sm navbar-dark bg-secondary">
   <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
     aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,20 +10,23 @@
   <div class="collapse navbar-collapse" id="collapsibleNavId">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
-        <a class="nav-link" href="{{ route('admin.index') }}" role="button">Admin Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{{ route('admin.index', $groupName) }}" role="button">{{ $groupName }} - Page admin
+          <span class="sr-only">(current)</span></a>
       </li>
     </ul>
     @isset($users)
-    <form class="form-inline my-2 my-lg-0" method="POST" action="{{ route('admin.searchResult', ['user']) }}">
+    <form class="form-inline my-2 my-lg-0" method="POST"
+      action="{{ route('admin.searchResult', ['user' => $user, 'groupName' => $groupName]) }}">
       @csrf
       <div class="form-group">
-        <input class="form-control mr-sm-2" list="users" name="user" id="user" type="text"
-          placeholder="Entrez un nom ou un e-mail" autocomplete="off" />
+        <input class="form-control mr-sm-2" list="users" name="user" id="user" type="text" placeholder="Entrez un nom"
+          autocomplete="off" />
         <datalist id="users">
           @foreach ($users as $user)
+          @if (in_array($user->id, $groupUsers))
           <option value="{{ $user->name }}">
-          <option value="{{ $user->email }}">
-            @endforeach
+          @endif
+          @endforeach
         </datalist>
       </div>
       <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Rechercher</button>

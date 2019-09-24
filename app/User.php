@@ -5,11 +5,9 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Kyslik\ColumnSortable\Sortable;
-
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, Sortable;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -18,10 +16,6 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'name', 'email', 'password', 'postsQty', 'avatar', 'notifs'
-    ];
-
-    public $sortable = [
-        'name', 'email', 'admin', 'postsQty', 'created_at'
     ];
 
     /**

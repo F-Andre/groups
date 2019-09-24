@@ -10,7 +10,7 @@
       </div>
       <div class="modal-body">
         <p class="h3 text-center my-3">ATTENTION!<br>La suppression d'un article est définitive!<br></p>
-        <form method="POST" action="{{ route('posts.destroy', ['id' => $post->id, 'group' => $groupName]) }}">
+        <form method="POST" action="{{ route('posts.destroy', ['id' => $post->id, 'groupName' => $groupName]) }}">
           @csrf
           @method('DELETE')
           <button type="submit" class="btn btn-danger float-right">Continuer</button>

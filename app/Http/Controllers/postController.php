@@ -38,13 +38,14 @@ class postController extends Controller
       $group = Group::where('name', $groupName)->first();
       $groupId = $group->id;
       $groupUsers = explode(" , ", $group->users_id);
+      $groupAdmins = explode(" , ", $group->admins_id);
 
       $nbrPosts = $group->posts()->count();
       $links = $posts->render();
 
       if (in_array(auth()->user()->id, $groupUsers))
       {
-        return view('blog', compact('posts', 'links', 'groupName', 'groupId', 'nbrPosts'));
+        return view('blog', compact('posts', 'links', 'groupName', 'groupId', 'nbrPosts', 'groupAdmins'));
       }
       else
       {
@@ -75,7 +76,7 @@ class postController extends Controller
    */
   public function store(PostRequest $request, $groupName)
   {
-    $retour = redirect(route('blog.index', $groupName))->withOk('Le post "' . $request->titre . '" est enregistré.');
+    $retour = redirect(route('posts.index', $groupName))->withOk('Le post "' . $request->titre . '" est enregistré.');
     $users = User::all();
     $group = Group::where('name', $groupName)->first();
 
@@ -140,11 +141,11 @@ class postController extends Controller
    * @param  \App\Post  $post
    * @return \Illuminate\Http\Response
    */
-  public function edit($id)
+  public function edit($group, $id)
   {
     $post = $this->post->getById($id);
     $imageUrl = Storage::url($post->image);
-    return view('post.edit', ['id' => $post->id, 'titre' => $post->titre, 'contenu' => $post->contenu, 'imageUrl' => $imageUrl]);
+    return view('post.edit', ['groupName' => $group, 'id' => $post->id, 'titre' => $post->titre, 'contenu' => $post->contenu, 'imageUrl' => $imageUrl]);
   }
 
   /**
@@ -154,10 +155,10 @@ class postController extends Controller
    * @param  \App\Post  $post
    * @return \Illuminate\Http\Response
    */
-  public function update(PostRequest $request, $id)
+  public function update(PostRequest $request, $groupName, $id)
   {
     $post = $this->post->getById($id);
-    $retour = redirect(route('blog.index'))->withOk('Le post "' . $request->titre . '" a été modifié');
+    $retour = redirect(route('posts.index', ['groupName' => $groupName]))->withOk('Le post "' . $request->titre . '" a été modifié');
 
     if ($request->hasFile('image')) {
       if ($request->image->isValid()) {

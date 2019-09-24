@@ -29,7 +29,7 @@ export default class CommentForm extends Component {
 
   componentDidMount () {
     window.addEventListener( 'message', ( e ) => {
-      const text = isString(e.data) ? e.data : '';
+      const text = typeof e.data == "string" ? e.data : '';
       this.setState( {
         commentValue: text,
         modified: true

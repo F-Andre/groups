@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repositories\CommentRepository;
 use App\Post;
 use App\User;
+use App\Group;
 use App\Notifications\CommentNotification;
 
 class CommentController extends Controller
@@ -50,6 +51,10 @@ class CommentController extends Controller
     $post = Post::where('id', $request->post_id)->first();
     $poster = User::where('id', $post->user_id)->first();
     $commenter = User::where('id', $request->user_id)->first();
+    $group = Group::where('id', $post->group_id)->first();
+    $groupName = $group->name;
+
+    var_dump($groupName);
 
     if ($poster->id != $commenter->id)
     {
@@ -59,7 +64,7 @@ class CommentController extends Controller
     $inputs = array_merge($request->all());
     $this->comment->store($inputs);
 
-    return redirect(route('blog.index', '#' . $post->id));
+    return redirect(route('posts.index', ['groupName' => $groupName, '#' . $post->id],));
   }
 
   /**

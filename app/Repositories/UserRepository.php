@@ -13,8 +13,7 @@ class UserRepository extends DataRepository
 
   public function getPaginate($n, $order)
   {
-    return $this->model->sortable()->orderBy($order)
-      ->paginate($n);
+    return $this->model->orderBy($order)->paginate($n);
   }
 
   public function nbreGroups($id)

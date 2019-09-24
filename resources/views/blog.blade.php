@@ -2,15 +2,15 @@
 @section('content')
 @auth
 <aside class="col-2 ml-5 py-4">
-  <div class="dropdown">
-    <a id="authDropdown" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-      aria-haspopup="true" aria-expanded="false" v-pre>
+  <div class="accordion" id="authAcc">
+    <a class="btn btn-secondary" id="headingAuth" href="#" role="button" data-toggle="collapse"
+      data-target="#authDropdown" aria-expanded="true" aria-controls="authDropdown">
       <span class="avatar avatar-btn float-left"
         style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></span>
       {{ Auth::user()->name }}
-      <span class="caret"></span>
+      <i class="ml-2 fas fa-caret-down"></i>
     </a>
-    <div class="dropdown-menu" aria-labelledby="authDropdown">
+    <div id="authDropdown" class="collapse mt-2" aria-labelledby="headingAuth" data-parent="#authAcc">
       <a class="dropdown-item" href="{{ route('user_page.index') }}">
         Mon compte
       </a>
@@ -24,32 +24,39 @@
     </div>
   </div>
   <hr>
-  <div class="dropdown">
-    <a id="groupDropdown" class="btn btn-outline-success dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-      aria-haspopup="true" aria-expanded="false" v-pre>
+  <div class="accordion" id="accountAcc">
+    <a id="headingGroup" class="btn btn-outline-success" href="#" role="button" data-toggle="collapse"
+      data-target="#groupDropdown" aria-expanded="true" aria-controls="groupDropdown">
       {{ $groupName }}
-      <span class="caret"></span>
+      <i class="ml-2 fas fa-caret-down"></i>
     </a>
-    <div class="dropdown-menu" aria-labelledby="groupDropdown">
-      <a class="dropdown-item" href="{{ route('group.index') }}" >
+    <div id="groupDropdown" class="collapse mt-2" aria-labelledby="headingGroup" data-parent="#accountAcc">
+      @if (in_array(auth()->user()->id, $groupAdmins))
+      <a class="dropdown-item" href="{{ route('admin.index', $groupName) }}" role="button">Page admin</a>
+      @endif
+      <a class="dropdown-item" href="{{ route('group.index') }}">
         Mes groupes
       </a>
     </div>
   </div>
   <div class="mt-4">
-    <a class="btn btn-outline-primary" href="{{ route('posts.create', $groupName) }}" role="button">Ecrire un article</a>
+    <a class="btn btn-outline-primary" href="{{ route('posts.create', $groupName) }}" role="button">Ecrire un
+      article</a>
   </div>
-  @if (Auth::user()->admin)
-  <div class="mt-4">
-    <a class="btn btn-outline-success" href="{{ route('admin.index') }}" role="button">page admin</a>
-  </div>
-  @endif
 </aside>
 @endauth
 <article class="mx-auto col-lg-6 py-4">
   @if (session()->has('ok'))
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
     {{ session('ok') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  @endif
+  @if (session()->has('error'))
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>

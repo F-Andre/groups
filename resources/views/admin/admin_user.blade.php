@@ -21,7 +21,7 @@
       @endif
     </div>
   </div>
-  <form method="GET" action={{ route( 'admin.show', ['id'=> $user->id]) }}>
+  <form method="GET" action={{ route( 'admin.show', ['id'=> $user->id, 'groupName' => $groupName]) }}>
     <div class="form-group my-4 ml-4">
       <label for="tri">Trier les posts:</label>
       <select id="tri" name="tri">
@@ -50,7 +50,8 @@
         <td class="text-center">le {{ Date::parse($post->created_at)->format('d F Y') }} à
           {{ Date::parse($post->created_at)->format('H:i') }}</td>
         <td class="text-center">{{ $post->comments()->count() }}</td>
-        <td class="text-right"><a class="btn btn-success btn-sm" href="{{ route('posts.index', '#'.$post->id) }}">Voir l'article</a></td>
+        {{ $groupName }}
+        <td class="text-right"><a class="btn btn-success btn-sm" href="{{ route('posts.index', ['groupName' => $groupName, '#' . $post->id]) }}">Voir l'article</a></td>
         <td class="text-right">
           <button type="button" class="btn btn-danger btn-sm float-right" data-toggle="modal" data-target="#deletePost">
             Supprimer
