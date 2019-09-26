@@ -53,7 +53,7 @@
       <div class="modal-body">
         <p class="h4 text-center my-3"><b>ATTENTION!</b><br>En radiant un membre du groupe, tous ses articles et
           commentaires seront aussi supprimés.<br>Cette action est irréversible.</p>
-        <form method="POST" action="{{ route('group.deleteUser', ['groupName' => $groupName, 'id' => $user->id]) }}">
+        <form method="POST" action="{{ route('group.removeUser', ['groupName' => $groupName, 'id' => $user->id]) }}">
           @csrf
           @method('DELETE')
           <button type="submit" class="btn btn-danger float-right">Continuer</button>

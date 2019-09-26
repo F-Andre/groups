@@ -69,7 +69,7 @@ class GroupController extends Controller
   public function show($name)
   {
     $group = Group::where('name', $name)->first();
-    $usersId = explode(" , ", $group->users_id);
+    $usersId = explode(",", $group->users_id);
 
     return view('group.group_show', compact('group', 'usersId'));
   }
@@ -124,11 +124,18 @@ class GroupController extends Controller
     return redirect(route('group.show', ['name' => $groupName]))->with('fail', "demande envoyée " . $user->name);
   }
 
-  public function deleteUser($groupName, $id)
+  public function removeUser($groupName, $id)
   {
-    $group = $this->group->where('name', $groupName);
-    $user = User::where('id', $$id)->first();
+    $group = $this->group->where('name', $groupName)->first();
+    $user = User::where('id', $id)->first();
     $groupUsers = explode(",", $group->user_id);
-    
+
+    $userKey = array_search($user, $groupUsers);
+    $newUsersArray = array_splice($groupUsers, $userKey, 1);
+    $newGroupUsers = implode(" ", $newUsersArray);
+
+    $group->user_id = $newGroupUsers;
+
+    $group->save();
   }
 }
