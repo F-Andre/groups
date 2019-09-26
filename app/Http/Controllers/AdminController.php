@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
 use App\Http\Requests\SearchRequest;
@@ -33,10 +34,13 @@ class AdminController extends Controller
     $groupAdmins = explode(",", $group->admins_id);
     $groupUsers = explode(",", $group->users_id);
 
+    $posts = Post::where('group_id', $group->id)->get();
+    $comments = Comment::where('group_id', $group->id)->get();
+
     $users = $this->user->getPaginate($this->nbrPerPage, $order);
     $links = $users->render();
 
-    return view('admin.admin_home', compact('groupName', 'groupAdmins', 'users', 'groupUsers', 'links'));
+    return view('admin.admin_home', compact('groupName', 'groupAdmins', 'users', 'groupUsers', 'posts', 'comments', 'links'));
   }
 
   /**

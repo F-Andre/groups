@@ -123,4 +123,12 @@ class GroupController extends Controller
     $user = User::where('id', $userId)->first();
     return redirect(route('group.show', ['name' => $groupName]))->with('fail', "demande envoyée " . $user->name);
   }
+
+  public function deleteUser($groupName, $id)
+  {
+    $group = $this->group->where('name', $groupName);
+    $user = User::where('id', $$id)->first();
+    $groupUsers = explode(",", $group->user_id);
+    
+  }
 }
