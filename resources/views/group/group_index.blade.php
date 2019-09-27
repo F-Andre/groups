@@ -27,10 +27,10 @@
 </aside>
 @endauth
 <div class="container-fluid col-lg-6 bx-auto mt-4">
-  @if (session()->has('fail'))
+  @if (session()->has('error'))
   <div class="col-lg-8 text-center mx-auto mt-4 alert alert-warning alert-dismissible fade show" role="alert">
     <i class="fas fa-exclamation-triangle"></i>
-    {{ session('fail') }}
+    {{ session('error') }}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -46,7 +46,7 @@
         <p>Mes groupes:</p>
         @foreach ($groups as $group)
         @php
-        $userArray = explode(" , ", $group->users_id);
+        $userArray = explode(",", $group->users_id);
         @endphp
         @if (in_array(auth()->user()->id, $userArray))
         <a href="{{ route('posts.index', $group->name) }}">{{ $group->name }}</a><br>

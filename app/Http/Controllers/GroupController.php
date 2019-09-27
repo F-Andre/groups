@@ -6,8 +6,8 @@ use App\Group;
 use Illuminate\Http\Request;
 use App\Repositories\GroupRepository;
 use App\Http\Requests\GroupSearchRequest;
+use App\Notifications\JoinGroupDemand;
 use App\User;
-use Illuminate\Support\Collection;
 
 class GroupController extends Controller
 {
@@ -49,8 +49,7 @@ class GroupController extends Controller
    */
   public function store(Request $request)
   {
-    if (preg_match('/[a-zA-Z0-9._-]*/', $request->name) == false)
-    {
+    if (preg_match('/[a-zA-Z0-9._-]*/', $request->name) == false) {
       return redirect(route('groupe.create'))->with('error', 'Le nom du groupe n\'est pas correct');
     }
 
@@ -115,27 +114,38 @@ class GroupController extends Controller
       return redirect(route('group.show', ['name' => $group->name]));
     }
 
-    return redirect(route('group.index'))->with('fail', "Le groupe '" . $result->groupSearch . "' n'existe pas.");
+    return redirect(route('group.index'))->with('error', "Le groupe '" . $result->groupSearch . "' n'existe pas.");
   }
 
-  public function join($groupName, $userId)
+  public function joinDemand($groupName, $userId)
   {
     $user = User::where('id', $userId)->first();
-    return redirect(route('group.show', ['name' => $groupName]))->with('fail', "demande envoyée " . $user->name);
-  }
+    $group = Group::where('name', $groupName)->first();
 
-  public function removeUser($groupName, $id)
-  {
-    $group = $this->group->where('name', $groupName)->first();
-    $user = User::where('id', $id)->first();
-    $groupUsers = explode(",", $group->user_id);
+    $groupOnDemand = explode(",", $group->on_demand);
 
-    $userKey = array_search($user, $groupUsers);
-    $newUsersArray = array_splice($groupUsers, $userKey, 1);
-    $newGroupUsers = implode(" ", $newUsersArray);
+    if (!in_array($user->id, $groupOnDemand)) {
+      foreach ($groupOnDemand as $key => $value) {
+        if (strlen($value) == 0)
+        {
+          array_splice($groupOnDemand, $key, 1);
+        }
+      }
+      array_push($groupOnDemand, $user->id);
+      $onDemand = implode(",", $groupOnDemand);
+      $group->on_demand = $onDemand;
+      $group->save();
 
-    $group->user_id = $newGroupUsers;
+      $groupAdmins = explode(",", $group->admins_id);
+      foreach ($groupAdmins as $admin) {
+        var_dump($admin);
+        $userAdmin = User::where('id', $admin)->first();
+        $userAdmin->notify(new JoinGroupDemand($user, $group));
+      }
 
-    $group->save();
+      return redirect(route('group.show', ['name' => $groupName]))->with('ok', "Votre demande pour rejoindre le groupe '" . $group->name . "' a été envoyée.");
+    }
+
+    return redirect(route('group.show', ['name' => $groupName]))->with('error', "Vous avez déjà envoyé une demande pour rejoindre le groupe '" . $groupName . "'");
   }
 }

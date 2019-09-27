@@ -34,12 +34,13 @@
     @endisset
   </div>
 </nav>
-<section class="col-lg-8 pt-4 mx-auto">
+@include('templates/nav_left_template')
+<section class="col-lg-6 pt-4 mx-auto">
   @yield('section')
 </section>
 @else
 <div class="text-center mt-5">
-  <p class="h4">Connectez-vous pour accéder à cette page.</p>
+  <p class="h4">Vous n'avez pas accès à cette page.</p>
 </div>
 @endif
 

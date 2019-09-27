@@ -10,6 +10,10 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use App\Post;
 use App\Group;
+use App\Notifications\GroupDeregister;
+use App\Notifications\JoinGroupFalse;
+use App\Notifications\JoinGroupOk;
+use App\Notifications\WarnUserNotif;
 
 class AdminController extends Controller
 {
@@ -33,6 +37,8 @@ class AdminController extends Controller
     $group = Group::where('name', $groupName)->first();
     $groupAdmins = explode(",", $group->admins_id);
     $groupUsers = explode(",", $group->users_id);
+    $groupOnDemand = explode(",", $group->on_demand);
+    $usersWarned = explode(",", $group->users_warned);
 
     $posts = Post::where('group_id', $group->id)->get();
     $comments = Comment::where('group_id', $group->id)->get();
@@ -40,7 +46,7 @@ class AdminController extends Controller
     $users = $this->user->getPaginate($this->nbrPerPage, $order);
     $links = $users->render();
 
-    return view('admin.admin_home', compact('groupName', 'groupAdmins', 'users', 'groupUsers', 'posts', 'comments', 'links'));
+    return view('admin.admin_home', compact('groupName', 'groupAdmins', 'groupOnDemand', 'usersWarned', 'users', 'groupUsers', 'posts', 'comments', 'links'));
   }
 
   /**
@@ -70,8 +76,8 @@ class AdminController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show($id, $groupName)
-  { 
+  public function show($groupName, $id)
+  {
     $orderValue = 'created_at';
     $ord = 'desc';
 
@@ -165,15 +171,125 @@ class AdminController extends Controller
       return view('admin.admin_user', compact('user', 'posts', 'groupName'));
     }
 
-    return redirect(route('admin.index'))->withOk("Le terme recherché n'existe pas: " . $result->user);
+    return redirect(route('admin.index', compact('groupName')))->with("error", "L'utilisateur recherché n'existe pas: " . $result->user);
   }
 
-  public function orderChange($orderNew)
+  public function deregisterUser($groupName, Request $request)
   {
+    $group = Group::where('name', $groupName)->first();
+    $user = $this->user->getById($request->user_id);
+    $userPosts = Post::where('user_id', $user->id)->get();
+    $userComments = Comment::where('user_id', $user->id)->get();
 
-    $users = $this->user->getPaginate($this->nbrPerPage, $orderNew);
-    $links = $users->render();
+    foreach ($userPosts as $post) {
+      if ($post->group_id == $group->id) {
+        foreach ($userComments as $comment) {
+          if ($comment->post_id == $post->id) {
+            $comment->delete();
+          }
+        }
+        $post->delete();
+      }
+    }
 
-    return view('admin.admin_home', compact('users', 'links'));
+    $groupUsers = explode(",", $group->users_id);
+    $userGroupKey = array_search($user->id, $groupUsers);
+    array_splice($groupUsers, $userGroupKey, 1);
+    $newGroupUsers = implode(",", $groupUsers);
+    $group->users_id = $newGroupUsers;
+
+    $userWarned = explode(",", $group->users_warned);
+    while (array_search($user->id, $userWarned)) {
+      $userWarnedKey = array_search($user->id, $userWarned);
+      array_splice($userWarned, $userWarnedKey, 1);
+    }
+    $newUserWarned = implode(",", $userWarned);
+    $group->users_warned = $newUserWarned;
+
+    $group->save();
+
+    $user->notify(new GroupDeregister($user, $group, $request->reason));
+
+    return redirect(route('admin.index', $groupName))->with('ok', $user->name . " a bien été radié du groupe.");
+  }
+
+  public function joinGroup(Request $request, $groupName)
+  {
+    $group = Group::where('name', $groupName)->first();
+    $user = $this->user->getById($request->user_id);
+
+    $groupOnDemand = explode(",", $group->on_demand);
+
+    if ($request->join) {
+      $groupUsers = explode(",", $group->users_id);
+      array_push($groupUsers, $user->id);
+      $newGroupUsers = implode(",", $groupUsers);
+
+      $userDemandKey = array_search($user, $groupOnDemand);
+      array_splice($groupOnDemand, $userDemandKey, 1);
+      $newOnDemand = implode(",", $groupOnDemand);
+
+      $group->on_demand = $newOnDemand;
+      $group->users_id = $newGroupUsers;
+      $group->save();
+
+      $user->notify(new JoinGroupOk($user, $group));
+
+      return redirect(route('admin.index', $groupName))->with('ok', "l'utilisateur " . $user->name . " a bien été ajouté au groupe.");
+    } else {
+      $userDemandKey = array_search($user, $groupOnDemand);
+      array_splice($groupOnDemand, $userDemandKey, 1);
+      $newOnDemand = implode(",", $groupOnDemand);
+
+      $group->on_demand = $newOnDemand;
+      $group->save();
+
+      $user->notify(new JoinGroupFalse($user, $group));
+
+      return redirect(route('admin.index', $groupName))->with('ok', "La demande de l'utilisateur " . $user->name . " a bien été rejetée.");
+    }
+  }
+
+  public function warnUser(Request $request, $groupName)
+  {
+    $group = Group::where('name', $groupName)->first();
+    $user = $this->user->getById($request->user_id);
+
+    $warnedUsers = explode(",", $group->users_warned);
+    array_push($warnedUsers, $user->id);
+    $newWarnedUsers = implode(",", $warnedUsers);
+
+    $group->users_warned = $newWarnedUsers;
+    $group->save();
+
+    $user->notify(new WarnUserNotif($user, $group, $request->reason));
+
+    return redirect(route('admin.index', $groupName))->with('ok', "L'utilisateur " . $user->name . " a bien été averti.");
+  }
+
+  public function adminSwitch(Request $request, $groupName)
+  {
+    $group = Group::where('name', $groupName)->first();
+    $user = $this->user->getById($request->user_id);
+    $adminsId = explode(",", $group->admins_id);
+
+    if ($request->admin) {
+      array_push($adminsId, $user->id);
+      $newAdminsId = implode(",", $adminsId);
+
+      $group->admins_id = $newAdminsId;
+      $group->save();
+
+      return redirect(route('admin.index', $groupName))->with('ok', "L'utilisateur " . $user->name . " a été ajouté aux administrateurs.");
+    }
+
+    $adminsIdKey = array_search($user, $adminsId);
+    array_splice($adminsId, $adminsIdKey, 1);
+    $newAdminsId = implode(",", $adminsId);
+
+    $group->admins_id = $newAdminsId;
+    $group->save();
+
+    return redirect(route('admin.index', $groupName))->with('ok', "L'utilisateur " . $user->name . " a été retiré des administrateurs.");
   }
 }

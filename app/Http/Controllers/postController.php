@@ -37,8 +37,8 @@ class postController extends Controller
 
       $group = Group::where('name', $groupName)->first();
       $groupId = $group->id;
-      $groupUsers = explode(" , ", $group->users_id);
-      $groupAdmins = explode(" , ", $group->admins_id);
+      $groupUsers = explode(",", $group->users_id);
+      $groupAdmins = explode(",", $group->admins_id);
 
       $nbrPosts = $group->posts()->count();
       $links = $posts->render();

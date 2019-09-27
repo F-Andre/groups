@@ -10,7 +10,7 @@ class Comment extends Model
     use Notifiable;
 
     protected $fillable = [
-        'comment', 'post_id', 'user_id'
+        'comment', 'post_id', 'user_id', 'group_id'
     ];
 
     public function group()

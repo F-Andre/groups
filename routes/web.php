@@ -22,9 +22,13 @@ Route::resources([
 
 Route::post('group/{group}', 'GroupController@searchResult')->name('group.searchResult');
 
-Route::post('{group}/admin/{admin}', 'AdminController@searchResult')->name('admin.searchResult');
+Route::post('{group}/admin/{admin}', 'AdminController@searchResult')->name('admin.searchResult')->middleware('verified');
+Route::post('{group}/deregisterUser', 'AdminController@deregisterUser')->name('admin.deregisterUser')->middleware('verified');
+Route::post('{group}/joinGroup', 'AdminController@joinGroup')->name('admin.joinGroup')->middleware('verified');
+Route::post('{group}/warnUser', 'AdminController@warnUser')->name('admin.warnUser')->middleware('verified');
+Route::post('{group}/adminSwitch', 'AdminController@adminSwitch')->name('admin.adminSwitch')->middleware('verified');
 
-Route::post('group/{group}/{user}', 'GroupController@join')->name('group.join');
+Route::post('group/{group}/{user}', 'GroupController@joinDemand')->name('group.joinDemand')->middleware('verified');
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
 

@@ -31,10 +31,18 @@
 </aside>
 @endauth
 <div class="container-fluid col-lg-6 bx-auto mt-4">
-  @if (session()->has('fail'))
-    <div class="col-lg-8 mx-auto mt-4 alert alert-warning alert-dismissible fade show" role="alert">
+    @if (session()->has('ok'))
+    <div class="col-lg-10 mx-auto mt-4 alert alert-success alert-dismissible fade show" role="alert">
+      {{ session('ok') }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  @endif
+  @if (session()->has('error'))
+    <div class="col-lg-10 mx-auto mt-4 alert alert-warning alert-dismissible fade show" role="alert">
       <i class="fas fa-exclamation-triangle"></i>
-      {{ session('fail') }}
+      {{ session('error') }}
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -48,7 +56,7 @@
       @if (in_array(auth()->user()->id, $usersId))
         <p>Vous êtes membre de ce groupe</p>
       @else
-      <form method="POST" action="{{ route('group.join', ['groupName' => $group->name, 'userId' => auth()->user()->id]) }}" enctype="multipart/form-data">
+      <form method="POST" action="{{ route('group.joinDemand', ['groupName' => $group->name, 'userId' => auth()->user()->id]) }}" enctype="multipart/form-data">
         @csrf
         <input name="joinGroup" id="joinGroup" class="btn btn-success" type="submit" value="Rejoindre">
       </form>
