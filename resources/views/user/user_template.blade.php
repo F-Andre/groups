@@ -18,7 +18,7 @@
       </div>
     </div>
     <li class="nav-item active">
-      <a class="nav-link" href="{{ route('user_page.show', ['id' => $user->id]) }}" role="button">Mes articles</a>
+      <a class="nav-link" href="{{ route('user_page.show', $user->id) }}" role="button">Mes articles</a>
     </li>
     @if ($user->admin)
     <li class="nav-item active">

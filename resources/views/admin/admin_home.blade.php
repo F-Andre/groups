@@ -79,7 +79,7 @@
     $warningsQ = count(array_keys($usersWarned, $user->id));
     @endphp
     <tr>
-      <td><a href={{ route('admin.show', ['groupName' => $groupName, 'id' => $user->id]) }}>{{ $user->name }}</a></td>
+      <td><a href={{ route('admin.show', [$groupName, $user->id]) }}>{{ $user->name }}</a></td>
       <td class="text-center">{{ $postsQ }}</td>
       <td class="text-center">{{ $commentsQ }}</td>
       <td class="text-center">{{ $warningsQ }}</td>

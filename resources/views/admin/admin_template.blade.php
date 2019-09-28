@@ -10,7 +10,7 @@
   <div class="collapse navbar-collapse" id="collapsibleNavId">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
-        <a class="nav-link" href="{{ route('admin.index', $groupName) }}" role="button">{{ $groupName }} - Page admin
+        <a class="nav-link" href="{{ route('admin.index', $groupName) }}" role="button">Page admin du groupe "{{ $groupName }}"
           <span class="sr-only">(current)</span></a>
       </li>
     </ul>
@@ -19,7 +19,7 @@
       action="{{ route('admin.searchResult', ['user' => $user, 'groupName' => $groupName]) }}">
       @csrf
       <div class="form-group">
-        <input class="form-control mr-sm-2" list="users" name="user" id="user" type="text" placeholder="Entrez un nom"
+        <input class="form-control mr-sm-2" list="users" name="user" id="user" type="text" placeholder="Chercher un membre du groupe"
           autocomplete="off" />
         <datalist id="users">
           @foreach ($users as $user)

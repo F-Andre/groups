@@ -52,7 +52,7 @@
     @endif
     @endif
     <hr class="hr">
-    <form method="GET" action={{ route( 'admin.show', ['id'=> $user->id, 'groupName' => $groupName]) }}>
+    <form method="GET" action={{ route( 'admin.show', [$groupName, $user->id]) }}>
       <div class="form-group my-4 ml-4">
         <label for="tri">Trier les posts:</label>
         <select id="tri" name="tri">

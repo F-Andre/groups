@@ -2,7 +2,7 @@
 @section('article')
 <article class="user-posts col-lg-8 mx-auto">
   @if (count($posts) > 0)
-  <form method="GET" action={{ route( 'user_page.show', ['id'=> $user->id]) }}>
+  <form method="GET" action={{ route( 'user_page.show', $user->id) }}>
     <div class="form-group my-4">
       <label for="tri">Trier les posts:</label>
       <select id="tri" name="tri">
@@ -45,7 +45,7 @@
           </td>
           <td class="text-center">{{ $post->comments()->count() }}</td>
           <td>
-            <form method="GET" action={{ route( 'user_page.show', ['id'=> $user->id]) }}>
+            <form method="GET" action={{ route( 'user_page.show', $user->id) }}>
               <input type="text" name="post-view" value={{ $post->id }} hidden>
               <input type="submit" class="btn btn-success btn-sm" value="Voir l'article">
             </form>
@@ -67,7 +67,7 @@
   </div>
   @endif
   @isset($postView)
-  <div class="col-lg-8 mx-auto">
+  <div class="col-lg-10 mx-auto">
     @include('templates/post_light_template', ['post' => $postView])
   </div>
   @endisset

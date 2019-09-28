@@ -133,7 +133,7 @@ export default class ArticleForm extends Component {
           <a id="btnDeleteImage" className={disableDelete} onClick={this.handleDeleteImage}>Effacer l'image</a>
         </div>
         <LoadModal />
-        <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Modifier le post</button>
+        <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Enregistrer</button>
       </div>
     )
   }

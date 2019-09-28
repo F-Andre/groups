@@ -48,7 +48,7 @@
           </button>
           <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownPost{{ $post->id }}">
             @if (Auth::user()->id == $post->user->id)
-            <a name="edit" id="edit" class="dropdown-item" href="{{ route('posts.edit', ['id' => $post->id, 'group' => $groupName]) }}"
+            <a name="edit" id="edit" class="dropdown-item" href="{{ route('posts.edit', [$groupName, $post->id]) }}"
               role="button">Editer l'article</a>
             @endif
             <button type="button" class="dropdown-item text-danger" data-toggle="modal" data-target="#deletePost">
@@ -90,7 +90,7 @@
             <i class="fas fa-ellipsis-h"></i>
           </button>
           <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownComment{{ $comment->id }}">
-            <form method="POST" action="{{ route('comment.destroy', ['id' => $comment->id, 'group' => $groupName]) }}">
+            <form method="POST" action="{{ route('comment.destroy', $comment->id) }}">
               @method('DELETE')
               @csrf
               <button type="submit" class="dropdown-item">Effacer</button>
@@ -103,8 +103,10 @@
     </div>
     @endforeach
     @auth
-    <form method="POST" action="{{ route('comment.store', ['post_id' => $post->id, 'user_id' => Auth::user()->id, 'group' => $groupName]) }}">
+    <form method="POST" action="{{ route('comment.store') }}"  enctype="multipart/form-data">
       @csrf
+      <input type="text" name="post_id" value={{ $post->id }} hidden>
+      <input type="text" name="user_id" value={{ auth()->user()->id }} hidden>
       <div class="commentForm"></div>
     </form>
     @endauth

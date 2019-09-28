@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Http\Requests\PostRequest;
 use App\Repositories\PostRepository;
 use Illuminate\Support\Facades\DB;
@@ -80,12 +81,6 @@ class postController extends Controller
     $users = User::all();
     $group = Group::where('name', $groupName)->first();
 
-    foreach ($users as $user) {
-      if ($user->id != $request->user()->id) {
-        $user->notify(new NewPost($request->user()));
-      }
-    }
-
     if ($request->hasFile('image')) {
       if ($request->image->isValid()) {
         if (Storage::exists('public/images/' . $request->user()->id) == false) {
@@ -120,6 +115,12 @@ class postController extends Controller
     $inputs = array_merge($request->all(), ['user_id' => $request->user()->id, 'group_id' => $group->id]);
     $this->post->store($inputs);
     DB::table('users')->where('id', $request->user()->id)->increment('postsQty');
+
+    foreach ($users as $user) {
+      if ($user->id != $request->user()->id) {
+        $user->notify(new NewPost($request->user()));
+      }
+    }
 
     return $retour;
   }
@@ -158,7 +159,7 @@ class postController extends Controller
   public function update(PostRequest $request, $groupName, $id)
   {
     $post = $this->post->getById($id);
-    $retour = redirect(route('posts.index', ['groupName' => $groupName]))->withOk('Le post "' . $request->titre . '" a été modifié');
+    $retour = redirect(route('posts.index', $groupName))->withOk('Le post "' . $request->titre . '" a été modifié');
 
     if ($request->hasFile('image')) {
       if ($request->image->isValid()) {
@@ -208,22 +209,23 @@ class postController extends Controller
    * @param  \App\Post  $post
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy($groupName, $id)
   {
-
-    $user = $this->post->findUser($id);
-    DB::table('users')->where('id', $user->id)->decrement('postsQty');
-
     $post = $this->post->getById($id);
+
+    $user = User::where('id', $post->user_id)->first();
+    $user->decrement('postsQty');
+
     Storage::delete($post->image);
 
-    $comments = $this->post->getComments($id);
+    $comments = Comment::where('post_id', $post->id)->get();
+
     foreach ($comments as $comment) {
-      DB::table('comments')->where('post_id', $post->id)->delete();
+      $comment->delete();
     }
 
     $this->post->destroy($id);
 
-    return redirect()->back()->withOk('Le post a bien été effacé');
+    return redirect(route('posts.index', $groupName))->with('ok', 'Le post a bien été effacé');
   }
 }

@@ -54,17 +54,16 @@ class CommentController extends Controller
     $group = Group::where('id', $post->group_id)->first();
     $groupName = $group->name;
 
-    var_dump($groupName);
+    $inputs = array_merge($request->all(), ['group_id' => $group->id]);
+
+    $this->comment->store($inputs);
 
     if ($poster->id != $commenter->id)
     {
       $poster->notify(new CommentNotification($commenter, $post));
     }
 
-    $inputs = array_merge($request->all());
-    $this->comment->store($inputs);
-
-    return redirect(route('posts.index', ['groupName' => $groupName, '#' . $post->id],));
+    return redirect(route('posts.index', [$groupName, '#' . $post->id],));
   }
 
   /**

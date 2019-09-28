@@ -29,6 +29,7 @@
         href="{{ route('group.index') }}">Groupes</a>
       @endif
       </div>
+      <hr class="hr">
       <div>
         <p class="h2">Mes infos</p>
         <p class="avatar" style={{"background-image:url(".Storage::url($user->avatar).")"}}></p>
