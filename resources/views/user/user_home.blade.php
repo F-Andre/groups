@@ -40,7 +40,7 @@
         <p class="card-text">Vous ne recevez pas les notifications par mail</p>
         @endif
         <a role="button" class="btn btn-warning float-right"
-          href="{{ route('user_page.edit', ['id' => $user->id]) }}">Editer mes informations</a>
+          href="{{ route('user_page.edit', $user->id) }}">Editer mes informations</a>
       </div>
     </div>
     @if ($user->admin == 1)
