@@ -24,7 +24,7 @@
           var avatar = {!! json_encode($avatarUrl) !!};
           var defaultAvatar = {!! json_encode($defaultAvatar) !!};
         </script>
-        <form class="my-5" method="POST" action={{ route('user_page.update', ['id' => $user->id]) }}
+        <form class="my-5" method="POST" action={{ route('user_page.update', $user->id) }}
           enctype="multipart/form-data">
           @method('PUT')
           @csrf
