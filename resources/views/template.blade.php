@@ -22,7 +22,9 @@
   </head>
 
   <body>
-    <?php setlocale(LC_TIME, 'fr_FR'); ?>
+    @php
+      setlocale(LC_TIME, 'fr_FR');
+    @endphp
     <div id="app">
       <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
         <div class="container col-11">

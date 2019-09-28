@@ -8,56 +8,14 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+
+@import 'welcome.scss';
+@import 'avatar.scss';
+
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
-
-#image,
-#avatar {
-  opacity: 0;
-}
-
-#btnDeleteImage,
-#btnDeleteAvatar:hover {
-  color: white;
-}
-
-#btnDeleteAvatar {
-  color: #e3342f;
-}
-
-#imageDeleted,
-#avatarDeleted {
-  display: none;
-}
-
-#avatarLabel:hover {
-  background-blend-mode: soft-light;
-}
-
-.avatar {
-  display: inline-block;
-  background-size: cover;
-  height: 128px;
-  width: 128px;
-  border-radius: 50%;
-  border: none;
-}
-
-.avatar_icon {
-  height: 56px;
-  width: 56px;
-}
-
-.avatar-cmt {
-  height: 48px;
-  width: 48px;
-}
-
-.avatar-btn {
-  height: 30px;
-  width: 30px;
 }
 
 .comment {

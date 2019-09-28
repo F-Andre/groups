@@ -1,0 +1,46 @@
+#image,
+#avatar {
+  opacity: 0;
+}
+
+#btnDeleteImage,
+#btnDeleteAvatar:hover {
+  color: white;
+}
+
+#btnDeleteAvatar {
+  color: #e3342f;
+}
+
+#imageDeleted,
+#avatarDeleted {
+  display: none;
+}
+
+#avatarLabel:hover {
+  background-blend-mode: soft-light;
+}
+
+.avatar {
+  display: inline-block;
+  background-size: cover;
+  height: 128px;
+  width: 128px;
+  border-radius: 50%;
+  border: none;
+}
+
+.avatar_icon {
+  height: 56px;
+  width: 56px;
+}
+
+.avatar-cmt {
+  height: 48px;
+  width: 48px;
+}
+
+.avatar-btn {
+  height: 30px;
+  width: 30px;
+}
