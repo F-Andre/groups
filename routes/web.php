@@ -17,9 +17,9 @@ Route::resource('{group}/admin', 'AdminController')->middleware('verified');
 Route::resources([
   'comment'=> 'CommentController',
   'user_page'=> 'UserController',
-  'group' => 'GroupController'
 ]);
 
+Route::resource('group', 'GroupController')->middleware('verified');
 Route::post('group/{group}', 'GroupController@searchResult')->name('group.searchResult');
 
 Route::post('{group}/admin/{admin}', 'AdminController@searchResult')->name('admin.searchResult')->middleware('verified');
