@@ -40,15 +40,15 @@
           <!-- Left Side Of Navbar -->
           @auth
           <ul id="authBtn" class="navbar-nav ml-auto">
-            <li class="nav-item accordion" id="authAcc">
-              <a class="btn btn-secondary" id="headingAuth" href="#" role="button" data-toggle="collapse"
-                data-target="#authDropdown" aria-expanded="true" aria-controls="authDropdown">
+            <li class="nav-item accordion" id="navAuthAcc">
+              <a class="btn btn-secondary" id="navHeadingAuth" href="#" role="button" data-toggle="collapse"
+                data-target="#navAuthDropdown" aria-expanded="true" aria-controls="navAuthDropdown">
                 <span class="avatar avatar-btn float-left"
                   style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></span>
                 {{ Auth::user()->name }}
                 <i class="ml-2 fas fa-caret-down"></i>
               </a>
-              <div id="authDropdown" class="collapse mt-2" aria-labelledby="headingAuth" data-parent="#authAcc">
+              <div id="navAuthDropdown" class="collapse mt-2" aria-labelledby="navHeadingAuth" data-parent="#navAuthAcc">
                 <a class="dropdown-item" href="{{ route('user_page.index') }}">
                   Mon compte
                 </a>
@@ -62,13 +62,13 @@
               </div>
             </li>
             @isset($groupName)
-            <li class="nav-item accordion mt-2" id="accountAcc">
-              <a id="headingGroup" class="btn btn-outline-success" href="#" role="button" data-toggle="collapse"
-                data-target="#groupDropdown" aria-expanded="true" aria-controls="groupDropdown">
+            <li class="nav-item accordion mt-2" id="navAccountAcc">
+              <a id="navHeadingGroup" class="btn btn-outline-success" href="#" role="button" data-toggle="collapse"
+                data-target="#navGroupDropdown" aria-expanded="true" aria-controls="navGroupDropdown">
                 {{ $groupName }}
                 <i class="ml-2 fas fa-caret-down"></i>
               </a>
-              <div id="groupDropdown" class="collapse mt-2" aria-labelledby="headingGroup" data-parent="#accountAcc">
+              <div id="navGroupDropdown" class="collapse mt-2" aria-labelledby="navHeadingGroup" data-parent="#navAccountAcc">
                 <a class="dropdown-item" href="{{ route('posts.index', $groupName) }}">
                   Fil du groupe
                 </a>

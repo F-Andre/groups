@@ -21,14 +21,12 @@
   </div>
   @endif
   @if (count($posts) > 0 && $nbrPosts > 0)
-  {{ $links }}
   @foreach ($posts as $post)
   @if ($post->group_id == $groupId)
   @include('templates/post_complete_template')
   @endif
   <br>
   @endforeach
-  {{ $links }}
   @else
   <div class="mt-5 text-center">
     <p class="h2">Il n'y encore aucun article</p>
