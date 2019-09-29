@@ -1,6 +1,8 @@
 @extends('template')
 @section('content')
-@include('templates/nav_left_template')
+<aside class="col-2 ml-5 py-4">
+  @include('templates/nav_left_template')
+</aside>
 <article class="mx-auto col-lg-6 py-4">
   @if (session()->has('ok'))
   <div class="alert alert-success alert-dismissible fade show" role="alert">

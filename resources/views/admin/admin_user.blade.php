@@ -11,7 +11,7 @@
     </div>
     <div>
       @if (Auth::user()->name == $user->name)
-      <a class="btn btn-warning" href="{{ route('user_page.edit', ['id' => $user->id]) }}">Editer</a>
+      <a class="btn btn-warning" href="{{ route('user_page.edit', $user->id) }}">Editer</a>
       @endif
     </div>
   </div>
@@ -52,17 +52,14 @@
     @endif
     @endif
     <hr class="hr">
-    <form method="GET" action={{ route( 'admin.show', [$groupName, $user->id]) }}>
-      <div class="form-group my-4 ml-4">
-        <label for="tri">Trier les posts:</label>
+    <form class="form-inline mb-3" method="GET" action={{ route( 'admin.show', [$groupName, $user->id]) }}>
         <select id="tri" name="tri">
-          <option value="">--choix--</option>
+          <option value="">Trier les posts</option>
           <option value="titre">Par titre</option>
-          <option value="created-desc">Date de création (le + récent)</option>
-          <option value="created-asc">Date de création (le + vieux)</option>
+          <option value="created-desc">Le + récent</option>
+          <option value="created-asc">Le + vieux</option>
         </select>
-        <button type="submit" class="btn btn-primary btn-sm">Trier</button>
-      </div>
+        <button type="submit" class="btn btn-primary btn-sm ml-2">Trier</button>
     </form>
     <table class="col-lg-11 mx-auto table table-striped table-inverse table-responsive text-nowrap">
       <thead class="thead-dark">
