@@ -16,6 +16,7 @@ class CreateGroupsTable extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->char('name', 80)->unique();
+            $table->text('description');
             $table->char('users_id', 255);
             $table->char('admins_id', 255);
             $table->char('on_demand', 255)->default('');

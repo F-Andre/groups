@@ -14,6 +14,7 @@ use App\Notifications\GroupDeregister;
 use App\Notifications\JoinGroupFalse;
 use App\Notifications\JoinGroupOk;
 use App\Notifications\WarnUserNotif;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -39,6 +40,7 @@ class AdminController extends Controller
     $groupUsers = explode(",", $group->users_id);
     $groupOnDemand = explode(",", $group->on_demand);
     $usersWarned = explode(",", $group->users_warned);
+    $dateCreation = Carbon::parse($group->created_at)->locale('fr')->format('d M Y à H:i');
 
     $posts = Post::where('group_id', $group->id)->get();
     $comments = Comment::where('group_id', $group->id)->get();
@@ -46,7 +48,7 @@ class AdminController extends Controller
     $users = $this->user->getPaginate($this->nbrPerPage, $order);
     $links = $users->render();
 
-    return view('admin.admin_home', compact('groupName', 'groupAdmins', 'groupOnDemand', 'usersWarned', 'users', 'groupUsers', 'posts', 'comments', 'links'));
+    return view('admin.admin_home', compact('group', 'dateCreation', 'groupAdmins', 'groupOnDemand', 'usersWarned', 'users', 'groupUsers', 'posts', 'comments', 'links'));
   }
 
   /**

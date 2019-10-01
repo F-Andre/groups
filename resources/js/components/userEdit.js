@@ -105,14 +105,13 @@ export default class UserEditForm extends Component {
   }
 
   render () {
-    const imageSizeMax = 4718592
     const disabledState = !this.state.modified ? true : this.state.imgSize > imageSizeMax ? true : false
     const submitClass = !disabledState ? "btn btn-success btn-lg" : "btn btn-success btn-lg disabled"
     const disableDelete = this.state.imgSrc != '/storage/default/default_avatar.png' ? "btn btn-outline-danger btn-sm" : "btn btn-outline-danger btn-sm disabled"
     const aStyle = {
       backgroundImage: 'url(' + this.state.imgSrc + ')',
     };
-    const imageClass = this.state.imgSize > imageSizeMax ? 'form-control is-invalid' : 'form-control'
+    const imageClass = 'form-control'
 
     return (
       <div>
@@ -139,7 +138,7 @@ export default class UserEditForm extends Component {
             <br />
             <a id="btnDeleteAvatar" className={disableDelete} onClick={this.handleDeleteAvatar}>Effacer l'image</a>
             <input id="avatar" name="avatar" className={imageClass} type="file" accept=".JPG, .PNG, .GIF" ref={this.fileInput} onChange={this.handleChangeAvatar} />
-            <div className="invalid-feedback">L'image doit être aux formats jpg, png ou gif et avoir une taille max de 4.5Mo.</div>
+            <div className="invalid-feedback">L'image doit être aux formats jpg, png ou gif.</div>
           </div>
           <input id="avatarDeleted" type="text" className="disabled" name="avatarDeleted" value={this.state.imageDeleted} />
         </div>

@@ -43,8 +43,8 @@
           @csrf
           <input type="text" id="deregisterForm" name="user_id" value={{ $user->id }} hidden>
           <div class="form-group">
-            <input type="text" class="form-control mr-3" name="reason" placeholder="Raisons de la radiation" required>
-            <input type="submit" class="btn btn-danger" value="Radier">
+            <input type="text" class="form-control mr-3" name="reason" placeholder="Raisons de l'exclusion" required>
+            <input type="submit" class="btn btn-danger" value="Exclure">
           </div>
         </form>
       </div>
@@ -61,7 +61,7 @@
         </select>
         <button type="submit" class="btn btn-primary btn-sm ml-2">Trier</button>
     </form>
-    <table class="col-lg-11 mx-auto table table-striped table-inverse table-responsive text-nowrap">
+    <table class="table table-striped table-inverse table-responsive text-nowrap">
       <thead class="thead-dark">
         <tr class="text-center">
           <th>Titre</th>

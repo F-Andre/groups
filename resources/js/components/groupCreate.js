@@ -15,38 +15,76 @@ function GroupName(props) {
   );
 }
 
+function GroupDesc(props) {
+  return (
+    <input
+      type="text"
+      name="description"
+      id="description"
+      value={props.value}
+      onChange={props.onChange}
+      className={props.className}
+    />
+  );
+}
+
 export default class GroupForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
       nameValue: '',
+      descValue: '',
       spinner: '',
       nameClass: 'form-control is-invalid',
+      descClass: 'form-control is-invalid'
     }
     this.handleChangeName = this.handleChangeName.bind(this);
+    this.handleChangeDesc = this.handleChangeDesc.bind(this);
   }
 
   handleChangeName(event) {
     let regexp = /[\s]{1,}/g
     if (event.target.value.length <= 6 || regexp.test(event.target.value)) {
-      console.log('zehzuierg')
       this.setState({ nameValue: event.target.value, nameClass: 'form-control is-invalid' })
     } else {
       this.setState({ nameValue: event.target.value, nameClass: 'form-control' })
     }
-    
+  }
+
+  handleChangeDesc(event) {
+    if (event.target.value.length <= 6) {
+      this.setState({ descValue: event.target.value, descClass: 'form-control is-invalid' })
+    } else {
+      this.setState({ descValue: event.target.value, descClass: 'form-control' })
+    }
   }
 
   render() {
-    const disabledState = this.state.nameClass == 'form-control is-invalid' ? true : false
+    const disabledState = this.state.nameClass == 'form-control is-invalid' ? true : this.state.descClass == 'form-control is-invalid' ? true : false
     const submitClass = !disabledState ? "btn btn-primary" : "btn btn-secondary disabled"
 
     return (
       <div className="form-group">
         <div className="form-group">
-          <label htmlFor="titre">Nom du groupe:</label>
+          <label htmlFor="name">Nom du groupe:</label>
           <GroupName value={this.state.nameValue} onChange={this.handleChangeName} className={this.state.nameClass} />
           <div className="invalid-feedback">Choisissez un nom d'au moins 6 caractères sans espaces.</div>
+        </div>
+        <div className="form-group">
+          <label htmlFor="desc">Description du groupe:</label>
+          <GroupDesc value={this.state.descValue} onChange={this.handleChangeDesc} className={this.state.descClass} />
+          <div className="invalid-feedback">Choisissez une description d'au moins 6 caractères.</div>
+        </div>
+        <div id="divAvatar" className="form-group">
+          <p>Avatar:</p>
+          <div className="form-group">
+            <label id="avatarLabel" htmlFor="avatar" className="btn btn-outline-secondary avatar" style={aStyle}></label>
+            <br />
+            <a id="btnDeleteAvatar" className={disableDelete} onClick={this.handleDeleteAvatar}>Effacer l'image</a>
+            <input id="avatar" name="avatar" className={imageClass} type="file" accept=".JPG, .PNG, .GIF" ref={this.fileInput} onChange={this.handleChangeAvatar} />
+            <div className="invalid-feedback">L'image doit être aux formats jpg, png ou gif.</div>
+          </div>
+          <input id="avatarDeleted" type="text" className="disabled" name="avatarDeleted" value={this.state.imageDeleted} />
         </div>
         <LoadModal />
         <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Créer le groupe</button>

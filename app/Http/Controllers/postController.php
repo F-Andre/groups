@@ -34,7 +34,7 @@ class postController extends Controller
   {
     if (isset($groupName))
     {
-      $posts = $this->post->getPaginate($this->nbrPerPage, 'nom');
+      $posts = $this->post->getCollection();
 
       $group = Group::where('name', $groupName)->first();
       $groupId = $group->id;
@@ -42,11 +42,10 @@ class postController extends Controller
       $groupAdmins = explode(",", $group->admins_id);
 
       $nbrPosts = $group->posts()->count();
-      $links = $posts->render();
 
       if (in_array(auth()->user()->id, $groupUsers))
       {
-        return view('blog', compact('posts', 'links', 'groupName', 'groupId', 'nbrPosts', 'groupAdmins'));
+        return view('blog', compact('posts', 'groupName', 'groupId', 'nbrPosts', 'groupAdmins'));
       }
       else
       {
@@ -66,7 +65,10 @@ class postController extends Controller
    */
   public function create($groupName)
   {
-    return view('post.create', ['groupName' => $groupName]);
+    $group = Group::where('name', $groupName)->first();
+    $groupAdmins = explode(",", $group->admins_id);
+
+    return view('post.create', compact('groupName', 'groupAdmins'));
   }
 
   /**

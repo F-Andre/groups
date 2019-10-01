@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\GroupRepository;
 use App\Http\Requests\GroupSearchRequest;
 use App\Notifications\JoinGroupDemand;
+use App\Post;
 use App\User;
 
 class GroupController extends Controller
@@ -104,7 +105,23 @@ class GroupController extends Controller
    */
   public function destroy($id)
   {
-    //
+    $group = $this->group->getById($id);
+
+    $posts = Post::where('group_id', $id);
+
+    foreach ($posts as $post) {
+
+      $comments = Comment::where('post_id', $post->id)->get();
+      foreach ($comments as $comment) {
+        $comment->delete();
+      }
+      $post->delete();
+    }
+
+    Storage::delete($group->avatar);
+    $this->group->destroy($id);
+
+    return redirect(route('group.index'))->with('ok', 'Le groupe a bien été supprimé');
   }
 
   public function searchResult(GroupSearchRequest $result)
@@ -126,8 +143,7 @@ class GroupController extends Controller
 
     if (!in_array($user->id, $groupOnDemand)) {
       foreach ($groupOnDemand as $key => $value) {
-        if (strlen($value) == 0)
-        {
+        if (strlen($value) == 0) {
           array_splice($groupOnDemand, $key, 1);
         }
       }

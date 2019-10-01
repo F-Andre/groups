@@ -11,11 +11,6 @@ class GroupRepository extends DataRepository
     $this->model = $group;
   }
 
-  public function getCollection()
-  {
-    return $this->model->all();
-  }
-
   public function findPost($id)
   {
     return $this->model->find($id)->post;

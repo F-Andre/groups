@@ -40,7 +40,7 @@
     @if (Auth::check())
     <div class="container">
       <div class="float-right text-right">
-        @if (Auth::user()->admin or Auth::user()->id == $post->user->id)
+        @if (in_array(auth()->user()->id, $groupAdmins) or Auth::user()->id == $post->user->id)
         <div class="dropdown">
           <button class="btn btn-outline-light btn-sm dropdown-toggle edit-button text-secondary" type="button"
             id="dropdownPost{{ $post->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -83,7 +83,7 @@
       </div>
       <div class="text-right">
         @auth
-        @if (Auth::user()->admin or Auth::user()->id == $comment->user->id)
+        @if (in_array(auth()->user()->id, $groupAdmins) or Auth::user()->id == $comment->user->id)
         <div class="dropdown">
           <button class="btn btn-outline-light btn-sm dropdown-toggle edit-button text-secondary" type="button"
             id="dropdownComment{{ $comment->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

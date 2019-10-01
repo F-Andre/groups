@@ -1,5 +1,9 @@
 @extends('admin/admin_template')
 
+@php
+$groupName = $group->name;
+@endphp
+
 @section('section')
 @if (session()->has('ok'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -18,6 +22,18 @@
   </button>
 </div>
 @endif
+<div class="card mb-4">
+  <div class="card-header">
+    <p class="h3">{{ $group->name }}</p>
+    <p>{{ $group->description }}</p>
+  </div>
+  <div class="card-body d-flex justify-content-between">
+    <p class="card-title">Créé le: {{ $dateCreation }}</p>
+    <button type="button" class="btn btn-danger btn-sm float-right" data-toggle="modal" data-target="#deleteGroup">
+      Supprimer le groupe
+    </button>
+  </div>
+</div>
 <p class="h4">Demandes d'adhésion:</p>
 @if (strlen($groupOnDemand[0]) > 0)
 <table class="table table-striped table-inverse table-responsive text-nowrap">
@@ -34,7 +50,7 @@
     <tr>
       <td>{{ $user->name }}</td>
       <td class="text-center">
-        <form action={{ route('admin.joinGroup', $groupName) }} method="POST" enctype="multipart/form-data">
+        <form action={{ route('admin.joinGroup', $group->name) }} method="POST" enctype="multipart/form-data">
           @csrf
           <input type="text" name="user_id" value={{ $user->id }} hidden>
           <input type="text" name="join" value="true" hidden>
@@ -42,7 +58,7 @@
         </form>
       </td>
       <td class="text-center">
-        <form action={{ route('admin.joinGroup', $groupName) }} method="POST" enctype="multipart/form-data">
+        <form action={{ route('admin.joinGroup', $group->name) }} method="POST" enctype="multipart/form-data">
           @csrf
           <input type="text" name="user_id" value={{ $user->id }} hidden>
           <input type="text" name="join" value="false" hidden>
@@ -79,7 +95,7 @@
     $warningsQ = count(array_keys($usersWarned, $user->id));
     @endphp
     <tr>
-      <td><a href={{ route('admin.show', [$groupName, $user->id]) }}>{{ $user->name }}</a></td>
+      <td><a href={{ route('admin.show', [$group->name, $user->id]) }}>{{ $user->name }}</a></td>
       <td class="text-center">{{ $postsQ }}</td>
       <td class="text-center">{{ $commentsQ }}</td>
       <td class="text-center">{{ $warningsQ }}</td>
@@ -88,4 +104,27 @@
     @endforeach
   </tbody>
 </table>
+
+<div class="modal fade" id="deleteGroup" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title h3">Supprimer le groupe</p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="h4 text-center my-3 mb-4"><b>ATTENTION!</b><br><br>En supprimant le groupe vous supprimez aussi définitivement les articles et les commentaires de ce groupe!<br><br>Cette action est irréversible!!</p>
+        <hr class="hr">
+        <form method="POST" action="{{ route('group.destroy', $group->id) }}">
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="btn btn-danger float-right">Continuer</button>
+        </form>
+        <button type="button" class="btn btn-success" data-dismiss="modal">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection

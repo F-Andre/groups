@@ -6,6 +6,11 @@ abstract class DataRepository
 {
     protected $model;
 
+    public function getCollection()
+    {
+        return $this->model->all();
+    }
+
     public function getId()
     {
         return $this->model->firstOrFail();
@@ -29,6 +34,5 @@ abstract class DataRepository
     public function destroy($id)
     {
         $this->model->findOrFail($id)->delete();
-
     }
 }

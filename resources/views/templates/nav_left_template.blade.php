@@ -20,13 +20,13 @@
   </div>
 </div>
 <hr>
-<div class="accordion" id="accountAcc">
+<div class="accordion" id="groupAcc">
   <a id="headingGroup" class="btn btn-outline-success" href="#" role="button" data-toggle="collapse"
     data-target="#groupDropdown" aria-expanded="true" aria-controls="groupDropdown">
     {{ $groupName }}
     <i class="ml-2 fas fa-caret-down"></i>
   </a>
-  <div id="groupDropdown" class="collapse mt-2" aria-labelledby="headingGroup" data-parent="#accountAcc">
+  <div id="groupDropdown" class="collapse mt-2" aria-labelledby="headingGroup" data-parent="#groupAcc">
     <a class="dropdown-item" href="{{ route('posts.index', $groupName) }}">
       Fil du groupe
     </a>
@@ -39,6 +39,6 @@
   </div>
 </div>
 <div class="mt-4">
-  <a class="btn btn-outline-primary" href="{{ route('posts.create', $groupName) }}" role="button">Ecrire un
+  <a class="btn btn-outline-primary" href={{ route('posts.create', $groupName) }} role="button">Ecrire un
     article</a>
 </div>
