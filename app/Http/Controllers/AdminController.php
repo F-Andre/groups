@@ -40,7 +40,7 @@ class AdminController extends Controller
     $groupUsers = explode(",", $group->users_id);
     $groupOnDemand = explode(",", $group->on_demand);
     $usersWarned = explode(",", $group->users_warned);
-    $dateCreation = Carbon::parse($group->created_at)->locale('fr')->format('d M Y à H:i');
+    $dateCreation = Carbon::parse($group->created_at)->locale('fr')->timezone('Europe/Paris')->format('d M Y à H:i');
 
     $posts = Post::where('group_id', $group->id)->get();
     $comments = Comment::where('group_id', $group->id)->get();

@@ -5,7 +5,7 @@
 <div class="container-fluid col-lg-6 bx-auto py-4">
   <div class="card">
     <div class="card-header">
-      Créer un groupe
+      Edition du groupe "{{ $group->name }}"
     </div>
     <div class="card-body">
       @if (session()->has('ok'))
@@ -26,12 +26,15 @@
       </div>
       @endif
       <script>
+        var name = {!! json_encode($group->name) !!};
+        var desc = {!! json_encode($group->description) !!};
         var avatar = {!! json_encode($avatarUrl) !!};
+        var defaultAvatar = {!! json_encode($defaultAvatar) !!};
       </script>
-      <form method="POST" action="{{ route('group.store') }}" enctype="multipart/form-data">
+      <form method="POST" action="{{ route('group.update', $group->id) }}" enctype="multipart/form-data">
         @csrf
-        <input type="text" name="user_id" id="user_id" value={{ auth()->user()->id }} hidden />
-        <div id="groupForm"></div>
+        @method('PUT')
+        <div id="groupEditForm"></div>
       </form>
     </div>
   </div>

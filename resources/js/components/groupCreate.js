@@ -34,12 +34,18 @@ export default class GroupForm extends Component {
     this.state = {
       nameValue: '',
       descValue: '',
+      imgSrc: avatar,
+      imgSize: 0,
+      avatarDeleted: '',
       spinner: '',
       nameClass: 'form-control is-invalid',
       descClass: 'form-control is-invalid'
     }
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeDesc = this.handleChangeDesc.bind(this);
+    this.handleChangeAvatar = this.handleChangeAvatar.bind( this );
+    this.handleDeleteAvatar = this.handleDeleteAvatar.bind( this );
+    this.fileInput = React.createRef();
   }
 
   handleChangeName(event) {
@@ -59,9 +65,39 @@ export default class GroupForm extends Component {
     }
   }
 
+  handleChangeAvatar () {
+    const reader = new FileReader();
+    let file = this.fileInput.current.files[0];
+    let fileSrc = '', fileSize = file.size;
+    reader.onload = ( e ) => {
+      fileSrc = e.target.result;
+      this.setState( {
+        imgSrc: fileSrc,
+        imgSize: fileSize,
+        modified: true
+      } );
+    };
+    reader.readAsDataURL( file );
+  }
+
+  handleDeleteAvatar () {
+    this.setState( {
+      imgSrc: defaultAvatar,
+      modified: true,
+      imageDeleted: true,
+    } )
+  }
+
   render() {
+    const imageSizeMax = 10485760
+    const imageClass = this.state.imgSize > imageSizeMax ? 'form-control is-invalid' : 'form-control'
     const disabledState = this.state.nameClass == 'form-control is-invalid' ? true : this.state.descClass == 'form-control is-invalid' ? true : false
     const submitClass = !disabledState ? "btn btn-primary" : "btn btn-secondary disabled"
+    const disableDelete = this.state.imgSrc != '/storage/default/default_avatar.png' ? "btn btn-outline-danger btn-sm" : "btn btn-outline-danger btn-sm disabled"
+
+    const aStyle = {
+      backgroundImage: 'url(' + this.state.imgSrc + ')',
+    };
 
     return (
       <div className="form-group">
@@ -82,7 +118,7 @@ export default class GroupForm extends Component {
             <br />
             <a id="btnDeleteAvatar" className={disableDelete} onClick={this.handleDeleteAvatar}>Effacer l'image</a>
             <input id="avatar" name="avatar" className={imageClass} type="file" accept=".JPG, .PNG, .GIF" ref={this.fileInput} onChange={this.handleChangeAvatar} />
-            <div className="invalid-feedback">L'image doit être aux formats jpg, png ou gif.</div>
+            <div className="invalid-feedback">L'image doit être aux formats jpg, png ou gif et avoir une taille max de 10Mo.</div>
           </div>
           <input id="avatarDeleted" type="text" className="disabled" name="avatarDeleted" value={this.state.imageDeleted} />
         </div>

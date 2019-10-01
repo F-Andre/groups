@@ -6,77 +6,57 @@ function Name ( props ) {
   return (
     <input
       type="text"
-      className="form-control col-lg-6"
+      className="form-control"
       name="name"
       id="name"
       value={props.value}
-      onChange={props.onChange}
+      //onChange={props.onChange}
+      readOnly
     />
   );
 }
 
-function Email ( props ) {
+function Desc ( props ) {
   return (
     <input
-      type="email"
-      className="form-control col-lg-6"
-      name="email"
-      id="email"
+      type="text"
+      className="form-control"
+      name="description"
+      id="description"
       value={props.value}
       onChange={props.onChange}
     />
   );
 }
 
-function Notifs ( props ) {
-  return (
-    <input
-      type="checkbox"
-      value={props.value}
-      checked={props.value}
-      onChange={props.onChange}
-    />
-  );
-}
-
-export default class UserEditForm extends Component {
+export default class GroupEditForm extends Component {
   constructor( props ) {
     super( props )
-    notifs == 'false' ? notifs = false : notifs = true;
     this.state = {
       nameValue: name,
-      emailValue: email,
-      notifsValue: notifs,
+      descValue: desc,
       imgSrc: avatar,
       imgSize: 0,
       modified: false,
       avatarDeleted: '',
     }
-    this.handleChangeName = this.handleChangeName.bind( this );
-    this.handleChangeEmail = this.handleChangeEmail.bind( this );
+    //this.handleChangeName = this.handleChangeName.bind( this );
+    this.handleChangeDesc = this.handleChangeDesc.bind( this );
     this.handleChangeAvatar = this.handleChangeAvatar.bind( this );
-    this.handleChangeNotifs = this.handleChangeNotifs.bind( this );
     this.handleDeleteAvatar = this.handleDeleteAvatar.bind( this );
     this.fileInput = React.createRef();
   }
 
-  handleChangeName ( event ) {
+  /* handleChangeName ( event ) {
     this.setState( {
       nameValue: event.target.value,
       modified: true
     } )
-  }
+  } */
 
-  handleChangeEmail ( event ) {
+  handleChangeDesc ( event ) {
     this.setState( {
-      emailValue: event.target.value,
-      modified: true
-    } )
-  }
-
-  handleChangeNotifs ( event ) {
-    this.setState( {
-      notifsValue: event.target.checked,
+      descValue: event.target.value,
       modified: true
     } )
   }
@@ -118,19 +98,11 @@ export default class UserEditForm extends Component {
       <div>
         <div className="form-group">
           <label htmlFor="nom">Nom:</label>
-          <Name value={this.state.nameValue} onChange={this.handleChangeName} />
+          <Name value={this.state.nameValue} onChange={this.handleChangeName}/>
         </div>
         <div className="form-group">
-          <label htmlFor="titre">Adresse e-mail:</label>
-          <Email value={this.state.emailValue} onChange={this.handleChangeEmail} />
-        </div>
-        <div className="form-group">
-          <label htmlFor='notif-switch'>Recevoir les notifications: </label>
-          <label className="switch ml-3">
-            <Notifs name="notif-switch" value={this.state.notifsValue} onChange={this.handleChangeNotifs} />
-            <span className="slider round"></span>
-          </label>
-          <input name="notifs" type="text" value={this.state.notifsValue} hidden />
+          <label htmlFor="titre">Description:</label>
+          <Desc value={this.state.descValue} onChange={this.handleChangeDesc} />
         </div>
         <div id="divAvatar" className="form-group">
           <p>Avatar:</p>
@@ -150,6 +122,6 @@ export default class UserEditForm extends Component {
   }
 }
 
-if ( document.getElementById( 'userEditForm' ) ) {
-  ReactDOM.render( <UserEditForm />, document.getElementById( 'userEditForm' ) );
+if ( document.getElementById( 'groupEditForm' ) ) {
+  ReactDOM.render( <GroupEditForm />, document.getElementById( 'groupEditForm' ) );
 }

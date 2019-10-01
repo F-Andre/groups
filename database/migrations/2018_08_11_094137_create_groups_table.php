@@ -21,7 +21,7 @@ class CreateGroupsTable extends Migration
             $table->char('admins_id', 255);
             $table->char('on_demand', 255)->default('');
             $table->char('users_warned', 255)->default('');
-            $table->string('avatar')->default('0');
+            $table->string('avatar')->default('public/default/default_avatar.png');
             $table->dateTime('active_at');
             $table->timestamps();
         });

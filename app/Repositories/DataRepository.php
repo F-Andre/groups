@@ -21,6 +21,11 @@ abstract class DataRepository
         $this->model->create($inputs);
     }
 
+    public function getByName($name)
+    {
+        return $this->model->where('name', $name)->first();
+    }
+
     public function getById($id)
     {
         return $this->model->findOrFail($id);

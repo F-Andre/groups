@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use App\Notifications\NewPost;
 use App\User;
 use App\Group;
+use Carbon\Carbon;
 
 class postController extends Controller
 {
@@ -37,7 +38,6 @@ class postController extends Controller
       $posts = $this->post->getCollection();
 
       $group = Group::where('name', $groupName)->first();
-      $groupId = $group->id;
       $groupUsers = explode(",", $group->users_id);
       $groupAdmins = explode(",", $group->admins_id);
 
@@ -45,7 +45,7 @@ class postController extends Controller
 
       if (in_array(auth()->user()->id, $groupUsers))
       {
-        return view('blog', compact('posts', 'groupName', 'groupId', 'nbrPosts', 'groupAdmins'));
+        return view('blog', compact('posts', 'groupName', 'group', 'nbrPosts', 'groupAdmins'));
       }
       else
       {
@@ -80,8 +80,9 @@ class postController extends Controller
   public function store(PostRequest $request, $groupName)
   {
     $retour = redirect(route('posts.index', $groupName))->withOk('Le post "' . $request->titre . '" est enregistré.');
-    $users = User::all();
     $group = Group::where('name', $groupName)->first();
+    $groupUsers = explode(",", $group->users_id);
+    $users = User::all();
 
     if ($request->hasFile('image')) {
       if ($request->image->isValid()) {
@@ -108,7 +109,13 @@ class postController extends Controller
         $inputs = array_merge($request->all(), ['user_id' => $request->user()->id, 'image' => $path, 'group_id' => $group->id]);
         $this->post->store($inputs);
 
-        DB::table('users')->where('id', $request->user()->id)->increment('postsQty');
+        foreach ($users as $user) {
+          if ($user->id != $request->user()->id && in_array($user->id, $groupUsers)) {
+            $user->notify(new NewPost($request->user()));
+          }
+        }
+
+        $group->update(['active_at' => Carbon::now()]);
 
         return $retour;
       }
@@ -116,10 +123,11 @@ class postController extends Controller
 
     $inputs = array_merge($request->all(), ['user_id' => $request->user()->id, 'group_id' => $group->id]);
     $this->post->store($inputs);
-    DB::table('users')->where('id', $request->user()->id)->increment('postsQty');
+
+    $group->update(['active_at' => Carbon::now()]);
 
     foreach ($users as $user) {
-      if ($user->id != $request->user()->id) {
+      if ($user->id != $request->user()->id && in_array($user->id, $groupUsers)) {
         $user->notify(new NewPost($request->user()));
       }
     }

@@ -9,6 +9,10 @@ use App\Http\Requests\GroupSearchRequest;
 use App\Notifications\JoinGroupDemand;
 use App\Post;
 use App\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class GroupController extends Controller
 {
@@ -29,6 +33,7 @@ class GroupController extends Controller
   public function index()
   {
     $groups = $this->group->getCollection();
+
     return view('group.group_index', compact('groups'));
   }
 
@@ -39,7 +44,8 @@ class GroupController extends Controller
    */
   public function create()
   {
-    return view('group.group_create');
+    $avatarUrl = Storage::url('public/default/default-group.svg');
+    return view('group.group_create', compact('avatarUrl'));
   }
 
   /**
@@ -53,9 +59,35 @@ class GroupController extends Controller
     if (preg_match('/[a-zA-Z0-9._-]*/', $request->name) == false) {
       return redirect(route('groupe.create'))->with('error', 'Le nom du groupe n\'est pas correct');
     }
-
     $inputs = array_merge($request->all(), ['users_id' => $request->user_id, 'admins_id' => $request->user_id, 'active_at' => now()]);
+    
     $this->group->store($inputs);
+
+    $group = $this->group->getByName($request->name);
+    
+    if ($request->hasFile('avatar')) {
+      if ($request->avatar->isValid()) {
+        mkdir('storage/group-avatar/' . $group->id, 0775, true);
+
+        $fileExt = $request->avatar->getClientOriginalExtension();
+        $fileName = Str::random(15);
+
+        while (Storage::exists('public/group-avatar/' . $group->id . '/' . $fileName . '.' . $fileExt)) {
+          $fileName = Str::random(15);
+        }
+
+        $path = 'public/group-avatar/' . $group->id . '/' . $fileName . '.' . $fileExt;
+
+        $pathUrl = Storage::url($path);
+        $imageMake = Image::make($request->avatar);
+        $imageMake->widen(256, function ($constraint) {
+          $constraint->upsize();
+        });
+        $imageMake->save('.' . $pathUrl);
+
+        $group->update(['avatar' => $path]);
+      }
+    }
 
     return redirect(route('group.index'));
   }
@@ -70,8 +102,9 @@ class GroupController extends Controller
   {
     $group = Group::where('name', $name)->first();
     $usersId = explode(",", $group->users_id);
+    $dateCreation = Carbon::parse($group->created_at)->locale('fr')->timezone('Europe/Paris')->format('d M Y à H:i');
 
-    return view('group.group_show', compact('group', 'usersId'));
+    return view('group.group_show', compact('group', 'usersId', 'dateCreation'));
   }
 
   /**
@@ -82,7 +115,10 @@ class GroupController extends Controller
    */
   public function edit($id)
   {
-    //
+    $group = $this->group->getById($id);
+    $avatarUrl = Storage::url($group->avatar);
+    $defaultAvatar = Storage::url('public/default/default-group.svg');
+    return view('group.group_edit', array_merge(compact('group'), ['avatarUrl' => $avatarUrl], ['defaultAvatar' => $defaultAvatar]));
   }
 
   /**
@@ -94,7 +130,63 @@ class GroupController extends Controller
    */
   public function update(Request $request, $id)
   {
-    //
+    $group = $this->group->getById($id);
+    $retour = redirect(route('admin.index', $group->name))->withOk('Les informations du groupe ont été mises à jour.');
+
+    if ($request->hasFile('avatar')) {
+      if ($request->avatar->isValid()) {
+        $oldImage = $group->avatar;
+
+        if (Storage::exists('public/avatar/' . $group->id) == false) {
+          mkdir('storage/avatar/' . $group->id, 0775, true);
+        } else {
+          $files = Storage::files('public/avatar/' . $group->id);
+          Storage::delete($files);
+        }
+
+        $fileExt = $request->avatar->getClientOriginalExtension();
+        $fileName = Str::random(15);
+
+        while (Storage::exists('public/avatar/' . $group->id . '/' . $fileName . '.' . $fileExt)) {
+          $fileName = Str::random(15);
+        }
+
+        $path = 'public/avatar/' . $group->id . '/' . $fileName . '.' . $fileExt;
+
+        $pathUrl = Storage::url($path);
+        $imageMake = Image::make($request->avatar);
+        $imageMake->widen(256, function ($constraint) {
+          $constraint->upsize();
+        });
+        $imageMake->save('.' . $pathUrl);
+
+        $inputs = array_merge($request->all(), ['avatar' => $path]);
+        $group->update($inputs);
+
+        if ($oldImage != 'public/default/default-group.svg') {
+          Storage::delete($oldImage);
+        }
+
+        return $retour;
+      }
+    }
+
+    if (strlen($group->avatar) > 1 && $request->avatarDeleted) {
+      $oldImage = $group->avatar;
+
+      if ($oldImage != 'public/default/default-group.svg') {
+        Storage::delete($oldImage);
+      }
+
+      $inputs = array_merge($request->all(), ['avatar' => 'public/default/default-group.svg']);
+      $group->update($inputs);
+
+      return $retour;
+    }
+
+    $group->update($request->all());
+
+    return $retour;
   }
 
   /**

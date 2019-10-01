@@ -23,13 +23,18 @@ $groupName = $group->name;
 </div>
 @endif
 <div class="card mb-4">
-  <div class="card-header">
-    <p class="h3">{{ $group->name }}</p>
-    <p>{{ $group->description }}</p>
+  <div class="card-header d-flex justify-content-between">
+    <div>
+      <p class="h3">{{ $group->name }}</p>
+      <p>{{ $group->description }}</p>
+      <p class="card-title">Créé le: {{ $dateCreation }}</p>
+    </div>
+    <p class="avatar" style={{"background-image:url(".Storage::url($group->avatar).")"}}></p>
   </div>
-  <div class="card-body d-flex justify-content-between">
-    <p class="card-title">Créé le: {{ $dateCreation }}</p>
-    <button type="button" class="btn btn-danger btn-sm float-right" data-toggle="modal" data-target="#deleteGroup">
+  <div class="card-body d-flex justify-content-end">
+    <a name="edit" id="edit" class="btn btn-warning btn-sm mr-2" href="{{ route('group.edit', $group->id) }}" role="button">Editer
+      les infos</a>
+    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteGroup">
       Supprimer le groupe
     </button>
   </div>
@@ -115,7 +120,8 @@ $groupName = $group->name;
         </button>
       </div>
       <div class="modal-body">
-        <p class="h4 text-center my-3 mb-4"><b>ATTENTION!</b><br><br>En supprimant le groupe vous supprimez aussi définitivement les articles et les commentaires de ce groupe!<br><br>Cette action est irréversible!!</p>
+        <p class="h4 text-center my-3 mb-4"><b>ATTENTION!</b><br><br>En supprimant le groupe vous supprimez aussi
+          définitivement les articles et les commentaires de ce groupe!<br><br>Cette action est irréversible!!</p>
         <hr class="hr">
         <form method="POST" action="{{ route('group.destroy', $group->id) }}">
           @csrf

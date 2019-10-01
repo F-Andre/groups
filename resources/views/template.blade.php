@@ -115,7 +115,7 @@
   <script>
     twemoji.parse(document.body);
   </script>
-  <script src="/js/diffLoad.js"></script>
+  {{-- <script src="/js/diffLoad.js"></script> --}}
 </body>
 
 </html>

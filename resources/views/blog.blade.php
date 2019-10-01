@@ -22,7 +22,7 @@
   @endif
   @if (count($posts) > 0 && $nbrPosts > 0)
   @foreach ($posts as $post)
-  @if ($post->group_id == $groupId)
+  @if ($post->group_id == $group->id)
   @include('templates/post_complete_template')
   @endif
   <br>

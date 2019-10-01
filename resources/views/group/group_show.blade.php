@@ -6,7 +6,8 @@
   <div class="dropdown">
     <a id="authDropdown" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false" v-pre>
-      <span class="avatar avatar-btn float-left" style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></span>
+      <span class="avatar avatar-btn float-left"
+        style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></span>
       {{ Auth::user()->name }}
       <span class="caret"></span>
     </a>
@@ -31,32 +32,40 @@
 </aside>
 @endauth
 <div class="container-fluid col-lg-6 bx-auto mt-4">
-    @if (session()->has('ok'))
-    <div class="col-lg-10 mx-auto mt-4 alert alert-success alert-dismissible fade show" role="alert">
-      {{ session('ok') }}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
+  @if (session()->has('ok'))
+  <div class="col-lg-10 mx-auto mt-4 alert alert-success alert-dismissible fade show" role="alert">
+    {{ session('ok') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
   @endif
   @if (session()->has('error'))
-    <div class="col-lg-10 mx-auto mt-4 alert alert-warning alert-dismissible fade show" role="alert">
-      <i class="fas fa-exclamation-triangle"></i>
-      {{ session('error') }}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
+  <div class="col-lg-10 mx-auto mt-4 alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fas fa-exclamation-triangle"></i>
+    {{ session('error') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
   @endif
   <div class="card">
-    <div class="card-header">
-      {{ $group->name }}
+    <div class="card-header d-flex justify-content-between">
+      <div>
+        <p class="h3">{{ $group->name }}</p>
+        <p>{{ $group->description }}</p>
+        <p class="card-title">Créé le: {{ $dateCreation }}</p>
+      </div>
+      <p class="avatar" style={{"background-image:url(".Storage::url($group->avatar).")"}}></p>
     </div>
     <div class="card-body">
       @if (in_array(auth()->user()->id, $usersId))
-        <p>Vous êtes membre de ce groupe</p>
+      <p>Vous êtes membre de ce groupe</p>
       @else
-      <form method="POST" action="{{ route('group.joinDemand', ['groupName' => $group->name, 'userId' => auth()->user()->id]) }}" enctype="multipart/form-data">
+
+      <form method="POST"
+        action="{{ route('group.joinDemand', ['groupName' => $group->name, 'userId' => auth()->user()->id]) }}"
+        enctype="multipart/form-data">
         @csrf
         <input name="joinGroup" id="joinGroup" class="btn btn-success" type="submit" value="Rejoindre">
       </form>

@@ -1,0 +1,13 @@
+.card-group {
+  background-color: white;
+  transition: .5s background-color;
+
+  a {
+    visibility: hidden;
+  }
+}
+
+.card-group:hover {
+  background-color: gainsboro;
+  cursor: pointer;
+}

@@ -79,7 +79,7 @@ export default class ArticleForm extends Component {
   }
 
   render () {
-    const imageSizeMax = 4718592
+    const imageSizeMax = 10485760
     const imageClass = this.state.imgSize > imageSizeMax ? 'form-control is-invalid' : 'form-control'
     const disabledState = this.state.titreValue.length <= 6 ? true : this.state.textValue.length <= 10 ? true : this.state.imgSize > imageSizeMax ? true : false
     const submitClass = !disabledState ? "btn btn-primary" : "btn btn-secondary disabled"
@@ -100,7 +100,7 @@ export default class ArticleForm extends Component {
         <div id="divImage" className="form-group">
           <img className="img-fluid text-center" src={this.state.imgSrc} />
           <input id="image" name="image" type="file" className={imageClass} accept=".JPG, .PNG, .GIF" ref={this.fileInput} onChange={this.handleChangeImage} />
-          <div className="invalid-feedback">L'image doit être aux formats jpg, png ou gif et avoir une taille max de 4.5Mo.</div>
+          <div className="invalid-feedback">L'image doit être aux formats jpg, png ou gif et avoir une taille max de 10Mo.</div>
           <label className="btn btn-success" htmlFor="image">Ajouter une image</label>
         </div>
         <LoadModal />
