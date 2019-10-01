@@ -6,7 +6,7 @@
     <div class="card-header d-flex justify-content-between">
       <div>Editer un article</div>
       <div>
-        <a name="" id="" class="btn btn-sm btn-danger" href={{ route('posts.index', $groupName) }} role="button">Annuler</a>
+        <a class="btn btn-sm btn-danger" href={{ route('posts.index', $groupName) }} role="button">Annuler</a>
       </div>
     </div>
     <div class="card-body">

@@ -48,7 +48,7 @@
           </button>
           <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownPost{{ $post->id }}">
             @if (Auth::user()->id == $post->user->id)
-            <a name="edit" id="edit" class="dropdown-item" href="{{ route('posts.edit', [$groupName, $post->id]) }}"
+            <a name="edit" id="edit" class="dropdown-item" href={{ route('posts.edit', [$groupName, $post->id]) }}
               role="button">Editer l'article</a>
             @endif
             <button type="button" class="dropdown-item text-danger" data-toggle="modal" data-target="#deletePost">

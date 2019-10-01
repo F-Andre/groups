@@ -106,7 +106,7 @@ class AdminController extends Controller
     $groupAdmins = explode(",", $group->admins_id);
     $user = $this->user->getById($id);
     $posts = Post::where('user_id', $user->id)->orderBy($orderValue, $ord)->get();
-    return view('admin.admin_user', compact('groupName', 'groupAdmins', 'user', 'posts'));
+    return view('admin.admin_user', compact('groupName', 'group', 'groupAdmins', 'user', 'posts'));
   }
 
   /**

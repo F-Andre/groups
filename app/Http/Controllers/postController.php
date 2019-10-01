@@ -35,7 +35,7 @@ class postController extends Controller
   {
     if (isset($groupName))
     {
-      $posts = $this->post->getCollection();
+      $posts = $this->post->getCollectionOrdered();
 
       $group = Group::where('name', $groupName)->first();
       $groupUsers = explode(",", $group->users_id);
@@ -152,11 +152,14 @@ class postController extends Controller
    * @param  \App\Post  $post
    * @return \Illuminate\Http\Response
    */
-  public function edit($group, $id)
+  public function edit($groupName, $id)
   {
     $post = $this->post->getById($id);
     $imageUrl = Storage::url($post->image);
-    return view('post.edit', ['groupName' => $group, 'id' => $post->id, 'titre' => $post->titre, 'contenu' => $post->contenu, 'imageUrl' => $imageUrl]);
+    $group = Group::where('name', $groupName)->first();
+    $groupAdmins = explode(",", $group->admins_id);
+
+    return view('post.edit', ['groupName' => $groupName, 'groupAdmins' => $groupAdmins, 'id' => $post->id, 'titre' => $post->titre, 'contenu' => $post->contenu, 'imageUrl' => $imageUrl]);
   }
 
   /**

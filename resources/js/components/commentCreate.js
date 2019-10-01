@@ -22,22 +22,19 @@ export default class CommentForm extends Component {
       commentValue: '',
       spinner: '',
     }
-    this.handleChangeText = this.handleChangeText.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('message', (e) => {
-      const text = typeof e.data == "string" ? e.data : '';
-      this.setState({
-        commentValue: text,
-        modified: true
-      })
+      if (typeof e.data == "string") {
+        const text = e.data;
+        this.setState({
+          commentValue: text,
+          modified: true
+        })
+      }
     })
-  }
-
-  handleChangeText(event) {
-    this.setState({ commentValue: event.target.value })
   }
 
   handleSubmit() {
@@ -47,12 +44,13 @@ export default class CommentForm extends Component {
   render() {
     const disabledState = this.state.commentValue.length <= 3 ? true : false
     const submitClass = !disabledState ? "btn btn-primary btn-sm float-right" : "btn btn-secondary btn-sm float-right disabled"
+    const contenuClass = this.state.commentValue.length > 10 ? 'form-control' : this.state.commentValue.length == 0 ? 'form-control' : 'form-control is-invalid'
 
     return (
       <div className="form-group">
         <div className="form-group mt-2">
           <label htmlFor="comment">Ajouter un commentaire</label>
-          <CommentText value={this.state.commentValue} onChange={this.handleChangeText} />
+          <textarea className={contenuClass} name="comment" id="comment" value={this.state.commentValue} hidden />
           <iframe id="comment_iframe" className="commentIframe" src="/comment_iframe.html"></iframe>
         </div>
         <button type="submit" onClick={this.handleSubmit} className={submitClass} disabled={disabledState}>Envoyer {this.state.spinner}</button>

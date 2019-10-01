@@ -11,6 +11,11 @@ abstract class DataRepository
         return $this->model->all();
     }
 
+    public function getCollectionOrdered()
+    {
+        return $this->model->orderBy('id', 'desc')->get();
+    }
+
     public function getId()
     {
         return $this->model->firstOrFail();

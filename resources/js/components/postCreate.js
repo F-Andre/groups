@@ -16,20 +16,6 @@ function ArticleTitre ( props ) {
   );
 }
 
-function ArticleText ( props ) {
-  const contenuClass = props.value.length <= 10 ? 'form-control is-invalid' : 'form-control'
-  return (
-    <textarea
-      name="contenu"
-      id="contenu"
-      value={props.value}
-      onChange={props.onChange}
-      className={contenuClass}
-      hidden
-    />
-  );
-}
-
 export default class ArticleForm extends Component {
   constructor( props ) {
     super( props )
@@ -41,27 +27,24 @@ export default class ArticleForm extends Component {
       spinner: '',
     }
     this.handleChangeTitre = this.handleChangeTitre.bind( this );
-    this.handleChangeText = this.handleChangeText.bind( this );
     this.handleChangeImage = this.handleChangeImage.bind( this );
     this.fileInput = React.createRef();
   }
 
   componentDidMount () {
     window.addEventListener( 'message', ( e ) => {
-      const text = typeof e.data == 'string' ? e.data : '';
-      this.setState( {
-        textValue: text,
-        modified: true
-      } )
+      if (typeof e.data == "string") {
+        const text = e.data;
+        this.setState({
+          textValue: text,
+          modified: true
+        })
+      }
     } )
   }
 
   handleChangeTitre ( event ) {
     this.setState( { titreValue: event.target.value } )
-  }
-
-  handleChangeText ( event ) {
-    this.setState( { textValue: event.target.value } )
   }
 
   handleChangeImage () {
@@ -83,6 +66,7 @@ export default class ArticleForm extends Component {
     const imageClass = this.state.imgSize > imageSizeMax ? 'form-control is-invalid' : 'form-control'
     const disabledState = this.state.titreValue.length <= 6 ? true : this.state.textValue.length <= 10 ? true : this.state.imgSize > imageSizeMax ? true : false
     const submitClass = !disabledState ? "btn btn-primary" : "btn btn-secondary disabled"
+    const contenuClass = this.state.textValue.length > 10 ? 'form-control' : this.state.textValue.length == 0 ? 'form-control' : 'form-control is-invalid'
 
     return (
       <div className="form-group">
@@ -93,7 +77,7 @@ export default class ArticleForm extends Component {
         </div>
         <div className="form-group">
           <label htmlFor="contenu">Ecrivez votre texte:</label>
-          <ArticleText value={this.state.textValue} onChange={this.handleChangeText} />
+          <textarea className={contenuClass} name="contenu" id="contenu" value={this.state.textValue} hidden />
           <iframe id="editor_iframe" className="postIframe" src="/editor_iframe.html"></iframe>
           <div className="invalid-feedback">Ecrivez un texte d'au moins 10 caractères.</div>
         </div>

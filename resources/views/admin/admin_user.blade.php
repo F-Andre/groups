@@ -17,11 +17,13 @@
   </div>
   <div class="card-body">
     @if (auth()->user()->id !== $user->id)
-    <form class="form-inline mb-4" action={{ route('admin.adminSwitch', $groupName) }} method="POST" enctype="multipart/form-data">
+    <form class="form-inline mb-4" action={{ route('admin.adminSwitch', $groupName) }} method="POST"
+      enctype="multipart/form-data">
       @csrf
       <div class="custom-control custom-switch mr-3">
         <input type="text" name="user_id" value={{ $user->id }} hidden>
-        <input type="checkbox" name="admin" class="custom-control-input" id="customSwitch1" @if(in_array($user->id, $groupAdmins)) checked @endif>
+        <input type="checkbox" name="admin" class="custom-control-input" id="customSwitch1" @if(in_array($user->id,
+        $groupAdmins)) checked @endif>
         <label class="custom-control-label" for="customSwitch1">Administrateur du groupe</label>
       </div>
       <input type="submit" class="btn btn-success" value="Valider">
@@ -29,11 +31,13 @@
     @if (!in_array($user->id, $groupAdmins))
     <div class="d-flex justify-content-start">
       <div class="text-center mr-4">
-        <form class="form-inline" action={{ route('admin.warnUser', $groupName) }} method="POST" enctype="multipart/form-data">
+        <form class="form-inline" action={{ route('admin.warnUser', $groupName) }} method="POST"
+          enctype="multipart/form-data">
           @csrf
           <input type="text" name="user_id" value={{ $user->id }} hidden>
           <div class="form-group">
-            <input type="text" class="form-control mr-3" name="reason" placeholder="Raisons de l'avertissement" required>
+            <input type="text" class="form-control mr-3" name="reason" placeholder="Raisons de l'avertissement"
+              required>
             <input type="submit" class="btn btn-warning" value="Avertir">
           </div>
         </form>
@@ -53,13 +57,13 @@
     @endif
     <hr class="hr">
     <form class="form-inline mb-3" method="GET" action={{ route( 'admin.show', [$groupName, $user->id]) }}>
-        <select id="tri" name="tri">
-          <option value="">Trier les posts</option>
-          <option value="titre">Par titre</option>
-          <option value="created-desc">Le + récent</option>
-          <option value="created-asc">Le + vieux</option>
-        </select>
-        <button type="submit" class="btn btn-primary btn-sm ml-2">Trier</button>
+      <select id="tri" name="tri">
+        <option value="">Trier les posts</option>
+        <option value="titre">Par titre</option>
+        <option value="created-desc">Le + récent</option>
+        <option value="created-asc">Le + vieux</option>
+      </select>
+      <button type="submit" class="btn btn-primary btn-sm ml-2">Trier</button>
     </form>
     <table class="table table-striped table-inverse table-responsive text-nowrap">
       <thead class="thead-dark">
@@ -79,9 +83,10 @@
             {{ Date::parse($post->created_at)->format('H:i') }}</td>
           <td class="text-center">{{ $post->comments()->count() }}</td>
           <td class="text-right"><a class="btn btn-success btn-sm"
-              href="{{ route('posts.index', ['groupName' => $groupName, '#' . $post->id]) }}">Voir l'article</a></td>
+              href={{ route('posts.index', [$groupName, '#' . $post->id]) }}>Voir l'article</a></td>
           <td class="text-right">
-            <button type="button" class="btn btn-danger btn-sm float-right" data-toggle="modal" data-target="#deletePost">
+            <button type="button" class="btn btn-danger btn-sm float-right" data-toggle="modal"
+              data-target="#deletePost">
               Supprimer
             </button>
           </td>
@@ -92,7 +97,8 @@
     </table>
   </div>
 </div>
-<div class="modal fade" id="deregisterUser" tabindex="-1" role="dialog" aria-labelledby="deregisterUserLabel" aria-hidden="true">
+<div class="modal fade" id="deregisterUser" tabindex="-1" role="dialog" aria-labelledby="deregisterUserLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

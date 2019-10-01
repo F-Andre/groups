@@ -18,7 +18,7 @@ function ArticleTitre(props) {
 }
 
 function ArticleText(props) {
-  const contenuClass = props.value.length <= 10 ? 'form-control is-invalid' : 'form-control'
+  const contenuClass = props.value.length > 10 ? 'form-control' : props.value.length == 0 ? 'form-control' : 'form-control is-invalid'
   const valueContenu = props.value.length > 0 ? props.value : ''
   return (
     <textarea
@@ -26,10 +26,11 @@ function ArticleText(props) {
       name="contenu"
       id="contenu"
       rows="5"
-      value={valueContenu}
       onChange={props.onChange}
       hidden
-    />
+    >
+      {valueContenu}
+    </textarea>
   );
 }
 
@@ -41,11 +42,10 @@ export default class ArticleForm extends Component {
       textValue: contenu,
       imgSrc: image == '/storage/0' ? '' : image,
       imgSize: 0,
-      modified: false,
       imageDeleted: '',
+      modified: false,
     }
     this.handleChangeTitre = this.handleChangeTitre.bind(this);
-    this.handleChangeText = this.handleChangeText.bind(this);
     this.handleLoad = this.handleLoad.bind(this);
     this.handleChangeImage = this.handleChangeImage.bind(this);
     this.handleDeleteImage = this.handleDeleteImage.bind(this);
@@ -54,24 +54,19 @@ export default class ArticleForm extends Component {
 
   componentDidMount() {
     window.addEventListener('message', (e) => {
-      const text = typeof e.data == "string" ? e.data : '';
-      this.setState({
-        textValue: text,
-        modified: true
-      })
+      if (typeof e.data == "string") {
+        const text = e.data;
+        this.setState({
+          textValue: text,
+          modified: true
+        })
+      }
     })
   }
 
   handleChangeTitre(event) {
     this.setState({
       titreValue: event.target.value,
-      modified: true
-    })
-  }
-
-  handleChangeText(event) {
-    this.setState({
-      textValue: event.target.value,
       modified: true
     })
   }
@@ -89,7 +84,7 @@ export default class ArticleForm extends Component {
       this.setState({
         imgSrc: fileSrc,
         imgSize: fileSize,
-        modified: true,
+        modified: true
       });
     };
     reader.readAsDataURL(file);
@@ -104,8 +99,10 @@ export default class ArticleForm extends Component {
   }
 
   render() {
-    const disabledState = !this.state.modified ? true : this.state.titreValue.length <= 6 ? true : this.state.textValue.length <= 10 ? true : false
-    const submitClass = !disabledState ? "btn btn-primary" : "btn btn-secondary disabled"
+    const contenuClass = this.state.textValue.length > 10 ? 'form-control' : this.state.textValue.length == 0 ? 'form-control' : 'form-control is-invalid'
+
+    const disableState = this.state.modified ? false : true
+    const submitClass = disableState ? "btn btn-secondary disabled" : "btn btn-primary"
     const disableDelete = this.state.imgSrc.length > 1 ? "btn btn-danger float-right" : "btn btn-danger float-right disabled"
     const imageClass = 'form-control'
 
@@ -118,7 +115,7 @@ export default class ArticleForm extends Component {
         </div>
         <div className="form-group">
           <label htmlFor="contenu">Ecrivez votre texte:</label>
-          <ArticleText value={this.state.textValue} onChange={this.handleChangeText} />
+          <textarea className={contenuClass} name="contenu" id="contenu" value={this.state.textValue} hidden />
           <iframe id="editor_iframe" className="postIframe" src="/editor_iframe.html" onLoad={this.handleLoad}></iframe>
           <div className="invalid-feedback">Ecrivez un texte d'au moins 10 caractères.</div>
         </div>
@@ -133,7 +130,7 @@ export default class ArticleForm extends Component {
           <a id="btnDeleteImage" className={disableDelete} onClick={this.handleDeleteImage}>Effacer l'image</a>
         </div>
         <LoadModal />
-        <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Enregistrer</button>
+        <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disableState}>Enregistrer</button>
       </div>
     )
   }
