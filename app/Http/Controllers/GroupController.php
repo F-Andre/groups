@@ -138,20 +138,20 @@ class GroupController extends Controller
         $oldImage = $group->avatar;
 
         if (Storage::exists('public/avatar/' . $group->id) == false) {
-          mkdir('storage/avatar/' . $group->id, 0775, true);
+          mkdir('storage/group-avatar/' . $group->id, 0775, true);
         } else {
-          $files = Storage::files('public/avatar/' . $group->id);
+          $files = Storage::files('public/group-avatar/' . $group->id);
           Storage::delete($files);
         }
 
         $fileExt = $request->avatar->getClientOriginalExtension();
         $fileName = Str::random(15);
 
-        while (Storage::exists('public/avatar/' . $group->id . '/' . $fileName . '.' . $fileExt)) {
+        while (Storage::exists('public/group-avatar/' . $group->id . '/' . $fileName . '.' . $fileExt)) {
           $fileName = Str::random(15);
         }
 
-        $path = 'public/avatar/' . $group->id . '/' . $fileName . '.' . $fileExt;
+        $path = 'public/group-avatar/' . $group->id . '/' . $fileName . '.' . $fileExt;
 
         $pathUrl = Storage::url($path);
         $imageMake = Image::make($request->avatar);
