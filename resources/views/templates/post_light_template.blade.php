@@ -7,10 +7,13 @@
     </div>
   </div>
   <div class="card-body">
+    @php
+        $imageUrl = Storage::url($post->image);
+    @endphp
     <p class="card-text">{!! nl2br(e($post->contenu)) !!}</p>
-    @if (strlen($post->image) > 1 && Storage::exists($post->image))
+    @if (strlen($post->image) > 1 && $imageUrl)
       <div class="mb-4 text-center">
-        <img class="image-blog" src="{!! Storage::url($post->image) !!}">
+        <img class="image-blog" src="{!! $imageUrl !!}">
       </div>
     @endif
     <div class="float-right">
