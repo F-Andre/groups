@@ -32,14 +32,12 @@
   </div>
   <div class="card-body">
     @php
-        $imageExist = Storage::exists($post->image);
         $imageUrl = Storage::url($post->image);
     @endphp
     <div class="card-text">
       <p>{!! $post->contenu !!}</p>
-      <p>{{ $imageExist }}</p>
     </div>
-    @if (strlen($post->image) > 1 && $imageExist)
+    @if (strlen($post->image) > 1 && $imageUrl)
     <div class="card-text my-4 text-center">
       <img class="image-blog" data-src="{!! $imageUrl !!}">
     </div>
