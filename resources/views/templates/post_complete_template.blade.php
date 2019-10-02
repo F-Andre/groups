@@ -37,9 +37,7 @@
     @endphp
     <div class="card-text">
       <p>{!! $post->contenu !!}</p>
-      @if ($imageExist == 1)
-      <p>{{ $imageUrl }}</p>
-      @endif
+      <p>{{ $imageExist }}</p>
     </div>
     @if (strlen($post->image) > 1 && $imageExist)
     <div class="card-text my-4 text-center">
