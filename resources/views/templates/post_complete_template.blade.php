@@ -35,7 +35,10 @@
         $imageExist = Storage::exists($post->image);
         $imageUrl = Storage::url($post->image);
     @endphp
-    <div class="card-text">{!! $post->contenu !!}</div>
+    <div class="card-text">
+      <p>{!! $post->contenu !!}</p>
+      <p>{{ $imageUrl }}</p>
+    </div>
     @if (strlen($post->image) > 1 && $imageExist)
     <div class="card-text my-4 text-center">
       <img class="image-blog" data-src="{!! $imageUrl !!}">
