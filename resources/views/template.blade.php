@@ -62,6 +62,7 @@
               </div>
             </li>
             @isset($groupName)
+            @isset($groupAdmins)
             <li class="nav-item accordion mt-2" id="navAccountAcc">
               <a id="navHeadingGroup" class="btn btn-outline-success" href="#" role="button" data-toggle="collapse"
                 data-target="#navGroupDropdown" aria-expanded="true" aria-controls="navGroupDropdown">
@@ -84,6 +85,7 @@
               <a class="btn btn-outline-primary" href="{{ route('posts.create', $groupName) }}" role="button">Ecrire un
                 article</a>
             </li>
+            @endisset
             @endisset
           </ul>
           @endauth

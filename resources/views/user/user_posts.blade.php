@@ -33,7 +33,7 @@
       <tbody>
       @foreach ($posts as $post)
       @php
-          $postGroup = $post->find($post->group_id)->group;
+          $postGroup = App\Group::find($post->group_id);
           $groupName= $postGroup->name;
       @endphp
         <tr>
