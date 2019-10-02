@@ -159,18 +159,20 @@ class AdminController extends Controller
 
   public function searchResult(SearchRequest $result, $groupName)
   {
+    $group = Group::where('name', $groupName)->first();
+    $groupAdmins = explode(",", $group->admins_id);
+
     if ($this->user->search($result->user) != false) {
       $user = $this->user->search($result->user);
 
       if ($user instanceof Collection) {
-        $users = $user;
-        $links = null;
+        $users = $user;        
 
-        return view('admin.admin_home', compact('users', 'links', 'groupName'));
+        return view('admin.admin_home', compact('users', 'group', 'groupName', 'groupAdmins'));
       }
 
       $posts = $this->user->nbrePosts($user->id);
-      return view('admin.admin_user', compact('user', 'posts', 'groupName'));
+      return view('admin.admin_user', compact('user', 'posts', 'group', 'groupName', 'groupAdmins'));
     }
 
     return redirect(route('admin.index', compact('groupName')))->with("error", "L'utilisateur recherché n'existe pas: " . $result->user);

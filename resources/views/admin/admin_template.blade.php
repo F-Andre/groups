@@ -16,8 +16,7 @@
       </li>
     </ul>
     @isset($users)
-    <form class="form-inline my-2 my-lg-0" method="POST"
-      action="{{ route('admin.searchResult', ['user' => $user, 'groupName' => $groupName]) }}">
+    <form class="form-inline my-2 my-lg-0" method="POST" action={{ route('admin.searchResult', [$groupName, $user]) }}>
       @csrf
       <div class="form-group">
         <input class="form-control mr-sm-2" list="users" name="user" id="user" type="text"
