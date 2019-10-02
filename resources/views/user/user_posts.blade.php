@@ -1,6 +1,6 @@
 @extends('user/user_template')
 @section('article')
-<article class="user-posts col-lg-8 mx-auto">
+<article class="user-posts col-lg-10 mx-auto">
   @if (count($posts) > 0)
   <form method="GET" action={{ route( 'user_page.show', $user->id) }}>
     <div class="form-group my-4">
@@ -19,7 +19,7 @@
   </form>
   <div class="list-table">
     <table class="table table-hover table-responsive text-nowrap mb-5">
-      <thead class="thead-dark">
+      <thead class="thead-dark text-center">
         <tr>
           <th>Groupe</th>
           <th>Titre</th>
