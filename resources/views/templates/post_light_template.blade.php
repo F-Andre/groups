@@ -10,7 +10,7 @@
     @php
         $imageUrl = Storage::url($post->image);
     @endphp
-    <p class="card-text">{!! nl2br(e($post->contenu)) !!}</p>
+    <p class="card-text">{!! $post->contenu !!}</p>
     @if (strlen($post->image) > 1 && $imageUrl)
       <div class="mb-4 text-center">
         <img class="image-blog" src="{!! $imageUrl !!}">
