@@ -9,25 +9,30 @@
   </button>
 </div>
 @endif
-<article class="col-lg-8 mx-auto mt-4">
-  <div class="card">
+<article class="col-lg-8 mx-auto pb-4">
+  <div class="card my-4">
     <div class="card-header">
       <p class="h4 text-center">{{ $user->name }}</p>
     </div>
     <div class="card-body">
       <div class="my-4">
-      <p class="h2">Mes groupes</p>
-      @if (count($userGroups) > 0)
-      <ul>
-        @foreach ($userGroups as $group)
-          <li><a href="{{ route('posts.index', $group->name) }}">{{ $group->name }}</a></li>
-        @endforeach
-      </ul>
-      @else
+        <p class="h2">Mes groupes</p>
+        @if (count($userGroups) > 0)
+        <div class="card-deck mt-4">
+          @foreach ($userGroups as $group)
+          @php
+          $userArray = explode(",", $group->users_id);
+          $avatarUrl = Storage::url($group->avatar);
+          $updated = Carbon\Carbon::parse($group->active_at)->locale('fr')->timezone('Europe/Paris')->format('d M Y à
+          H:i');
+          @endphp
+          @include('templates/group_list_template')
+          @endforeach
+        </div>
+        @else
         <p>Vous n'êtes inscrit dans aucun groupe.<br><br>Cliquez pour en rejoindre ou en créer un: </p>
-        <a role="button" class="btn btn-primary"
-        href="{{ route('group.index') }}">Groupes</a>
-      @endif
+        <a role="button" class="btn btn-primary" href="{{ route('group.index') }}">Groupes</a>
+        @endif
       </div>
       <hr class="hr">
       <div>
@@ -40,8 +45,8 @@
         @else
         <p class="card-text">Vous ne recevez pas les notifications par mail</p>
         @endif
-        <a role="button" class="btn btn-warning float-right"
-          href="{{ route('user_page.edit', $user->id) }}">Editer mes informations</a>
+        <a role="button" class="btn btn-warning float-right" href="{{ route('user_page.edit', $user->id) }}">Editer mes
+          informations</a>
       </div>
     </div>
     @if ($user->admin == 1)

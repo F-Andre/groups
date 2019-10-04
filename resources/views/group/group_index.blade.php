@@ -55,21 +55,7 @@
           @endphp
 
           @if (in_array(auth()->user()->id, $userArray))
-          <div class="card flex-fill mb-2">
-            <div class="card-body d-flex card-group">
-              <a id={{ $group->name }} href={{ route('posts.index', $group->name) }}></a>
-              <div class="mr-4">
-                <img src={{ $avatarUrl }} class="avatar avatar-group" alt="{{ $group->name }}-image">
-              </div>
-              <div>
-                <p class="card-title h5">{{ $group->name }}</p>
-                <p class="card-text">{{ $group->description }}</p>
-              </div>
-            </div>
-            <div class="card-footer">
-              <p class="card-text"><small class="text-muted">Actif le : {{ $updated }}</small></p>
-            </div>
-          </div>
+          @include('templates/group_list_template')
           @endif
           @endforeach
         </div>
@@ -98,28 +84,14 @@
           @foreach ($groups as $group)
 
           @php
-          $userArrayUnreg = explode(",", $group->users_id);
-          $avatarUrlUnreg = Storage::url($group->avatar);
-          $updatedUnreg = Carbon\Carbon::parse($group->active_at)->locale('fr')->timezone('Europe/Paris')->format('d M Y à
+          $userArray = explode(",", $group->users_id);
+          $avatarUrl = Storage::url($group->avatar);
+          $updated = Carbon\Carbon::parse($group->active_at)->locale('fr')->timezone('Europe/Paris')->format('d M Y à
           H:i');
           @endphp
 
-          @if (!in_array(auth()->user()->id, $userArrayUnreg))
-          <div class="card flex-fill mb-2">
-            <div class="card-body d-flex card-group">
-              <a id={{ $group->name }} href={{ route('group.show', $group->name) }}></a>
-              <div class="mr-4">
-                <img src={{ $avatarUrlUnreg }} class="avatar avatar-group" alt="{{ $group->name }}-image">
-              </div>
-              <div>
-                <p class="card-title h5">{{ $group->name }}</p>
-                <p class="card-text">{{ $group->description }}</p>
-              </div>
-            </div>
-            <div class="card-footer">
-              <p class="card-text"><small class="text-muted">Actif le : {{ $updatedUnreg }}</small></p>
-            </div>
-          </div>
+          @if (!in_array(auth()->user()->id, $userArray))
+          @include('templates/group_list_template')
           @endif
           @endforeach
         </div>

@@ -19,6 +19,7 @@ require('./components/userEdit');
 require('./components/commentCreate');
 require('./components/groupCreate.js');
 require('./components/groupEdit.js');
+require('./components/invitForm.js');
 
 /***
  * Global JS

@@ -61,13 +61,19 @@
     <div class="card-body">
       @if (in_array(auth()->user()->id, $usersId))
       <p>Vous êtes membre de ce groupe</p>
+      <hr class="hr">
+      <div>
+        <p>Vous pouvez inviter une ou plusieurs personnes par mail:</p>
+        <form id="invitMailForm" method="POST" action={{ route('group.invitMember', ['groupName' => $group->name, 'userId' => auth()->user()->id]) }} enctype="multipart/form-data">
+          @csrf
+          <div id="invitForm"></div>
+        </form>
+      </div>
       @else
-
-      <form method="POST"
-        action="{{ route('group.joinDemand', ['groupName' => $group->name, 'userId' => auth()->user()->id]) }}"
+      <form id="joinDemandForm" method="POST" action="{{ route('group.joinDemand', ['groupName' => $group->name, 'userId' => auth()->user()->id]) }}"
         enctype="multipart/form-data">
         @csrf
-        <input name="joinGroup" id="joinGroup" class="btn btn-success" type="submit" value="Rejoindre">
+        <input form="joinDemandForm" name="joinGroup" id="joinGroup" class="btn btn-success" type="submit" value="Rejoindre">
       </form>
       @endif
     </div>

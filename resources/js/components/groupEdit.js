@@ -10,7 +10,6 @@ function Name ( props ) {
       name="name"
       id="name"
       value={props.value}
-      //onChange={props.onChange}
       readOnly
     />
   );
@@ -40,19 +39,11 @@ export default class GroupEditForm extends Component {
       modified: false,
       avatarDeleted: '',
     }
-    //this.handleChangeName = this.handleChangeName.bind( this );
     this.handleChangeDesc = this.handleChangeDesc.bind( this );
     this.handleChangeAvatar = this.handleChangeAvatar.bind( this );
     this.handleDeleteAvatar = this.handleDeleteAvatar.bind( this );
     this.fileInput = React.createRef();
   }
-
-  /* handleChangeName ( event ) {
-    this.setState( {
-      nameValue: event.target.value,
-      modified: true
-    } )
-  } */
 
   handleChangeDesc ( event ) {
     this.setState( {

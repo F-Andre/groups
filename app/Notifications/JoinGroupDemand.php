@@ -21,7 +21,7 @@ class JoinGroupDemand extends Notification
    *
    * @return void
    */
-  public function __construct(User $user, Group $group)
+  public function __construct(Group $group, User $user)
   {
     $this->group = $group;
     $this->user = $user;

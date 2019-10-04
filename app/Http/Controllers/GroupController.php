@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Repositories\GroupRepository;
 use App\Http\Requests\GroupSearchRequest;
 use App\Notifications\JoinGroupDemand;
+use App\Mail\InvitNewMember;
+use Illuminate\Support\Facades\Mail;
 use App\Post;
 use App\User;
 use Carbon\Carbon;
@@ -60,11 +62,11 @@ class GroupController extends Controller
       return redirect(route('groupe.create'))->with('error', 'Le nom du groupe n\'est pas correct');
     }
     $inputs = array_merge($request->all(), ['users_id' => $request->user_id, 'admins_id' => $request->user_id, 'active_at' => now()]);
-    
+
     $this->group->store($inputs);
 
     $group = $this->group->getByName($request->name);
-    
+
     if ($request->hasFile('avatar')) {
       if ($request->avatar->isValid()) {
         mkdir('storage/group-avatar/' . $group->id, 0775, true);
@@ -251,9 +253,25 @@ class GroupController extends Controller
         $userAdmin->notify(new JoinGroupDemand($user, $group));
       }
 
-      return redirect(route('group.show', ['name' => $groupName]))->with('ok', "Votre demande pour rejoindre le groupe '" . $group->name . "' a été envoyée.");
+      return redirect(route('group.show', $groupName))->with('ok', "Votre demande pour rejoindre le groupe '" . $group->name . "' a été envoyée.");
     }
 
-    return redirect(route('group.show', ['name' => $groupName]))->with('error', "Vous avez déjà envoyé une demande pour rejoindre le groupe '" . $groupName . "'");
+    return redirect(route('group.show', $groupName))->with('error', "Vous avez déjà envoyé une demande pour rejoindre le groupe '" . $groupName . "'");
+  }
+
+  public function invitMember(Request $request, $groupName, $userId)
+  {
+    $group = $this->group->getByName($groupName);
+    $user = User::where('id', $userId)->first();
+    $mails = explode(",", $request->emails);
+
+    foreach ($mails as $mail) {
+      if (strlen($mail) > 0)
+      {
+        Mail::send(new InvitNewMember($group, $user, $mail));
+      }
+    }
+
+    return redirect(route('group.show', $groupName))->with('ok', "Les demandes ont été envoyées");
   }
 }
