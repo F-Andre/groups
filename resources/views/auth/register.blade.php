@@ -10,9 +10,14 @@
         <div class="card-body">
           <form method="POST" action="{{ route('register') }}">
             @csrf
-
+            <div class="mb-2">
+              <p>Votre adresse e-mail ne sera utilisée que pour vous connecter et envoyer des notifications. Elle ne sera
+                visible par aucun utilisateur de la plateforme.</p>
+              <p>Les autres utilisateurs verront seulement le pseudo que vous avez renseigné.</p>
+            </div>
+            <hr class="hr">
             <div class="form-group row">
-              <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+              <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nickname') }}</label>
 
               <div class="col-md-6">
                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
@@ -74,11 +79,6 @@
             </div>
           </form>
         </div>
-      </div>
-      <div class="mt-4">
-        <p>Votre adresse e-mail ne sera utilisée que pour vous connecter et envoyer des notifications. Elle ne sera
-          visible par aucun utilisateur de la plateforme.</p>
-        <p>Les autres utilisateurs verront seulement le nom que vous avez renseigné.</p>
       </div>
     </div>
   </div>
