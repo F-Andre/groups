@@ -92,7 +92,7 @@ export default class GroupForm extends Component {
     const imageClass = this.state.imgSize > imageSizeMax ? 'form-control is-invalid' : 'form-control'
     const disabledState = this.state.nameClass == 'form-control is-invalid' ? true : this.state.descClass == 'form-control is-invalid' ? true : false
     const submitClass = !disabledState ? "btn btn-primary" : "btn btn-secondary disabled"
-    const disableDelete = this.state.imgSrc != '/storage/default/default_avatar.png' ? "btn btn-outline-danger btn-sm" : "btn btn-outline-danger btn-sm disabled"
+    const disableDelete = this.state.imgSrc != '/storage/default/default-group.svg' ? "btn btn-outline-danger btn-sm" : "btn btn-outline-danger btn-sm disabled"
 
     const aStyle = {
       backgroundImage: 'url(' + this.state.imgSrc + ')',

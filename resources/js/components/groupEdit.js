@@ -79,7 +79,7 @@ export default class GroupEditForm extends Component {
     const imageSizeMax = 10485760
     const disabledState = !this.state.modified ? true : this.state.imgSize > imageSizeMax ? true : false
     const submitClass = !disabledState ? "btn btn-success btn-lg" : "btn btn-success btn-lg disabled"
-    const disableDelete = this.state.imgSrc != '/storage/default/default_avatar.png' ? "btn btn-outline-danger btn-sm" : "btn btn-outline-danger btn-sm disabled"
+    const disableDelete = this.state.imgSrc != '/storage/default/default-group.svg' ? "btn btn-outline-danger btn-sm" : "btn btn-outline-danger btn-sm disabled"
     const aStyle = {
       backgroundImage: 'url(' + this.state.imgSrc + ')',
     };
