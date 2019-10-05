@@ -5,10 +5,10 @@
     @else
     <a id={{ $group->name }} style="display: none;" href={{ route('group.show', $group->name) }}></a>
     @endif
-    <div class="mx-auto">
+    <div>
       <img src={{ $avatarUrl }} class="avatar avatar-group" alt="{{ $group->name }}-image">
     </div>
-    <div>
+    <div class="ml-3 mt-2">
       <p class="card-title h5">{{ $group->name }}</p>
       <p class="card-text">{{ $group->description }}</p>
     </div>
