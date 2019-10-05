@@ -54,7 +54,7 @@ class JoinGroupOk extends Notification
       ->greeting($greeting)
       ->line($line)
       ->line($line2)
-      ->action($this->group->name, url('/' . $this->group->name))
+      ->action($this->group->name, url('/' . $this->group->name . '/posts'))
       ->line('Merci et à bientôt!');
   }
 
