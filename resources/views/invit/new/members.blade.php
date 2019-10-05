@@ -1,12 +1,11 @@
 @component('mail::message')
 {{-- Greeting --}}
 <p>Bonjour,</p>
-<br>
 {{-- Intro Lines --}}
 
 <p>Vous recevez ce mail car {{ $name }} vous invite à rejoindre son groupe "{{ $groupName }}"</p>
-<p>Pour devenir membre de ce groupe vous devez créer un compte sur le site <a
-    href="https://groups.fabienandre.com">groups.fabienandre.com</a></p>
+<p>Pour cela vous devez avoir un compte sur le site <a href="https://groups.fabienandre.com">groups.fabienandre.com</a></p>
+<p>Si vous n'en avez pas, vous pouvez en créer un en cliquant sur le bouton ci-dessous</p>
 
 {{-- Action Button --}}
 @component('mail::button', ['url' => $actionUrl])

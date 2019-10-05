@@ -1,7 +1,11 @@
 <div class="card flex-fill mb-2">
   <div class="card-body d-flex card-group">
-    <a id={{ $group->name }} href={{ route('group.show', $group->name) }}></a>
-    <div class="mr-4">
+    @if (in_array(auth()->user()->id, $userArray))
+    <a id={{ $group->name }} style="display: none;" href={{ route('posts.index', $group->name) }}></a>
+    @else
+    <a id={{ $group->name }} style="display: none;" href={{ route('group.show', $group->name) }}></a>
+    @endif
+    <div class="mx-auto">
       <img src={{ $avatarUrl }} class="avatar avatar-group" alt="{{ $group->name }}-image">
     </div>
     <div>
@@ -10,6 +14,6 @@
     </div>
   </div>
   <div class="card-footer">
-    <a class="btn btn-success btn-sm float-right" href={{ route('group.show', $group->name) }} role="button">Infos</a>
+    <a class="btn btn-outline-success btn-sm float-right" href={{ route('group.show', $group->name) }} role="button">Infos</a>
   </div>
 </div>

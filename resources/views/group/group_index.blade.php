@@ -38,12 +38,12 @@
   @endif
   <div class="card">
     <div class="card-header">
-      Choisir un groupe
+      <p class="h4">Les groupes</p>
     </div>
     <div class="card-body">
       <div>
         @isset($groups)
-        <p>Mes groupes:</p>
+        <p class="h5">Mes groupes:</p>
         <div class="card-deck">
           @foreach ($groups as $group)
 
@@ -60,7 +60,7 @@
           @endforeach
         </div>
         <hr>
-        <p>Rechercher un groupe:</p>
+        <p class="h5">Rechercher un groupe:</p>
         <form class="form-inline my-2 my-lg-0" method="POST"
           action="{{ route('group.searchResult', ['groupSearch']) }}">
           @csrf

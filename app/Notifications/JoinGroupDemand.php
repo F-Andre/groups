@@ -54,7 +54,7 @@ class JoinGroupDemand extends Notification
       ->greeting($greeting)
       ->line($line)
       ->line($line2)
-      ->action('Admin groupe', url('/' . $this->group->name . '/admin'))
+      ->action('Administration de ' . $this->group->name, url('/' . $this->group->name . '/admin'))
       ->line('Merci et à bientôt!');
   }
 

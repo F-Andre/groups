@@ -23,13 +23,15 @@ $groupName = $group->name;
 </div>
 @endif
 <div class="card mb-4">
-  <div class="card-header d-flex justify-content-between">
+  <div class="card-header d-flex flex-wrap-reverse justify-content-between align-items-center">
     <div>
       <p class="h3">{{ $group->name }}</p>
       <p>{{ $group->description }}</p>
       <p class="card-title">Créé le: {{ $dateCreation }}</p>
     </div>
-    <p class="avatar" style={{"background-image:url(".Storage::url($group->avatar).")"}}></p>
+    <div>
+      <span class="avatar" style={{"background-image:url(".Storage::url($group->avatar).")"}}></span>
+    </div>
   </div>
   <div class="card-body d-flex justify-content-end">
     <a name="edit" id="edit" class="btn btn-warning btn-sm mr-2" href="{{ route('group.edit', $group->id) }}" role="button">Editer

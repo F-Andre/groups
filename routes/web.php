@@ -19,7 +19,7 @@ Route::resources(['user_page'=> 'UserController']);
 
 Route::resource('group', 'GroupController')->middleware('verified');
 Route::post('group/{group}', 'GroupController@searchResult')->name('group.searchResult')->middleware('verified');
-Route::post('group/{group}/{user}', 'GroupController@joinDemand')->name('group.joinDemand')->middleware('verified');
+Route::post('group/{groupName}/{userId}', 'GroupController@joinDemand')->name('group.joinDemand')->middleware('verified');
 Route::post('invitMember/{groupName}/{userId}', 'GroupController@invitMember')->name('group.invitMember')->middleware('verified');
 
 Route::resource('{group}/admin', 'AdminController')->middleware('verified');

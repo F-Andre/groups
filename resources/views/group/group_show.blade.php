@@ -50,7 +50,7 @@
   </div>
   @endif
   <div class="card">
-    <div class="card-header d-flex justify-content-between">
+    <div class="card-header d-flex flex-wrap-reverse justify-content-between align-items-center">
       <div>
         <p class="h3">{{ $group->name }}</p>
         <p>{{ $group->description }}</p>
@@ -63,7 +63,7 @@
       <p>Vous êtes membre de ce groupe</p>
       <hr class="hr">
       <div>
-        <p>Vous pouvez inviter une ou plusieurs personnes par mail:</p>
+        <p>Inviter une ou plusieurs personnes par mail à rejoindre le goupe:</p>
         <form id="invitMailForm" method="POST" action={{ route('group.invitMember', ['groupName' => $group->name, 'userId' => auth()->user()->id]) }} enctype="multipart/form-data">
           @csrf
           <div id="invitForm"></div>

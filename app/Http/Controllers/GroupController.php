@@ -231,7 +231,7 @@ class GroupController extends Controller
   public function joinDemand($groupName, $userId)
   {
     $user = User::where('id', $userId)->first();
-    $group = Group::where('name', $groupName)->first();
+    $group = $this->group->getByName($groupName);
 
     $groupOnDemand = explode(",", $group->on_demand);
 
@@ -243,14 +243,13 @@ class GroupController extends Controller
       }
       array_push($groupOnDemand, $user->id);
       $onDemand = implode(",", $groupOnDemand);
-      $group->on_demand = $onDemand;
-      $group->save();
+
+      $group->update(['on_demand' => $onDemand]);
 
       $groupAdmins = explode(",", $group->admins_id);
       foreach ($groupAdmins as $admin) {
-        var_dump($admin);
         $userAdmin = User::where('id', $admin)->first();
-        $userAdmin->notify(new JoinGroupDemand($user, $group));
+        $userAdmin->notify(new JoinGroupDemand($group, $user));
       }
 
       return redirect(route('group.show', $groupName))->with('ok', "Votre demande pour rejoindre le groupe '" . $group->name . "' a été envoyée.");
@@ -268,7 +267,8 @@ class GroupController extends Controller
     foreach ($mails as $mail) {
       if (strlen($mail) > 0)
       {
-        Mail::send(new InvitNewMember($group, $user, $mail));
+        $mailTrim = trim($mail);
+        Mail::send(new InvitNewMember($group, $user, $mailTrim));
       }
     }
 

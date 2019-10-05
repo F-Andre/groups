@@ -29,7 +29,7 @@ export default class InvitForm extends Component {
   handleSubmitMail(e) {
     e.preventDefault()
     this.setState({
-      emailsValue: this.state.emailsValue += this.state.mailValue + ',',
+      emailsValue: this.state.emailsValue += this.state.mailValue + ', ',
       mailValue: '',
       submitDisabled: false,
     })
@@ -47,13 +47,18 @@ export default class InvitForm extends Component {
       <div className="form-group">
         <form className="inline-form" id="addMailForm">
           <div className="form-group">
-            <input form="addMailForm" type="email" name="mail" className="ml-2" value={this.state.mailValue} max='80' placeholder="Entrez une adresse e-mail" onChange={this.handleChangeMail} />
+            <input form="addMailForm" type="email" name="mail" className="ml-2 mb-2" value={this.state.mailValue} max='80' placeholder="Entrez une adresse e-mail" onChange={this.handleChangeMail} />
             <button form="addMailForm" type="submit" onClick={this.handleSubmitMail} className={submitMailClass} disabled={this.state.submitMailDisabled}>Ajouter</button>
           </div>
         </form>
         <div className="form-group">
           <label htmlFor="emails">Liste des e-mails:</label>
-          <input form="invitMailForm" type="text" className="ml-2 form-control" name="emails" id="emails" placeholder="Aucune adresse" value={this.state.emailsValue} readOnly/>
+          <div className="card">
+            <div className="card-body">
+            {this.state.emailsValue}
+            </div>
+          </div>
+          <input form="invitMailForm" type="text" className="ml-2 form-control" name="emails" id="emails" placeholder="Aucune adresse" value={this.state.emailsValue} hidden readOnly />
         </div>
         <button form="invitMailForm" type="submit" onClick={this.handleSubmit} className="btn btn-success" disabled={this.state.submitDisabled}>Envoyer {this.state.spinner}</button>
       </div>

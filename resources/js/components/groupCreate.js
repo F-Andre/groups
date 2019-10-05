@@ -36,10 +36,11 @@ export default class GroupForm extends Component {
       descValue: '',
       imgSrc: avatar,
       imgSize: 0,
-      avatarDeleted: '',
+      avatarDeleted: false,
       spinner: '',
       nameClass: 'form-control is-invalid',
-      descClass: 'form-control is-invalid'
+      descClass: 'form-control is-invalid',
+      disabledState: true,
     }
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeDesc = this.handleChangeDesc.bind(this);
@@ -53,7 +54,7 @@ export default class GroupForm extends Component {
     if (event.target.value.length <= 6 || regexp.test(event.target.value)) {
       this.setState({ nameValue: event.target.value, nameClass: 'form-control is-invalid' })
     } else {
-      this.setState({ nameValue: event.target.value, nameClass: 'form-control' })
+      this.setState({ nameValue: event.target.value, nameClass: 'form-control', disabledState: false })
     }
   }
 
@@ -61,7 +62,7 @@ export default class GroupForm extends Component {
     if (event.target.value.length <= 6) {
       this.setState({ descValue: event.target.value, descClass: 'form-control is-invalid' })
     } else {
-      this.setState({ descValue: event.target.value, descClass: 'form-control' })
+      this.setState({ descValue: event.target.value, descClass: 'form-control', disabledState: false })
     }
   }
 
@@ -74,7 +75,6 @@ export default class GroupForm extends Component {
       this.setState( {
         imgSrc: fileSrc,
         imgSize: fileSize,
-        modified: true
       } );
     };
     reader.readAsDataURL( file );
@@ -83,8 +83,7 @@ export default class GroupForm extends Component {
   handleDeleteAvatar () {
     this.setState( {
       imgSrc: defaultAvatar,
-      modified: true,
-      imageDeleted: true,
+      avatarDeleted: true,
     } )
   }
 
@@ -104,7 +103,7 @@ export default class GroupForm extends Component {
         <div className="form-group">
           <label htmlFor="name">Nom du groupe:</label>
           <GroupName value={this.state.nameValue} onChange={this.handleChangeName} className={this.state.nameClass} />
-          <div className="invalid-feedback">Choisissez un nom d'au moins 6 caractères sans espaces.</div>
+          <div className="invalid-feedback">Choisissez un nom d'au moins 6 caractères sans espaces (-_. autorisés).</div>
         </div>
         <div className="form-group">
           <label htmlFor="desc">Description du groupe:</label>
@@ -120,7 +119,7 @@ export default class GroupForm extends Component {
             <input id="avatar" name="avatar" className={imageClass} type="file" accept=".JPG, .PNG, .GIF" ref={this.fileInput} onChange={this.handleChangeAvatar} />
             <div className="invalid-feedback">L'image doit être aux formats jpg, png ou gif et avoir une taille max de 10Mo.</div>
           </div>
-          <input id="avatarDeleted" type="text" className="disabled" name="avatarDeleted" value={this.state.imageDeleted} />
+          <input id="avatarDeleted" type="text" className="disabled" name="avatarDeleted" value={this.state.avatarDeleted} />
         </div>
         <LoadModal />
         <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Créer le groupe</button>
