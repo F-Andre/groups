@@ -60,7 +60,7 @@ class CommentController extends Controller
 
     if ($poster->id != $commenter->id)
     {
-      $poster->notify(new CommentNotification($commenter, $post));
+      $poster->notify(new CommentNotification($commenter, $post, $group));
     }
 
     return redirect(route('posts.index', [$groupName, '#' . $post->id],));

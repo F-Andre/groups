@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Group;
+use App\Post;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -12,15 +14,19 @@ class NewPost extends Notification
 {
   use Queueable;
   private $fromUser;
+  private $post;
+  private $group;
 
   /**
    * Create a new notification instance.
    *
    * @return void
    */
-  public function __construct(User $user)
+  public function __construct(User $user, Post $post, Group $group)
   {
     $this->fromUser = $user;
+    $this->post = $post;
+    $this->group = $group;
   }
 
   /**
@@ -43,12 +49,12 @@ class NewPost extends Notification
   public function toMail($notifiable)
   {
     $greeting = sprintf('Bonjour %s,', $notifiable->name);
-    $line = sprintf('%s vient de poster un nouvel article.', $this->fromUser->name);
+    $line = sprintf('%s vient de poster un nouvel article: %s', $this->fromUser->name, $this->post->titre);
     return (new MailMessage)
       ->subject('Nouveau post')
       ->greeting($greeting)
       ->line($line)
-      ->action('Voir l\'article', url('/'))
+      ->action('Voir l\'article', url($this->group->name . '/posts/#' . $this->post->id))
       ->line('Merci et à bientôt!');
   }
 

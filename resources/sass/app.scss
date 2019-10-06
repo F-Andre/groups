@@ -23,13 +23,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.comment {
-  background-color: white;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 5px;
-}
-
 .image-blog {
   max-height: 50vh;
   max-width: 100%;
@@ -123,6 +116,14 @@ aside a {
   height: 300px;
   border: 2px solid gainsboro;
   border-radius: 5px;
+}
+
+.comment {
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
+  font-size: 1rem;
 }
 
 .commentIframe {

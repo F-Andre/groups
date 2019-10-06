@@ -18,6 +18,11 @@ class PostRepository extends DataRepository
         ->paginate($n);
     }
 
+    public function getByLatestTitre($titre)
+    {
+        $posts = $this->model->where('titre', $titre)->latest()->first();
+    }
+
     public function findUser($id)
     {
         return $this->model->find($id)->user;

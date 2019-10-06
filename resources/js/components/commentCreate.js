@@ -49,7 +49,6 @@ export default class CommentForm extends Component {
     return (
       <div className="form-group">
         <div className="form-group mt-2">
-          <label htmlFor="comment">Ajouter un commentaire</label>
           <textarea className={contenuClass} name="comment" id="comment" value={this.state.commentValue} hidden />
           <iframe id="comment_iframe" className="commentIframe" src="/comment_iframe.html"></iframe>
         </div>

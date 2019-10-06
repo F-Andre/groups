@@ -12,6 +12,7 @@ use App\Notifications\NewPost;
 use App\User;
 use App\Group;
 use Carbon\Carbon;
+use App\Post;
 
 class postController extends Controller
 {
@@ -108,9 +109,11 @@ class postController extends Controller
         $inputs = array_merge($request->all(), ['user_id' => $request->user()->id, 'image' => $path, 'group_id' => $group->id]);
         $this->post->store($inputs);
 
+        $post = Post::where('titre', $request->titre)->latest()->first();
+
         foreach ($users as $user) {
           if ($user->id != $request->user()->id && in_array($user->id, $groupUsers)) {
-            $user->notify(new NewPost($request->user()));
+            $user->notify(new NewPost($request->user(), $post, $group));
           }
         }
 
@@ -125,9 +128,11 @@ class postController extends Controller
 
     $group->update(['active_at' => Carbon::now()]);
 
+    $post = Post::where('titre', $request->titre)->latest()->first();
+
     foreach ($users as $user) {
       if ($user->id != $request->user()->id && in_array($user->id, $groupUsers)) {
-        $user->notify(new NewPost($request->user()));
+        $user->notify(new NewPost($request->user(), $post, $group));
       }
     }
 

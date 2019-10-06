@@ -68,8 +68,14 @@
     @endif
   </div>
   <div class="card-footer">
-    <p><b>Commentaires:</b></p>
-    <?php $comments = $post->comments()->orderBy('created_at', 'asc')->get(); ?>
+    <p><small><b>Commentaires:</b></small></p>
+    @php
+      $comments = $post->comments()->orderBy('created_at', 'asc')->get();
+    @endphp
+    @if (count($comments) == 0)
+      <p><small>Aucun commentaire pour l'instant.</small></p>
+      <hr class="hr">
+    @else
     @foreach ($comments as $comment)
     <div class="comment">
       <div class="comment-head d-flex justify-content-between border-bottom">
@@ -107,13 +113,25 @@
       </div>
     </div>
     @endforeach
-    @auth
-    <form method="POST" action="{{ route('comment.store') }}"  enctype="multipart/form-data">
-      @csrf
-      <input type="text" name="post_id" value={{ $post->id }} hidden>
-      <input type="text" name="user_id" value={{ auth()->user()->id }} hidden>
-      <div class="commentForm"></div>
-    </form>
-    @endauth
+    @endif
+    <div class="accordion" id="accordionComment{{ $post->id }}">
+      <div>
+        <div id="heading{{ $post->id }}">
+          <button class="btn btn-link btn-sm" type="button" data-toggle="collapse" data-target="#collapse{{ $post->id }}" aria-expanded="false" aria-controls="collapse{{ $post->id }}">
+            Ajouter un commentaire
+          </button>
+        </div>
+        <div id="collapse{{ $post->id }}" class="collapse" aria-labelledby="heading{{ $post->id }}" data-parent="#accordionComment{{ $post->id }}">
+          <div>
+            <form method="POST" action="{{ route('comment.store') }}"  enctype="multipart/form-data">
+              @csrf
+              <input type="text" name="post_id" value={{ $post->id }} hidden>
+              <input type="text" name="user_id" value={{ auth()->user()->id }} hidden>
+              <div class="commentForm"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
