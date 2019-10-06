@@ -142,7 +142,7 @@ class UserController extends Controller
         $oldImage = $user->avatar;
 
         if (Storage::exists('public/avatar/' . $user->id) == false) {
-          mkdir('storage/avatar/' . $user->id, 0775, true);
+          Storage::makeDirectory('public/avatar/' . $user->id);
         } else {
           $files = Storage::files('public/avatar/' . $user->id);
           Storage::delete($files);

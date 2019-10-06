@@ -69,7 +69,7 @@ class GroupController extends Controller
 
     if ($request->hasFile('avatar')) {
       if ($request->avatar->isValid()) {
-        mkdir('storage/group-avatar/' . $group->id, 0775, true);
+        Storage::makeDirectory('public/group-avatar/' . $group->id);
 
         $fileExt = $request->avatar->getClientOriginalExtension();
         $fileName = Str::random(15);
@@ -140,7 +140,7 @@ class GroupController extends Controller
         $oldImage = $group->avatar;
 
         if (Storage::exists('public/avatar/' . $group->id) == false) {
-          mkdir('storage/group-avatar/' . $group->id, 0775, true);
+          Storage::makeDirectory('public/group-avatar/' . $group->id);
         } else {
           $files = Storage::files('public/group-avatar/' . $group->id);
           Storage::delete($files);
