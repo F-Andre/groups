@@ -34,10 +34,11 @@
     @endisset
   </div>
 </nav>
+
 <aside class="col-2 ml-5 py-4">
   @include('templates/nav_left_template')
 </aside>
-<section class="col-lg-6 pt-4 mx-auto">
+<section class="col-lg-8 offset-lg-3 pt-4">
   @yield('section')
 </section>
 @else

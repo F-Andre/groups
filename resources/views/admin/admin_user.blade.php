@@ -17,20 +17,22 @@
   </div>
   <div class="card-body">
     @if (auth()->user()->id !== $user->id)
-    <form class="form-inline mb-4" action={{ route('admin.adminSwitch', $groupName) }} method="POST"
-      enctype="multipart/form-data">
-      @csrf
-      <div class="custom-control custom-switch mr-3">
-        <input type="text" name="user_id" value={{ $user->id }} hidden>
-        <input type="checkbox" name="admin" class="custom-control-input" id="customSwitch1" @if(in_array($user->id,
-        $groupAdmins)) checked @endif>
-        <label class="custom-control-label" for="customSwitch1">Administrateur du groupe</label>
-      </div>
-      <input type="submit" class="btn btn-success" value="Valider">
-    </form>
+    <div class="mb-5 mt-2">
+      <form class="form-inline" action={{ route('admin.adminSwitch', $groupName) }} method="POST"
+        enctype="multipart/form-data">
+        @csrf
+        <div class="custom-control custom-switch mr-3">
+          <input type="text" name="user_id" value={{ $user->id }} hidden>
+          <input type="checkbox" name="admin" class="custom-control-input" id="customSwitch1" @if(in_array($user->id,
+          $groupAdmins)) checked @endif>
+          <label class="custom-control-label" for="customSwitch1">Administrateur du groupe</label>
+        </div>
+        <input type="submit" class="btn btn-success btn-sm" value="Valider">
+      </form>
+    </div>
     @if (!in_array($user->id, $groupAdmins))
-    <div class="d-flex justify-content-start">
-      <div class="text-center mr-4">
+    <div class="d-flex justify-content-start mt-5 mb-5">
+      <div class="text-center mr-5">
         <form class="form-inline" action={{ route('admin.warnUser', $groupName) }} method="POST"
           enctype="multipart/form-data">
           @csrf
@@ -53,9 +55,9 @@
         </form>
       </div>
     </div>
-    @endif
-    @endif
     <hr class="hr">
+    @endif
+    @endif
     <form class="form-inline mb-3" method="GET" action={{ route( 'admin.show', [$groupName, $user->id]) }}>
       <select id="tri" name="tri">
         <option value="">Trier les posts</option>
