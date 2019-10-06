@@ -50,7 +50,7 @@
           @php
           $userArray = explode(",", $group->users_id);
           $avatarUrl = Storage::url($group->avatar);
-          $updated = Carbon\Carbon::parse($group->active_at)->locale('fr')->timezone('Europe/Paris')->format('d M Y à
+          $updated = Carbon\Carbon::parse($group->active_at)->locale('fr')->format('d M Y à
           H:i');
           @endphp
 
@@ -86,7 +86,7 @@
           @php
           $userArray = explode(",", $group->users_id);
           $avatarUrl = Storage::url($group->avatar);
-          $updated = Carbon\Carbon::parse($group->active_at)->locale('fr')->timezone('Europe/Paris')->format('d M Y à
+          $updated = Carbon\Carbon::parse($group->active_at)->locale('fr')->format('d M Y à
           H:i');
           @endphp
 

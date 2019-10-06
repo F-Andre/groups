@@ -22,6 +22,8 @@ Groups
 @lang('Regards'),<br>{{ config('app.name') }}
 @endif
 
+<small>Merci de ne pas répondre à cet email. Les messages reçus à cette adresse ne sont pas lus et ne reçoivent donc aucune réponse.</small>
+
 {{-- Subcopy --}}
 @isset($actionText)
 @slot('subcopy')
