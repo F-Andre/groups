@@ -21,7 +21,7 @@
 </div>
 <hr>
 <div class="accordion" id="groupAcc">
-  <a id="headingGroup" class="btn btn-outline-success" href="#" role="button" data-toggle="collapse"
+  <a id="headingGroup" class="btn btn-outline-secondary" href="#" role="button" data-toggle="collapse"
     data-target="#groupDropdown" aria-expanded="true" aria-controls="groupDropdown">
     <span class="avatar avatar-btn float-left" style="background-image: url({{ Storage::url($group->avatar) }})"></span>
     {{ $groupName }}
@@ -31,13 +31,18 @@
     <a class="dropdown-item" href="{{ route('posts.index', $groupName) }}">
       Fil du groupe
     </a>
-    <a class="dropdown-item" href="{{ route('group.index') }}">
-      Mes groupes
+    <a class="dropdown-item" href="{{ route('group.show', $groupName) }}">
+      Infos du groupe
     </a>
     @if (in_array(auth()->user()->id, $groupAdmins))
     <a class="dropdown-item" href="{{ route('admin.index', $groupName) }}" role="button">Page admin</a>
     @endif
   </div>
+</div>
+<div class="mt-4">
+  <a class="btn btn-outline-success" href="{{ route('group.index') }}">
+    Mes groupes
+  </a>
 </div>
 <div class="mt-4">
   <a class="btn btn-outline-primary" href={{ route('posts.create', $groupName) }} role="button">Ecrire un

@@ -60,20 +60,31 @@
     </div>
     <div class="card-body">
       @if (in_array(auth()->user()->id, $usersId))
-      <p>Vous êtes membre de ce groupe</p>
+      <div class="d-flex justify-content-between">
+        <p>Vous êtes membre de ce groupe</p>
+        <div>
+          <a class="btn btn-outline-success" href={{ route('posts.index', ['groupName' => $group->name]) }} role="button">
+            Fil du groupe
+          </a>
+        </div>
+      </div>
       <hr class="hr">
       <div>
         <p>Inviter une ou plusieurs personnes par mail à rejoindre le goupe:</p>
-        <form id="invitMailForm" method="POST" action={{ route('group.invitMember', ['groupName' => $group->name, 'userId' => auth()->user()->id]) }} enctype="multipart/form-data">
+        <form id="invitMailForm" method="POST"
+          action={{ route('group.invitMember', ['groupName' => $group->name, 'userId' => auth()->user()->id]) }}
+          enctype="multipart/form-data">
           @csrf
           <div id="invitForm"></div>
         </form>
       </div>
       @else
-      <form id="joinDemandForm" method="POST" action="{{ route('group.joinDemand', ['groupName' => $group->name, 'userId' => auth()->user()->id]) }}"
+      <form id="joinDemandForm" method="POST"
+        action="{{ route('group.joinDemand', ['groupName' => $group->name, 'userId' => auth()->user()->id]) }}"
         enctype="multipart/form-data">
         @csrf
-        <input form="joinDemandForm" name="joinGroup" id="joinGroup" class="btn btn-success" type="submit" value="Rejoindre">
+        <input form="joinDemandForm" name="joinGroup" id="joinGroup" class="btn btn-success" type="submit"
+          value="Rejoindre">
       </form>
       @endif
     </div>

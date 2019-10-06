@@ -48,7 +48,8 @@
                 {{ Auth::user()->name }}
                 <i class="ml-2 fas fa-caret-down"></i>
               </a>
-              <div id="navAuthDropdown" class="collapse mt-2" aria-labelledby="navHeadingAuth" data-parent="#navAuthAcc">
+              <div id="navAuthDropdown" class="collapse mt-2" aria-labelledby="navHeadingAuth"
+                data-parent="#navAuthAcc">
                 <a class="dropdown-item" href="{{ route('user_page.index') }}">
                   Mon compte
                 </a>
@@ -69,17 +70,23 @@
                 {{ $groupName }}
                 <i class="ml-2 fas fa-caret-down"></i>
               </a>
-              <div id="navGroupDropdown" class="collapse mt-2" aria-labelledby="navHeadingGroup" data-parent="#navAccountAcc">
+              <div id="navGroupDropdown" class="collapse mt-2" aria-labelledby="navHeadingGroup"
+                data-parent="#navAccountAcc">
                 <a class="dropdown-item" href="{{ route('posts.index', $groupName) }}">
                   Fil du groupe
                 </a>
-                <a class="dropdown-item" href="{{ route('group.index') }}">
-                  Mes groupes
+                <a class="dropdown-item" href="{{ route('group.show', $groupName) }}">
+                  Infos du groupe
                 </a>
                 @if (in_array(auth()->user()->id, $groupAdmins))
                 <a class="dropdown-item" href="{{ route('admin.index', $groupName) }}" role="button">Page admin</a>
                 @endif
               </div>
+            </li>
+            <li class="mt-2">
+              <a class="btn btn-outline-success" href="{{ route('group.index') }}">
+                Mes groupes
+              </a>
             </li>
             <li class="mt-2">
               <a class="btn btn-outline-primary" href="{{ route('posts.create', $groupName) }}" role="button">Ecrire un
