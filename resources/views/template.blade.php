@@ -119,7 +119,6 @@
     </main>
   </div>
 
-
   <!-- Optional JavaScript -->
   <script>
     twemoji.parse(document.body);

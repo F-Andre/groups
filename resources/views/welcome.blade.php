@@ -20,9 +20,13 @@
 
 <body class="welcome">
   <div class="flex-center position-ref full-height">
+    @if (!$cookiesAccept)
+    @include('templates/modal_cookies')
+    @endif
     <div class="content">
       <div class="title m-b-md">
         {{ config('app.name')}}
+        {{$cookiesAccept}}
       </div>
       <h1 class="mb-4">Plateforme de discussion qui respecte la vie privée</h1>
       <div class="links d-flex justify-content-center flex-wrap">
@@ -60,10 +64,12 @@
               <li>En créant un compte sur le site, vous avez la possibilité de rejoindre ou de créer un groupe de
                 discussion.</li>
               <li>Le créateur d'un groupe dispose des droits d'aministration de ce groupe. C'est à dire qu'il a la
-                possibilité de supprimer des articles et des commentaires. Il peut aussi désigner un administrateur parmi
+                possibilité de supprimer des articles et des commentaires. Il peut aussi désigner un administrateur
+                parmi
                 les membre du groupe. L'administrateur du groupe a aussi la faculté d'envoyer des avertissements et
                 de radier un membre du groupe.</li>
-              <li>Quand un membre quitte le groupe, tous ces articles et commentaires sont aussi supprimés définitivement.</li>
+              <li>Quand un membre quitte le groupe, tous ces articles et commentaires sont aussi supprimés
+                définitivement.</li>
             </ul>
           </p>
           <p class="h5">Respect des données personnelles:</p>
@@ -73,7 +79,8 @@
                 stockées via un hébergeur français - gandi - sur ses serveurs.</li>
               <li>"Groups" n'utilise pas d'outils de fournisseurs tiers captant des données comme par exemple des outils
                 d'analyse Google ou de lien vers Facebook.</li>
-              <li>Vous pouvez connaître à tout moment le contenu des données vous concernant en en faisant la demande.</li>
+              <li>Vous pouvez connaître à tout moment le contenu des données vous concernant en en faisant la demande.
+              </li>
             </ul>
           </p>
           <p class="h5">Le droit à l'oubli:</p>
@@ -86,7 +93,8 @@
           </p>
           <p class="h5"><i class="fas fa-exclamation-triangle"></i> Version de test:</p>
           <p>
-            La plateforme proposée est actuellement en test, il peut y avoir des disfonctionnements. Merci de rapporter tout problème sur le group "Groups".
+            La plateforme proposée est actuellement en test, il peut y avoir des disfonctionnements. Merci de rapporter
+            tout problème sur le group "Groups".
           </p>
         </div>
         <div class="modal-footer">
