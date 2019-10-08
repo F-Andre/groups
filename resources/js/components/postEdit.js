@@ -124,8 +124,8 @@ export default class ArticleForm extends Component {
             <img className="img-fluid" src={this.state.imgSrc} />
             <input id="imageDeleted" type="text" className="disabled" name="imageDeleted" value={this.state.imageDeleted} />
           </div>
-          <input id="image" name="image" type="file" className={imageClass} accept=".JPG, .PNG, .GIF" ref={this.fileInput} onChange={this.handleChangeImage} />
-          <div className="invalid-feedback">L'image doit être aux formats jpg, png ou gif et avoir une taille max de 20Mo.</div>
+          <input id="image" name="image" type="file" className={imageClass} accept=".JPG, .PNG, .SVG" ref={this.fileInput} onChange={this.handleChangeImage} />
+          <div className="invalid-feedback">L'image doit être aux formats jpg, png ou svg et avoir une taille max de 20Mo.</div>
           <label htmlFor="image" className="btn btn-secondary m-0">Modifier l'image</label>
           <a id="btnDeleteImage" className={disableDelete} onClick={this.handleDeleteImage}>Effacer l'image</a>
         </div>

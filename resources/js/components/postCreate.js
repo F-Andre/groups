@@ -83,8 +83,8 @@ export default class ArticleForm extends Component {
         </div>
         <div id="divImage" className="form-group">
           <img className="img-fluid text-center" src={this.state.imgSrc} />
-          <input id="image" name="image" type="file" className={imageClass} accept=".JPG, .PNG, .GIF" ref={this.fileInput} onChange={this.handleChangeImage} />
-          <div className="invalid-feedback">L'image doit être aux formats jpg, png ou gif et avoir une taille max de 20Mo.</div>
+          <input id="image" name="image" type="file" className={imageClass} accept=".JPG, .PNG, .SVG" ref={this.fileInput} onChange={this.handleChangeImage} />
+          <div className="invalid-feedback">L'image doit être aux formats jpg, png ou svg et avoir une taille max de 20Mo.</div>
           <label className="btn btn-success" htmlFor="image">Ajouter une image</label>
         </div>
         <LoadModal />
