@@ -43,11 +43,10 @@
         <p>
           <ul>
             <li>"Groups" ne donne, n'échange, ni ne vend les données des utilisateurs inscrits. Les données sont
-              stockées via un hébergeur français - gandi - sur ses serveurs.</li>
+              stockées sur des serveurs situés en France.</li>
             <li>"Groups" n'utilise pas d'outils de fournisseurs tiers captant des données comme par exemple des outils
-              d'analyse Google ou de lien vers Facebook.</li>
-            <li>Vous pouvez connaître à tout moment le contenu des données vous concernant en en faisant la demande.
-            </li>
+              d'analyse Google ou Facebook.</li>
+            <li>Vous pouvez connaître à tout moment le contenu des données vous concernant en en faisant la demande.</li>
           </ul>
         </p>
         <p class="h5">Le droit à l'oubli:</p>

@@ -122,17 +122,16 @@
     <main class="pb-5">
       @yield('content')
     </main>
-    <footer>
-      <div class="d-flex justify-content-between">
-        <p><small>Copyright © 2019 Fabien ANDRE</small></p>
-        <button type="button" class="btn mx-auto" data-toggle="modal" data-target="#helpModal">
-          <i id="help" class="far fa-question-circle fa-2x"></i>
-        </button>
-      </div>
-    </footer>
     @include('templates/help_modal')
   </div>
-
+  <footer>
+    <div class="d-flex justify-content-between align-items-center">
+      <p><small>Copyright © 2019 Fabien ANDRE</small></p>
+      <button type="button" class="btn mx-auto" data-toggle="modal" data-target="#helpModal">
+        <i id="help" class="far fa-question-circle fa-2x"></i>
+      </button>
+    </div>
+  </footer>
   <!-- Optional JavaScript -->
   <script>
     twemoji.parse(document.body);

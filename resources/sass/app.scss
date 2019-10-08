@@ -16,6 +16,10 @@
 @import 'switch.scss';
 
 
+#app {
+  min-height: calc(100vh - 60px);
+}
+
 .btn:disabled {
   cursor: not-allowed;
 }
