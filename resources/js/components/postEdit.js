@@ -99,12 +99,12 @@ export default class ArticleForm extends Component {
   }
 
   render() {
+    const imageSizeMax = 20971520
     const contenuClass = this.state.textValue.length > 10 ? 'form-control' : this.state.textValue.length == 0 ? 'form-control' : 'form-control is-invalid'
-
     const disableState = this.state.modified ? false : true
     const submitClass = disableState ? "btn btn-secondary disabled" : "btn btn-primary"
     const disableDelete = this.state.imgSrc.length > 1 ? "btn btn-danger float-right" : "btn btn-danger float-right disabled"
-    const imageClass = 'form-control'
+    const imageClass = this.state.imgSize > imageSizeMax ? 'form-control is-invalid' : 'form-control'
 
     return (
       <div>
@@ -125,7 +125,7 @@ export default class ArticleForm extends Component {
             <input id="imageDeleted" type="text" className="disabled" name="imageDeleted" value={this.state.imageDeleted} />
           </div>
           <input id="image" name="image" type="file" className={imageClass} accept=".JPG, .PNG, .GIF" ref={this.fileInput} onChange={this.handleChangeImage} />
-          <div className="invalid-feedback">L'image doit être aux formats jpg, png ou gif et avoir une taille max de 4.5Mo.</div>
+          <div className="invalid-feedback">L'image doit être aux formats jpg, png ou gif et avoir une taille max de 20Mo.</div>
           <label htmlFor="image" className="btn btn-secondary m-0">Modifier l'image</label>
           <a id="btnDeleteImage" className={disableDelete} onClick={this.handleDeleteImage}>Effacer l'image</a>
         </div>

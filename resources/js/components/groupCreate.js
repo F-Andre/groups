@@ -88,7 +88,7 @@ export default class GroupForm extends Component {
   }
 
   render() {
-    const imageSizeMax = 10485760
+    const imageSizeMax = 20971520
     const imageClass = this.state.imgSize > imageSizeMax ? 'form-control is-invalid' : 'form-control'
     const disabledState = this.state.nameClass == 'form-control is-invalid' ? true : this.state.descClass == 'form-control is-invalid' ? true : false
     const submitClass = !disabledState ? "btn btn-primary" : "btn btn-secondary disabled"
@@ -117,7 +117,7 @@ export default class GroupForm extends Component {
             <br />
             <a id="btnDeleteAvatar" className={disableDelete} onClick={this.handleDeleteAvatar}>Effacer l'image</a>
             <input id="avatar" name="avatar" className={imageClass} type="file" accept=".JPG, .PNG, .GIF" ref={this.fileInput} onChange={this.handleChangeAvatar} />
-            <div className="invalid-feedback">L'image doit être aux formats jpg, png ou gif et avoir une taille max de 10Mo.</div>
+            <div className="invalid-feedback">L'image doit être aux formats jpg, png ou gif et avoir une taille max de 20Mo.</div>
           </div>
           <input id="avatarDeleted" type="text" className="disabled" name="avatarDeleted" value={this.state.avatarDeleted} />
         </div>
