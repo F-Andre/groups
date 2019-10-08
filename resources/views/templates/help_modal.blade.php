@@ -28,15 +28,25 @@
         <p class="h5">Comment ça marche?</p>
         <p>
           <ul>
-            <li>En créant un compte sur le site, vous avez la possibilité de rejoindre ou de créer un groupe de
-              discussion.</li>
-            <li>Le créateur d'un groupe dispose des droits d'aministration de ce groupe. C'est à dire qu'il a la
+            <li>
+              En créant un compte sur le site, vous avez la possibilité de rejoindre ou de créer un groupe de
+              discussion.
+            </li>
+            <li>
+              Le créateur d'un groupe dispose des droits d'aministration de ce groupe. C'est à dire qu'il a la
               possibilité de supprimer des articles et des commentaires. Il peut aussi désigner un administrateur
               parmi
               les membre du groupe. L'administrateur du groupe a aussi la faculté d'envoyer des avertissements et
-              de radier un membre du groupe.</li>
-            <li>Quand un membre quitte le groupe, tous ces articles et commentaires sont aussi supprimés
-              définitivement.</li>
+              de radier un membre du groupe.
+            </li>
+            <li>
+              Quand un membre quitte le groupe, tous ces articles et commentaires sont aussi supprimés
+              définitivement.
+            </li>
+            <li>
+              Les publications doivent se faire dans le respect des autres utilisateurs et de la loi.<br>
+              "Groups" se réserve un droit de regard sur tous les contenus publiés sur la plateforme.
+            </li>
           </ul>
         </p>
         <p class="h5">Respect des données personnelles:</p>
