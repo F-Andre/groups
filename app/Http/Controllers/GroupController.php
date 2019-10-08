@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
 use Illuminate\Http\Request;
 use App\Repositories\GroupRepository;
 use App\Http\Requests\GroupSearchRequest;
@@ -64,7 +65,7 @@ class GroupController extends Controller
 
     $this->group->store($inputs);
 
-    $group = $this->group->getByName($request->name);
+    $group = Group::where('name', $request->name)->first();
 
     if ($request->hasFile('avatar')) {
       if ($request->avatar->isValid()) {
@@ -72,8 +73,6 @@ class GroupController extends Controller
 
         $fileExt = $request->avatar->getClientOriginalExtension();
         $fileName = Str::random(15);
-
-        return var_dump(Storage::exists('public/group-avatar/' . $group->id));
 
         while (Storage::exists('public/group-avatar/' . $group->id . '/' . $fileName . '.' . $fileExt)) {
           $fileName = Str::random(15);
