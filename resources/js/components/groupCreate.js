@@ -23,7 +23,8 @@ function GroupDesc(props) {
       id="description"
       value={props.value}
       onChange={props.onChange}
-      className={props.className}
+      className='form-control'
+      placeholder='Ajouter une petite description du groupe, ou pas'
     />
   );
 }
@@ -44,8 +45,8 @@ export default class GroupForm extends Component {
     }
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeDesc = this.handleChangeDesc.bind(this);
-    this.handleChangeAvatar = this.handleChangeAvatar.bind( this );
-    this.handleDeleteAvatar = this.handleDeleteAvatar.bind( this );
+    this.handleChangeAvatar = this.handleChangeAvatar.bind(this);
+    this.handleDeleteAvatar = this.handleDeleteAvatar.bind(this);
     this.fileInput = React.createRef();
   }
 
@@ -59,38 +60,34 @@ export default class GroupForm extends Component {
   }
 
   handleChangeDesc(event) {
-    if (event.target.value.length <= 6) {
-      this.setState({ descValue: event.target.value, descClass: 'form-control is-invalid' })
-    } else {
-      this.setState({ descValue: event.target.value, descClass: 'form-control', disabledState: false })
-    }
+    this.setState({ descValue: event.target.value })
   }
 
-  handleChangeAvatar () {
+  handleChangeAvatar() {
     const reader = new FileReader();
     let file = this.fileInput.current.files[0];
     let fileSrc = '', fileSize = file.size;
-    reader.onload = ( e ) => {
+    reader.onload = (e) => {
       fileSrc = e.target.result;
-      this.setState( {
+      this.setState({
         imgSrc: fileSrc,
         imgSize: fileSize,
-      } );
+      });
     };
-    reader.readAsDataURL( file );
+    reader.readAsDataURL(file);
   }
 
-  handleDeleteAvatar () {
-    this.setState( {
+  handleDeleteAvatar() {
+    this.setState({
       imgSrc: defaultAvatar,
       avatarDeleted: true,
-    } )
+    })
   }
 
   render() {
     const imageSizeMax = 20971520
     const imageClass = this.state.imgSize > imageSizeMax ? 'form-control is-invalid' : 'form-control'
-    const disabledState = this.state.nameClass == 'form-control is-invalid' ? true : this.state.descClass == 'form-control is-invalid' ? true : false
+    const disabledState = this.state.nameClass == 'form-control is-invalid' ? true : false
     const submitClass = !disabledState ? "btn btn-primary" : "btn btn-secondary disabled"
     const disableDelete = this.state.imgSrc != '/storage/default/default-group.svg' ? "btn btn-outline-danger btn-sm" : "btn btn-outline-danger btn-sm disabled"
 
@@ -107,8 +104,7 @@ export default class GroupForm extends Component {
         </div>
         <div className="form-group">
           <label htmlFor="desc">Description du groupe:</label>
-          <GroupDesc value={this.state.descValue} onChange={this.handleChangeDesc} className={this.state.descClass} />
-          <div className="invalid-feedback">Choisissez une description d'au moins 6 caractères.</div>
+          <GroupDesc value={this.state.descValue} onChange={this.handleChangeDesc} />
         </div>
         <div id="divAvatar" className="form-group">
           <p>Avatar:</p>

@@ -30,6 +30,7 @@ Route::post('{groupName}/warnUser', 'AdminController@warnUser')->name('admin.war
 Route::post('{groupName}/adminSwitch', 'AdminController@adminSwitch')->name('admin.adminSwitch')->middleware('verified');
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
+Route::get('cookies', 'WelcomeController@cookies')->name('cookies');
 
 Auth::routes(['verify' => true]);
 

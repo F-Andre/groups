@@ -1,6 +1,7 @@
 @extends('admin/admin_template')
 
 @section('section')
+@if (in_array($user->id, $groupUsers))
 <div class="card mt-4">
   <div class="card-header d-flex justify-content-between flex-wrap">
     <div>
@@ -119,4 +120,7 @@
     </div>
   </div>
 </div>
+@else
+  <script>window.history.back()</script> 
+@endif
 @endsection

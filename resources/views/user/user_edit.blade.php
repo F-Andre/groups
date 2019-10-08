@@ -47,18 +47,6 @@
   </article>
   @include('templates/modal_delete_user')
 @else
-<article class="col-lg-8 mx-auto mt-4">
-    <div class="card">
-      <div class="card-header">
-        <p class="h4 text-center">Erreur</p>
-      </div>
-      <div class="card-body">
-        <p>Vous ne pouvez pas modifier un autre compte que le votre</p>
-        <a href={{ route('user_page.index') }} type="button" class="btn btn-primary">
-          Retour
-        </a>
-      </div>
-    </div>
-  </article>
+<script>window.history.back(); </script>
 @endif
 @endsection

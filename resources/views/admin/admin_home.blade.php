@@ -6,7 +6,7 @@ $groupName = $group->name;
 
 @section('section')
 @if (session()->has('ok'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+<div class="alert alert-success alert-dismissible fade show col-lg-8 ml-5" role="alert">
   {{ session('ok') }}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -14,7 +14,7 @@ $groupName = $group->name;
 </div>
 @endif
 @if (session()->has('error'))
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
+<div class="alert alert-warning alert-dismissible fade show col-lg-8 ml-5" role="alert">
   {{ session('error') }}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <i class="fas fa-exclamation-triangle"></i>

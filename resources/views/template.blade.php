@@ -24,7 +24,15 @@
 <body>
   @php
   setlocale(LC_TIME, 'fr_FR');
+  $cookiesAccept = Illuminate\Support\Facades\Cookie::get('cookiesAccept');
+  if ($cookiesAccept == null )
+  {
+  $cookiesAccept = false;
+  }
   @endphp
+  @if (!$cookiesAccept)
+  @include('templates/modal_cookies')
+  @endif
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
       <div class="container col-11">
@@ -41,15 +49,13 @@
           @auth
           <ul id="authBtn" class="navbar-nav ml-auto">
             <li class="nav-item accordion" id="navAuthAcc">
-              <a class="btn btn-secondary" id="navHeadingAuth" href="#" role="button" data-toggle="collapse"
-                data-target="#navAuthDropdown" aria-expanded="true" aria-controls="navAuthDropdown">
-                <span class="avatar avatar-btn float-left"
-                  style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></span>
+              <a class="btn btn-secondary" id="navHeadingAuth" href="#" role="button" data-toggle="collapse" data-target="#navAuthDropdown"
+                aria-expanded="true" aria-controls="navAuthDropdown">
+                <span class="avatar avatar-btn float-left" style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></span>
                 {{ Auth::user()->name }}
                 <i class="ml-2 fas fa-caret-down"></i>
               </a>
-              <div id="navAuthDropdown" class="collapse mt-2" aria-labelledby="navHeadingAuth"
-                data-parent="#navAuthAcc">
+              <div id="navAuthDropdown" class="collapse mt-2" aria-labelledby="navHeadingAuth" data-parent="#navAuthAcc">
                 <a class="dropdown-item" href="{{ route('user_page.index') }}">
                   Mon compte
                 </a>
@@ -70,8 +76,7 @@
                 {{ $groupName }}
                 <i class="ml-2 fas fa-caret-down"></i>
               </a>
-              <div id="navGroupDropdown" class="collapse mt-2" aria-labelledby="navHeadingGroup"
-                data-parent="#navAccountAcc">
+              <div id="navGroupDropdown" class="collapse mt-2" aria-labelledby="navHeadingGroup" data-parent="#navAccountAcc">
                 <a class="dropdown-item" href="{{ route('posts.index', $groupName) }}">
                   Fil du groupe
                 </a>
@@ -117,6 +122,15 @@
     <main class="pb-5">
       @yield('content')
     </main>
+    <footer>
+      <div class="d-flex justify-content-between">
+        <p><small>Copyright © 2019 Fabien ANDRE</small></p>
+        <button type="button" class="btn mx-auto" data-toggle="modal" data-target="#helpModal">
+          <i id="help" class="far fa-question-circle fa-2x"></i>
+        </button>
+      </div>
+    </footer>
+    @include('templates/help_modal')
   </div>
 
   <!-- Optional JavaScript -->

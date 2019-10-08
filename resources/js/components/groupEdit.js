@@ -24,6 +24,7 @@ function Desc ( props ) {
       id="description"
       value={props.value}
       onChange={props.onChange}
+      placeholder='Ajouter une petite description du groupe, ou pas'
     />
   );
 }

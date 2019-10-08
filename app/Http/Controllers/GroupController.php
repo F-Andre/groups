@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Group;
 use Illuminate\Http\Request;
 use App\Repositories\GroupRepository;
 use App\Http\Requests\GroupSearchRequest;
@@ -102,7 +101,7 @@ class GroupController extends Controller
    */
   public function show($name)
   {
-    $group = Group::where('name', $name)->first();
+    $group = $this->group->getByName($name);
     $usersId = explode(",", $group->users_id);
     $dateCreation = Carbon::parse($group->created_at)->locale('fr')->timezone('Europe/Paris')->format('d M Y à H:i');
 
@@ -118,9 +117,11 @@ class GroupController extends Controller
   public function edit($id)
   {
     $group = $this->group->getById($id);
+    $adminsId = explode(",", $group->admins_id);
     $avatarUrl = Storage::url($group->avatar);
     $defaultAvatar = Storage::url('public/default/default-group.svg');
-    return view('group.group_edit', array_merge(compact('group'), ['avatarUrl' => $avatarUrl], ['defaultAvatar' => $defaultAvatar]));
+
+    return view('group.group_edit', array_merge(compact('group', 'adminsId'), ['avatarUrl' => $avatarUrl], ['defaultAvatar' => $defaultAvatar]));
   }
 
   /**
