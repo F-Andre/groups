@@ -71,7 +71,7 @@ class GroupController extends Controller
       if ($request->avatar->isValid()) {
         Storage::makeDirectory('public/group-avatar/' . $group->id);
 
-        return var_dump(Storage::url('public/group-avatar/' . $group->id));
+        return var_dump(Storage::directories('public/group-avatar/'));
 
         $fileExt = $request->avatar->getClientOriginalExtension();
         $fileName = Str::random(15);
