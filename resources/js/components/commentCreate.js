@@ -49,7 +49,7 @@ export default class CommentForm extends Component {
     return (
       <div className="form-group">
         <div className="form-group mt-2">
-          <textarea className={contenuClass} name="comment" id="comment" value={this.state.commentValue} hidden />
+          <textarea className={contenuClass} name="comment" id="comment" value={this.state.commentValue} hidden readOnly />
           <iframe id="comment_iframe" className="commentIframe" src="/comment_iframe.html"></iframe>
         </div>
         <button type="submit" onClick={this.handleSubmit} className={submitClass} disabled={disabledState}>Envoyer {this.state.spinner}</button>

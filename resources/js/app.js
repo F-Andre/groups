@@ -20,12 +20,15 @@ require('./components/commentCreate');
 require('./components/groupCreate.js');
 require('./components/groupEdit.js');
 require('./components/invitForm.js');
+require('./components/diaporama.js');
+require('./components/groupLink.js');
+require('./components/asyncLoad.js');
 
 /***
  * Global JS
  */
 
-function rafScroll() {
+/* function rafScroll() {
   var lastScrollPos = 0,
     ticking = false;
 
@@ -98,5 +101,5 @@ window.addEventListener('load', function () {
   initImg();
   rafScroll();
   groupLink();
-});
+}); */
 
