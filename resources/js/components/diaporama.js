@@ -10,6 +10,7 @@ function openModal(target) {
   var fond,
     closeBtn,
     main;
+    
   if (!document.querySelector('#modal-fond')) {
     fond = document.createElement('div');
     closeBtn = document.createElement('button');
@@ -29,11 +30,8 @@ function openModal(target) {
     closeBtn = document.querySelector('#close-btn');
   }
 
-  window.addEventListener('scroll', (e) => {
-    e.preventDefault();
-  })
-
-  var imgList = document.querySelectorAll('.image-blog');
+  var targetParent = target.parentElement;
+  var imgList = targetParent.querySelectorAll('.image-blog');
   var position = parseInt(target.getAttribute('data-pos'));
 
   for (let i = 0; i < imgList.length; i++) {
