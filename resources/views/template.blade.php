@@ -47,9 +47,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
           @auth
-          <ul id="authBtn" class="navbar-nav ml-auto">
+          <ul id="authBtn" class="navbar-nav ml-auto mt-2">
             <li class="nav-item accordion" id="navAuthAcc">
-              <a class="btn btn-secondary" id="navHeadingAuth" href="#" role="button" data-toggle="collapse" data-target="#navAuthDropdown"
+              <a class="btn btn-secondary form-control" id="navHeadingAuth" href="#" role="button" data-toggle="collapse" data-target="#navAuthDropdown"
                 aria-expanded="true" aria-controls="navAuthDropdown">
                 <span class="avatar avatar-btn float-left" style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></span>
                 {{ Auth::user()->name }}
@@ -71,7 +71,7 @@
             @isset($groupName)
             @isset($groupAdmins)
             <li class="nav-item accordion mt-2" id="navAccountAcc">
-              <a id="navHeadingGroup" class="btn btn-outline-success" href="#" role="button" data-toggle="collapse"
+              <a id="navHeadingGroup" class="btn btn-outline-success form-control" href="#" role="button" data-toggle="collapse"
                 data-target="#navGroupDropdown" aria-expanded="true" aria-controls="navGroupDropdown">
                 {{ $groupName }}
                 <i class="ml-2 fas fa-caret-down"></i>
@@ -89,12 +89,12 @@
               </div>
             </li>
             <li class="mt-2">
-              <a class="btn btn-outline-success" href="{{ route('group.index') }}">
+              <a class="btn btn-outline-success form-control" href="{{ route('group.index') }}">
                 Mes groupes
               </a>
             </li>
             <li class="mt-2">
-              <a class="btn btn-outline-primary" href="{{ route('posts.create', $groupName) }}" role="button">Ecrire un
+              <a class="btn btn-outline-primary form-control" href="{{ route('posts.create', $groupName) }}" role="button">Ecrire un
                 article</a>
             </li>
             @endisset
