@@ -127,7 +127,7 @@
   <footer>
     <div class="d-flex justify-content-between align-items-center">
       <p><small>Copyright © 2019 Fabien ANDRE</small></p>
-      <button type="button" class="btn mx-auto" data-toggle="modal" data-target="#helpModal">
+      <button type="button" class="btn mx-xl-auto" data-toggle="modal" data-target="#helpModal">
         <i id="help" class="far fa-question-circle fa-2x"></i>
       </button>
     </div>
