@@ -34,7 +34,7 @@
   @include('templates/modal_cookies')
   @endif
   <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
+    <nav class="navbar navbar-expand-xl navbar-light navbar-laravel">
       <div class="container col-11">
         <a class="navbar-brand" href="{{ url('/') }}">
           {{ config('app.name', 'Laravel') }}
