@@ -5,15 +5,14 @@
     @else
     <a id={{ $group->name }} style="display: none;" href={{ route('group.show', $group->name) }}></a>
     @endif
-    <div>
-      <img src={{ $avatarUrl }} class="avatar avatar-group" alt="{{ $group->name }}-image">
-    </div>
-    <div class="ml-3 mt-2">
-      <p class="card-title h5">{{ $group->name }}</p>
-      <p class="card-text">{{ $group->description }}</p>
+    <img src={{ $avatarUrl }} class="avatar avatar-group mx-auto mx-sm-1" alt="{{ $group->name }}-image">
+    <div class="ml-0 ml-sm-3 mt-2">
+      <p class="card-title h5 text-center text-sm-left">{{ $group->name }}</p>
+      <p class="card-text text-center text-sm-left">{{ $group->description }}</p>
     </div>
   </div>
   <div class="card-footer">
-    <a class="btn btn-outline-success btn-sm float-right" href={{ route('group.show', $group->name) }} role="button">Infos</a>
+    <a class="btn btn-outline-success btn-sm float-right" href={{ route('group.show', $group->name) }}
+      role="button">Infos</a>
   </div>
 </div>

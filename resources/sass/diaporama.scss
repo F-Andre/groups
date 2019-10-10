@@ -21,7 +21,7 @@
 #close-btn {
   position: absolute;
   top: 2vh;
-  left: 92vw;
+  left: 95vw;
   color: white;
   background-color: transparent;
   font-size: 40px;
@@ -32,6 +32,15 @@
   z-index: 9999;
   transform: scale(1, 1);
   transition: 0.2s transform cubic-bezier(0.6, -2, 0.735, 2);
+
+  @media only screen and (max-width: 768px) {
+    left: 90vw;
+  }
+
+  @media only screen and (max-width: 395px) {
+    left: 85vw;
+  }
+
 }
 
 .main {
