@@ -26,6 +26,11 @@ class GroupRepository extends DataRepository
     return $this->model->find($id)->admins_id;
   }
 
+  public function getOrderedByName()
+  {
+    return $this->model->orderBy('name', 'asc')->get();
+  }
+
   public function search($request)
   {
     if ($this->model->where('name', 'like', '%' . $request . '%')->exists()) {

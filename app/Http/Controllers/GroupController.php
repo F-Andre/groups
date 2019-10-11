@@ -34,7 +34,7 @@ class GroupController extends Controller
    */
   public function index()
   {
-    $groups = $this->group->getCollection();
+    $groups = $this->group->getOrderedByName();
 
     return view('group.group_index', compact('groups'));
   }
@@ -100,9 +100,9 @@ class GroupController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show($name)
+  public function show($groupName)
   {
-    $group = $this->group->getByName($name);
+    $group = $this->group->getByName($groupName);
     $usersId = explode(",", $group->users_id);
     $dateCreation = Carbon::parse($group->created_at)->locale('fr')->timezone('Europe/Paris')->format('d M Y à H:i');
 
@@ -224,7 +224,7 @@ class GroupController extends Controller
   {
     if ($this->group->search($result->groupSearch)) {
       $group = $this->group->search($result->groupSearch);
-      return redirect(route('group.show', ['name' => $group->name]));
+      return redirect(route('group.show', $group->name));
     }
 
     return redirect(route('group.index'))->with('error', "Le groupe '" . $result->groupSearch . "' n'existe pas.");

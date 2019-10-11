@@ -44,7 +44,7 @@
       <div>
         @isset($groups)
         <p class="h5">Mes groupes:</p>
-        <div class="card-deck">
+        <div class="card-deck scrollable-div">
           @foreach ($groups as $group)
 
           @php
@@ -80,7 +80,9 @@
           </div>
           <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Rechercher</button>
         </form>
-        <div class="card-deck mt-4">
+        <hr class="hr">
+        <p class="h5">Tous les groupes:</p>
+        <div class="card-deck mt-4 scrollable-div">
           @foreach ($groups as $group)
 
           @php
@@ -97,7 +99,6 @@
         </div>
         @endisset
       </div>
-      <hr>
       <div class="my-4">
         <a class="btn btn-primary" href={{ route('group.create') }} role="button">Créer un groupe</a>
       </div>

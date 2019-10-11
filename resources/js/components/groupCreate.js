@@ -51,7 +51,7 @@ export default class GroupForm extends Component {
   }
 
   handleChangeName(event) {
-    let regexp = /[\s]{1,}/g
+    let regexp = /[\s|\/|\\]{1,}/g
     if (event.target.value.length <= 6 || regexp.test(event.target.value)) {
       this.setState({ nameValue: event.target.value, nameClass: 'form-control is-invalid' })
     } else {

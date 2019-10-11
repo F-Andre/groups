@@ -109,3 +109,10 @@ select option {
 #helpModal {
   color: black;
 }
+
+.scrollable-div {
+  position: relative;
+  top: 0;
+  max-height: 40vh;
+  overflow: hidden;
+}
