@@ -67691,9 +67691,12 @@ scrollableDivs.forEach(function (div) {
     if (position > div.scrollHeight - divHeight) {
       position = div.scrollHeight - divHeight;
     } else {
-      position += (touchesPosStart - e.changedTouches[0].pageY) / 10;
+      position += touchesPosStart - e.changedTouches[0].pageY;
       div.scrollTop = position;
+      touchesPosStart = e.changedTouches[0].pageY;
     }
+
+    console.log(position + ' | ' + (div.scrollHeight - divHeight));
   }, false);
 });
 
