@@ -34,7 +34,7 @@ scrollableDivs.forEach(div => {
       if (position > (div.scrollHeight - divHeight)) {
         position = div.scrollHeight - divHeight;
       } else {
-        position += (e.changedTouches[0].pageY - touchesPosStart) / 2;
+        position += (touchesPosStart - e.changedTouches[0].pageY) / 7;
         div.scrollTop = position;
       }
     console.log(position + ' | ' + (div.scrollHeight - divHeight));
