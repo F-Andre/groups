@@ -1,4 +1,4 @@
-<div class="accordion" id="authAcc">
+<div class="accordion text-center" id="authAcc">
   <a class="btn btn-secondary" id="headingAuth" href="#" role="button" data-toggle="collapse"
     data-target="#authDropdown" aria-expanded="true" aria-controls="authDropdown">
     <span class="avatar avatar-btn float-left"
@@ -6,7 +6,7 @@
     {{ Auth::user()->name }}
     <i class="ml-2 fas fa-caret-down"></i>
   </a>
-  <div id="authDropdown" class="collapse mt-2" aria-labelledby="headingAuth" data-parent="#authAcc">
+  <div id="authDropdown" class="collapse mt-2 text-left" aria-labelledby="headingAuth" data-parent="#authAcc">
     <a class="dropdown-item" href="{{ route('user_page.index') }}">
       Mon compte
     </a>
@@ -20,14 +20,14 @@
   </div>
 </div>
 <hr>
-<div class="accordion" id="groupAcc">
-  <a id="headingGroup" class="btn btn-outline-secondary" href="#" role="button" data-toggle="collapse"
+<div class="accordion text-center" id="groupAcc">
+  <a id="headingGroup" class="btn btn-light" href="#" role="button" data-toggle="collapse"
     data-target="#groupDropdown" aria-expanded="true" aria-controls="groupDropdown">
     <span class="avatar avatar-btn float-left" style="background-image: url({{ Storage::url($group->avatar) }})"></span>
     {{ $groupName }}
     <i class="ml-2 fas fa-caret-down"></i>
   </a>
-  <div id="groupDropdown" class="collapse mt-2" aria-labelledby="headingGroup" data-parent="#groupAcc">
+  <div id="groupDropdown" class="collapse mt-2 text-left" aria-labelledby="headingGroup" data-parent="#groupAcc">
     <a class="dropdown-item" href="{{ route('posts.index', $groupName) }}">
       Fil du groupe
     </a>
@@ -39,12 +39,12 @@
     @endif
   </div>
 </div>
-<div class="mt-4">
+<div class="mt-4 text-center">
   <a class="btn btn-outline-success" href="{{ route('group.index') }}">
     Mes groupes
   </a>
 </div>
-<div class="mt-4">
+<div class="mt-4 text-center">
   <a class="btn btn-outline-primary" href={{ route('posts.create', $groupName) }} role="button">Ecrire un
     article</a>
 </div>

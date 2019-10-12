@@ -49,6 +49,8 @@
 
           @php
           $userArray = explode(",", $group->users_id);
+          $onDemandArray = explode(",", $group->on_demand);
+          $adminsArray = explode(",", $group->admins_id);
           $avatarUrl = Storage::url($group->avatar);
           $updated = Carbon\Carbon::parse($group->active_at)->locale('fr')->format('d M Y à
           H:i');
@@ -99,6 +101,7 @@
         </div>
         @endisset
       </div>
+      <hr class="hr">
       <div class="my-4">
         <a class="btn btn-primary" href={{ route('group.create') }} role="button">Créer un groupe</a>
       </div>

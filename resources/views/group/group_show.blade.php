@@ -4,10 +4,9 @@
 @auth
 <aside class="col-2 ml-5 py-4">
   <div class="dropdown">
-    <a id="authDropdown" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-      aria-haspopup="true" aria-expanded="false" v-pre>
-      <span class="avatar avatar-btn float-left"
-        style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></span>
+    <a id="authDropdown" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+      aria-expanded="false" v-pre>
+      <span class="avatar avatar-btn float-left" style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></span>
       {{ Auth::user()->name }}
       <span class="caret"></span>
     </a>
@@ -61,7 +60,7 @@
     <div class="card-body">
       @if (in_array(auth()->user()->id, $usersId))
       <div class="d-flex justify-content-between">
-        <p>Vous êtes membre de ce groupe</p>
+        <p class="align-self-center m-0">Vous êtes membre de ce groupe</p>
         <div>
           <a class="btn btn-outline-success" href={{ route('posts.index', ['groupName' => $group->name]) }} role="button">
             Fil du groupe
@@ -69,8 +68,31 @@
         </div>
       </div>
       <hr class="hr">
+      <div class="mb-5">
+        <p>Les autres membres:</p>
+        <div class="card-deck">
+          @foreach ($users as $user)
+          @if (auth()->user()->id !== $user->id && in_array($user->id, $usersId))
+          <div class="card">
+            <div class="card-body m-0">
+              <span class="avatar avatar-btn float-left mr-2" style="background-image: url({{ Storage::url($user->avatar) }})"></span>
+              <span>{{ $user->name }}</span>
+              @if (in_array($user->id, $adminsId))
+              <div>
+                <button type="button" class="btn btn-link btn-sm p-0" data-toggle="modal" data-target="#contactAdmin">
+                  <small><i class="fas fa-user-cog mx-2"></i>Administrateur</small>
+                </button>
+              </div>
+              @endif
+            </div>
+          </div>
+          @endif
+          @endforeach
+        </div>
+      </div>
+      <hr class="hr">
       <div>
-        <p>Inviter une ou plusieurs personnes par mail à rejoindre le goupe:</p>
+        <p>Inviter une ou plusieurs personnes par mail à rejoindre le groupe:</p>
         <form id="invitMailForm" method="POST"
           action={{ route('group.invitMember', ['groupName' => $group->name, 'userId' => auth()->user()->id]) }}
           enctype="multipart/form-data">
@@ -83,10 +105,45 @@
         action="{{ route('group.joinDemand', ['groupName' => $group->name, 'userId' => auth()->user()->id]) }}"
         enctype="multipart/form-data">
         @csrf
-        <input form="joinDemandForm" name="joinGroup" id="joinGroup" class="btn btn-success" type="submit"
-          value="Rejoindre">
+        <input form="joinDemandForm" name="joinGroup" id="joinGroup" class="btn btn-success" type="submit" value="Rejoindre">
       </form>
       @endif
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="contactAdmin" tabindex="-1" role="dialog" aria-labelledby="contactAdmin" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Contacter les administrateurs</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="contactAdminForm" method="POST"
+            action={{ route('group.contactAdmin', ['groupName' => $group->name, 'userId' => auth()->user()->id]) }}
+            enctype="multipart/form-data">
+            @csrf
+            <div class="form-group">
+              <label for="subject">Sujet</label>
+              <input type="text" class="form-control" name="subject" aria-describedby="helpId" placeholder="" required>
+              <small id="helpId" class="form-text text-muted"></small>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea class="form-control" name="message" aria-describedby="helpId" required></textarea>
+              <small id="helpId" class="form-text text-muted"></small>
+            </div>
+          </form>
+          <p>Ce formulaire permet de contacter les administrateurs du groupe. Votre e-mail ne sera pas visible par ceux-ci, ils ne pourront pas
+            vous répondre directement.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annuler</button>
+          <button type="submit" form="contactAdminForm" class="btn btn-primary btn-sm">Envoyer</button>
+        </div>
+      </div>
     </div>
   </div>
   @endsection

@@ -50,7 +50,7 @@ class JoinGroupDemand extends Notification
     $line = sprintf('%s demande a rejoindre votre groupe : %s.', $this->user->name, $this->group->name);
     $line2 = "Pour accepter ou refuser la demande, rendez-vous dans l'espace administration de votre groupe.";
     return (new MailMessage)
-      ->subject('Nouveau membre')
+      ->subject('Demande d\'adhésion')
       ->greeting($greeting)
       ->line($line)
       ->line($line2)

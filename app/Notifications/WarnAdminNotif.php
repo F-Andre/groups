@@ -3,13 +3,13 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use App\User;
+use Illuminate\Notifications\Notification;
 use App\Group;
+use App\User;
 
-class GroupDeregister extends Notification
+class WarnAdminNotif extends Notification
 {
   use Queueable;
 
@@ -49,16 +49,15 @@ class GroupDeregister extends Notification
   public function toMail($notifiable)
   {
     $greeting = sprintf('Bonjour %s,', $notifiable->name);
-    $line = sprintf('Vous avez été radié du groupe : %s.', $this->group->name);
-    $line2 = sprintf("La raison donnée pour cette radiation est: '%s'", $this->reason);
-    $line3 = "Vous pouvez toujours créer votre groupe ou faire une demande pour rejoindre un autre groupe.";
+    $line = sprintf("%s a reçu un avertissement.", $this->user->name);
+    $line2 = sprintf("La raison de cet avertissement est: '%s'", $this->reason);
+    
     return (new MailMessage)
-      ->subject('Radiation du groupe ' . $this->group->name)
+      ->subject('Avertissement')
       ->greeting($greeting)
       ->line($line)
       ->line($line2)
-      ->line($line3)
-      ->action('Accueil', url('/'))
+      ->action('Administration de ' . $this->group->name, url('/' . $this->group->name . '/admin'))
       ->line('Merci et à bientôt!');
   }
 

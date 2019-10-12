@@ -32,7 +32,6 @@ class UserController extends Controller
   public function index()
   {
     $user = auth()->user();
-    /* $usersArray = Group::pluck('users_id')->all(); */
     $groups = Group::all();
     $userGroups = [];
 

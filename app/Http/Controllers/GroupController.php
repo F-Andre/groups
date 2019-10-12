@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Group;
-use Illuminate\Http\Request;
-use App\Repositories\GroupRepository;
-use App\Http\Requests\GroupSearchRequest;
-use App\Notifications\JoinGroupDemand;
-use App\Mail\InvitNewMember;
-use Illuminate\Support\Facades\Mail;
 use App\Post;
 use App\User;
-use Carbon\Carbon;
+use App\Repositories\GroupRepository;
+use App\Http\Requests\GroupSearchRequest;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Mail;
+
+use App\Notifications\JoinGroupDemand;
+use App\Notifications\ContactAdmin;
+use App\Mail\InvitNewMember;
 
 class GroupController extends Controller
 {
@@ -104,9 +107,11 @@ class GroupController extends Controller
   {
     $group = $this->group->getByName($groupName);
     $usersId = explode(",", $group->users_id);
+    $adminsId = explode(",", $group->admins_id);
+    $users = User::all();
     $dateCreation = Carbon::parse($group->created_at)->locale('fr')->timezone('Europe/Paris')->format('d M Y à H:i');
 
-    return view('group.group_show', compact('group', 'usersId', 'dateCreation'));
+    return view('group.group_show', compact('group', 'usersId', 'dateCreation', 'users', 'adminsId'));
   }
 
   /**
@@ -274,6 +279,23 @@ class GroupController extends Controller
       }
     }
 
-    return redirect(route('group.show', $groupName))->with('ok', "Les demandes ont été envoyées");
+    return redirect(route('group.show', $groupName))->with('ok', "Les invitations ont été envoyées.");
+  }
+
+  public function contactAdmin(Request $request, $groupName, $userId)
+  {
+    $group = $this->group->getByName($groupName);
+    $user = User::where('id', $userId)->first();
+    $admins = explode(",", $group->admins_id);
+
+    $subject = $request->subject;
+    $message = $request->message;
+
+    foreach ($admins as $admin) {
+      $userAdmin = User::find($admin);
+      $userAdmin->notify(new ContactAdmin($group, $user, $subject, $message));
+    }
+
+    return redirect(route('group.show', $groupName))->with('ok', "Le message a été envoyé.");
   }
 }

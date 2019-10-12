@@ -80,6 +80,7 @@
       </thead>
       <tbody>
         @foreach ($posts as $post)
+        @if ($post->group_id == $group->id)
         <tr>
           <td>{{ $post->titre }}</td>
           <td class="text-center">le {{ Date::parse($post->created_at)->format('d F Y') }} à
@@ -94,6 +95,7 @@
             </button>
           </td>
         </tr>
+        @endif
         @include('templates/modal_delete_post')
         @endforeach
       </tbody>

@@ -10,9 +10,13 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use App\Post;
 use App\Group;
+use App\Notifications\DeregisterUser;
 use App\Notifications\GroupDeregister;
 use App\Notifications\JoinGroupFalse;
 use App\Notifications\JoinGroupOk;
+use App\Notifications\JoinRejectAdminNotif;
+use App\Notifications\NewMember;
+use App\Notifications\WarnAdminNotif;
 use App\Notifications\WarnUserNotif;
 use Carbon\Carbon;
 
@@ -185,6 +189,7 @@ class AdminController extends Controller
     $user = $this->user->getById($request->user_id);
     $userPosts = Post::where('user_id', $user->id)->get();
     $userComments = Comment::where('user_id', $user->id)->get();
+    $admins = explode(",", $group->admins_id);
 
     foreach ($userPosts as $post) {
       if ($post->group_id == $group->id) {
@@ -213,6 +218,12 @@ class AdminController extends Controller
 
     $group->save();
 
+    foreach($admins as $admin)
+    {
+      $adminUser = $this->user->getById($admin);
+      $adminUser->notify(new DeregisterUser($group, $user, $request->reason));
+    }
+
     $user->notify(new GroupDeregister($user, $group, $request->reason));
 
     return redirect(route('admin.index', $groupName))->with('ok', $user->name . " a bien été radié du groupe.");
@@ -225,7 +236,7 @@ class AdminController extends Controller
 
     $groupOnDemand = explode(",", $group->on_demand);
 
-    if ($request->join) {
+    if ($request->join === true) {
       $groupUsers = explode(",", $group->users_id);
       array_push($groupUsers, $user->id);
       $newGroupUsers = implode(",", $groupUsers);
@@ -238,9 +249,19 @@ class AdminController extends Controller
       $group->users_id = $newGroupUsers;
       $group->save();
 
+      foreach($groupUsers as $groupUserId)
+      {
+        $groupUser = $this->user->getById($groupUserId);
+        if ($groupUser->notifs)
+        {
+          $groupUser->notify(new NewMember($user, $group));
+        }
+      }
+
       $user->notify(new JoinGroupOk($user, $group));
 
       return redirect(route('admin.index', $groupName))->with('ok', "l'utilisateur " . $user->name . " a bien été ajouté au groupe.");
+
     } else {
       $userDemandKey = array_search($user, $groupOnDemand);
       array_splice($groupOnDemand, $userDemandKey, 1);
@@ -248,6 +269,13 @@ class AdminController extends Controller
 
       $group->on_demand = $newOnDemand;
       $group->save();
+
+      $adminsId = explode(",", $group->admins_id);
+      foreach($adminsId as $adminId)
+      {
+        $admin = $this->user->getById($adminId);
+        $admin->notify(new JoinRejectAdminNotif($user, $group));
+      }
 
       $user->notify(new JoinGroupFalse($user, $group));
 
@@ -259,6 +287,7 @@ class AdminController extends Controller
   {
     $group = Group::where('name', $groupName)->first();
     $user = $this->user->getById($request->user_id);
+    $admins = explode(",", $group->admins_id);
 
     $warnedUsers = explode(",", $group->users_warned);
     array_push($warnedUsers, $user->id);
@@ -266,6 +295,12 @@ class AdminController extends Controller
 
     $group->users_warned = $newWarnedUsers;
     $group->save();
+
+    foreach($admins as $admin)
+    {
+      $adminUser = $this->user->getById($admin);
+      $adminUser->notify(new WarnAdminNotif($user, $group, $request->reason));
+    }
 
     $user->notify(new WarnUserNotif($user, $group, $request->reason));
 

@@ -12,7 +12,13 @@
     </div>
   </div>
   <div class="card-footer">
-    <a class="btn btn-outline-success btn-sm float-right" href={{ route('group.show', $group->name) }}
-      role="button">Infos</a>
+    @php
+    $onDemandArray = explode(",", $group->on_demand);
+    $adminsArray = explode(",", $group->admins_id);
+    @endphp
+    @if (count($onDemandArray) > 0 && strlen($onDemandArray[0] > 0) && in_array(auth()->user()->id, $adminsArray))
+    <span class="badge badge-pill badge-primary">{{ count($onDemandArray) }}</span>
+    @endif
+    <a class="btn btn-outline-success btn-sm float-right" href={{ route('group.show', $group->name) }} role="button">Infos</a>
   </div>
 </div>

@@ -3,30 +3,28 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 use App\User;
 use App\Group;
 
-class GroupDeregister extends Notification
+class JoinRejectAdminNotif extends Notification
 {
   use Queueable;
 
   private $group;
   private $user;
-  private $reason;
 
   /**
    * Create a new notification instance.
    *
    * @return void
    */
-  public function __construct(User $user, Group $group, $reason)
+  public function __construct(User $user, Group $group)
   {
     $this->group = $group;
     $this->user = $user;
-    $this->reason = $reason;
   }
 
   /**
@@ -49,16 +47,13 @@ class GroupDeregister extends Notification
   public function toMail($notifiable)
   {
     $greeting = sprintf('Bonjour %s,', $notifiable->name);
-    $line = sprintf('Vous avez été radié du groupe : %s.', $this->group->name);
-    $line2 = sprintf("La raison donnée pour cette radiation est: '%s'", $this->reason);
-    $line3 = "Vous pouvez toujours créer votre groupe ou faire une demande pour rejoindre un autre groupe.";
+    $line = sprintf('La demande de %s pour rejoindre le groupe "%s" a été rejetée.', $this->user->name, $this->group->name);
+    
     return (new MailMessage)
-      ->subject('Radiation du groupe ' . $this->group->name)
+      ->subject('Rejet de demande d\'adhésion')
       ->greeting($greeting)
       ->line($line)
-      ->line($line2)
-      ->line($line3)
-      ->action('Accueil', url('/'))
+      ->action('Administration de ' . $this->group->name, url('/' . $this->group->name . '/admin'))
       ->line('Merci et à bientôt!');
   }
 

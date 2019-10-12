@@ -2,6 +2,9 @@
 @section('content')
 <aside class="col-2 ml-5 py-4">
   @include('templates/nav_left_template')
+  @if (in_array(auth()->user()->id, $groupAdmins) && count($groupOnDemand) > 0 && strlen($groupOnDemand[0] > 0))
+  <p class="mt-3 mx-0 px-0 text-center"><small>{{ count($groupOnDemand) }} demande(s) d'adhésion en attente</small></p>
+  @endif
 </aside>
 <article class="offset-xl-3 col-xl-6 py-4">
   @if (session()->has('ok'))

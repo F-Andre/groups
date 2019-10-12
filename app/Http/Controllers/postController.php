@@ -40,12 +40,13 @@ class postController extends Controller
       $group = Group::where('name', $groupName)->first();
       $groupUsers = explode(",", $group->users_id);
       $groupAdmins = explode(",", $group->admins_id);
+      $groupOnDemand = explode(",", $group->on_demand);
 
       $nbrPosts = $group->posts()->count();
 
       if (in_array(auth()->user()->id, $groupUsers))
       {
-        return view('blog', compact('posts', 'groupName', 'group', 'nbrPosts', 'groupAdmins'));
+        return view('blog', compact('posts', 'groupName', 'group', 'nbrPosts', 'groupAdmins', 'groupOnDemand'));
       }
       else
       {
