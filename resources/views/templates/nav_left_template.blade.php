@@ -21,7 +21,7 @@
 </div>
 <hr>
 <div class="accordion text-center" id="groupAcc">
-  <a id="headingGroup" class="btn btn-light" href="#" role="button" data-toggle="collapse"
+  <a id="headingGroup" class="btn btn-outline-success" href="#" role="button" data-toggle="collapse"
     data-target="#groupDropdown" aria-expanded="true" aria-controls="groupDropdown">
     <span class="avatar avatar-btn float-left" style="background-image: url({{ Storage::url($group->avatar) }})"></span>
     {{ $groupName }}
@@ -40,7 +40,7 @@
   </div>
 </div>
 <div class="mt-4 text-center">
-  <a class="btn btn-outline-success" href="{{ route('group.index') }}">
+  <a class="btn btn-light" href="{{ route('group.index') }}">
     Mes groupes
   </a>
 </div>

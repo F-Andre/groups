@@ -89,7 +89,7 @@
               </div>
             </li>
             <li class="mt-2">
-              <a class="btn btn-outline-success form-control" href="{{ route('group.index') }}">
+              <a class="btn btn-light form-control" href="{{ route('group.index') }}">
                 Mes groupes
               </a>
             </li>
