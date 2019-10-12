@@ -69,7 +69,7 @@ class postController extends Controller
     $group = Group::where('name', $groupName)->first();
     $groupAdmins = explode(",", $group->admins_id);
 
-    return view('post.create', compact('groupName', 'groupAdmins'));
+    return view('post.create', compact('groupName', 'groupAdmins', 'group'));
   }
 
   /**
