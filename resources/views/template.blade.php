@@ -73,6 +73,7 @@
             <li class="nav-item accordion mt-2" id="navAccountAcc">
               <a id="navHeadingGroup" class="btn btn-outline-success form-control" href="#" role="button" data-toggle="collapse"
                 data-target="#navGroupDropdown" aria-expanded="true" aria-controls="navGroupDropdown">
+                <span class="avatar avatar-btn float-left" style="background-image: url({{ Storage::url($group->avatar) }})"></span>
                 {{ $groupName }}
                 <i class="ml-2 fas fa-caret-down"></i>
               </a>
