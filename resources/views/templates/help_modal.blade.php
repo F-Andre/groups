@@ -10,12 +10,11 @@
       <div class="modal-body">
         <div class="card mb-3">
           <div class="card-body">
-            <p class="h4 text-center mb-2"><i class="fas fa-exclamation-triangle mr-2"></i>En test<i
-                class="fas fa-exclamation-triangle ml-2"></i></p>
+            <p class="h4 text-center mb-2"><i class="fas fa-exclamation-circle mr-2"></i>Application en développement</p>
             <p class="m-0">
-              La plateforme proposée est actuellement en test, il peut y avoir des disfonctionnements. Merci de rapporter
-              tout problème sur le groupe "Groups.aide".<br>
-              Même si tout est fait pour éviter la perte des données, il n'est pas exclu que cela puisse arriver.
+              La plateforme proposée est actuellement en développement, il peut y avoir des disfonctionnements. Si vous avez des remarques,
+              des suggestions ou des bugs, merci de m'en faire part sur le groupe "Groups.aide".<br>
+              Même si tout est fait pour éviter que des données soient perdues, il n'est pas exclu que cela puisse arriver.
             </p>
           </div>
         </div>
@@ -24,7 +23,8 @@
           <ul>
             <li>"Groups" est une plateforme de groupes de discussions fermés respectueuse des données personnelles, du
               droit à l'oubli et sans publicité.</li>
-            <li>"Groups" n'est pas un réseau social, il n'y a pas de profil utilisateur. Les autres membres d'un groupe ne verront que votre pseudo et votre avatar.</li>
+            <li>"Groups" n'est pas vraiment un réseau social: il n'y a pas de profil utilisateur. Les autres membres d'un groupe ne verront que votre
+              pseudo et votre avatar.</li>
           </ul>
         </p>
         <p class="h5">Comment ça marche?</p>
