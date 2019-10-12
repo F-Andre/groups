@@ -1,6 +1,23 @@
 @extends('admin/admin_template')
 
 @section('section')
+@if (session()->has('ok'))
+<div class="alert alert-success alert-dismissible fade show col-lg-8 ml-5" role="alert">
+  {{ session('ok') }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+@endif
+@if (session()->has('error'))
+<div class="alert alert-warning alert-dismissible fade show col-lg-8 ml-5" role="alert">
+  {{ session('error') }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <i class="fas fa-exclamation-triangle"></i>
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+@endif
 @if (in_array($user->id, $groupUsers))
 <div class="card mt-4">
   <div class="card-header d-flex justify-content-between flex-wrap">
@@ -19,8 +36,7 @@
   <div class="card-body">
     @if (auth()->user()->id !== $user->id)
     <div class="mb-5 mt-2">
-      <form class="form-inline" action={{ route('admin.adminSwitch', $groupName) }} method="POST"
-        enctype="multipart/form-data">
+      <form class="form-inline" action={{ route('admin.adminSwitch', $groupName) }} method="POST" enctype="multipart/form-data">
         @csrf
         <div class="custom-control custom-switch mr-3">
           <input type="text" name="user_id" value={{ $user->id }} hidden>
@@ -32,15 +48,20 @@
       </form>
     </div>
     @if (!in_array($user->id, $groupAdmins))
-    <div class="d-flex justify-content-start mt-5 mb-5">
+    <div class="d-flex justify-content-between my-5">
+      @php
+      $receiverIds = [];
+      array_push($receiverIds, $user->id);
+      @endphp
+      <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#contactModal">
+        Contacter
+      </button>
       <div class="text-center mr-5">
-        <form class="form-inline" action={{ route('admin.warnUser', $groupName) }} method="POST"
-          enctype="multipart/form-data">
+        <form class="form-inline" action={{ route('admin.warnUser', $groupName) }} method="POST" enctype="multipart/form-data">
           @csrf
           <input type="text" name="user_id" value={{ $user->id }} hidden>
           <div class="form-group">
-            <input type="text" class="form-control mr-3" name="reason" placeholder="Raisons de l'avertissement"
-              required>
+            <input type="text" class="form-control mr-3" name="reason" placeholder="Raisons de l'avertissement" required>
             <input type="submit" class="btn btn-warning" value="Avertir">
           </div>
         </form>
@@ -86,11 +107,10 @@
           <td class="text-center">le {{ Date::parse($post->created_at)->format('d F Y') }} à
             {{ Date::parse($post->created_at)->format('H:i') }}</td>
           <td class="text-center">{{ $post->comments()->count() }}</td>
-          <td class="text-right"><a class="btn btn-success btn-sm"
-              href={{ route('posts.index', [$groupName, '#' . $post->id]) }}>Voir l'article</a></td>
+          <td class="text-right"><a class="btn btn-success btn-sm" href={{ route('posts.index', [$groupName, '#' . $post->id]) }}>Voir
+              l'article</a></td>
           <td class="text-right">
-            <button type="button" class="btn btn-danger btn-sm float-right" data-toggle="modal"
-              data-target="#deletePost">
+            <button type="button" class="btn btn-danger btn-sm float-right" data-toggle="modal" data-target="#deletePost">
               Supprimer
             </button>
           </td>
@@ -102,8 +122,7 @@
     </table>
   </div>
 </div>
-<div class="modal fade" id="deregisterUser" tabindex="-1" role="dialog" aria-labelledby="deregisterUserLabel"
-  aria-hidden="true">
+<div class="modal fade" id="deregisterUser" tabindex="-1" role="dialog" aria-labelledby="deregisterUserLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -123,6 +142,9 @@
   </div>
 </div>
 @else
-  <script>window.history.back()</script> 
+<script>
+  window.history.back()
+</script>
 @endif
+@include('templates/modal_contact_template')
 @endsection

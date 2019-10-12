@@ -21,7 +21,7 @@ Route::resource('group', 'GroupController')->middleware('verified');
 Route::post('group/{groupName}/searchGroup', 'GroupController@searchResult')->name('group.searchResult')->middleware('verified');
 Route::post('group/{groupName}/{userId}', 'GroupController@joinDemand')->name('group.joinDemand')->middleware('verified');
 Route::post('invitMember/{groupName}/{userId}', 'GroupController@invitMember')->name('group.invitMember')->middleware('verified');
-Route::post('contactAdmin/{groupName}/{userId}', 'GroupController@contactAdmin')->name('group.contactAdmin')->middleware('verified');
+Route::post('contactModal/{groupName}/{userId}', 'GroupController@contactModal')->name('group.contactModal')->middleware('verified');
 
 Route::resource('{groupName}/admin', 'AdminController')->middleware('verified');
 Route::post('{groupName}/admin/{admin}', 'AdminController@searchResult')->name('admin.searchResult')->middleware('verified');

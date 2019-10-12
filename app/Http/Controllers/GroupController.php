@@ -272,8 +272,7 @@ class GroupController extends Controller
     $mails = explode(",", $request->emails);
 
     foreach ($mails as $mail) {
-      if (strlen($mail) > 0)
-      {
+      if (strlen($mail) > 0) {
         $mailTrim = trim($mail);
         Mail::send(new InvitNewMember($group, $user, $mailTrim));
       }
@@ -282,20 +281,24 @@ class GroupController extends Controller
     return redirect(route('group.show', $groupName))->with('ok', "Les invitations ont été envoyées.");
   }
 
-  public function contactAdmin(Request $request, $groupName, $userId)
+  public function contactModal(Request $request, $groupName, $userId)
   {
     $group = $this->group->getByName($groupName);
     $user = User::where('id', $userId)->first();
-    $admins = explode(",", $group->admins_id);
 
     $subject = $request->subject;
     $message = $request->message;
 
-    foreach ($admins as $admin) {
-      $userAdmin = User::find($admin);
-      $userAdmin->notify(new ContactAdmin($group, $user, $subject, $message));
+    if (is_array($request->receiverId)) {
+      foreach ($request->receiverId as $receiverId) {
+        $receiverUser = User::find($receiverId);
+        $receiverUser->notify(new ContactAdmin($group, $user, $subject, $message));
+      }
+    } else {
+      $receiverUser = User::find($request->receiverId);
+      $receiverUser->notify(new ContactAdmin($group, $user, $subject, $message));
     }
 
-    return redirect(route('group.show', $groupName))->with('ok', "Le message a été envoyé.");
+    return redirect()->back()->with('ok', "Le message a été envoyé.");
   }
 }
