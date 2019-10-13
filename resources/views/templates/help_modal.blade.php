@@ -18,6 +18,15 @@
             </p>
           </div>
         </div>
+        <p class="h5">Le projet</p>
+        <p>
+          J'ai commencé ce projet pour offrir à mon fils de 11 ans la liberté d'échanger avec ses amis sur internet 
+          en toute sécurité, sans course aux likes, publicité et avec la possibilité d'effacer définitivement une image ou un post.
+          <br><br>Au fur et à mesure que j'avançais dans ce projet, j'ai réalisé qu'il pouvait aussi intéresser un public plus large.
+          C'est pourquoi j'ai créé l'application "Groups" qui offre un espace de discussion à tout le monde en évitant, autant que faire ce peux,
+          les travers des différents réseaux sociaux, dont principalement la captation des données personnelles.<br><br>
+          Cette application est en constante évolution. Toutes les suggestions et remarques sont les bienvenues.
+        </p>
         <p class="h5">Qu'est-ce "Groups"?</p>
         <p>
           <ul>
