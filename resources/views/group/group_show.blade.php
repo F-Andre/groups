@@ -82,7 +82,7 @@
               <span>{{ $user->name }}</span>
               @if (in_array($user->id, $adminsId))
               @php
-                array_push($receiverIds, $user->id);
+              array_push($receiverIds, $user->id);
               @endphp
               <div>
                 <button type="button" class="btn btn-link btn-sm p-0" data-toggle="modal" data-target="#contactModal">
@@ -117,5 +117,7 @@
     </div>
   </div>
   <!-- Modal -->
+  @if (count($receiverIds) > 0)
   @include('templates/modal_contact_template')
+  @endif
   @endsection
