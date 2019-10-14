@@ -10,29 +10,40 @@
       <div class="modal-body">
         <div class="card mb-3">
           <div class="card-body">
-            <p class="h4 text-center mb-2"><i class="fas fa-exclamation-circle mr-2"></i>Application en développement</p>
+            <p class="h4 text-center mb-2"><i class="fas fa-exclamation-circle mr-2"></i>Application en développement
+            </p>
             <p class="m-0">
-              La plateforme proposée est actuellement en développement, il peut y avoir des disfonctionnements. Si vous avez des remarques,
+              La plateforme proposée est actuellement en développement, il peut y avoir des disfonctionnements. Si vous
+              avez des remarques,
               des suggestions ou des bugs, merci de m'en faire part sur le groupe "Groups.aide".<br>
-              Même si tout est fait pour éviter que des données soient perdues, il n'est pas exclu que cela puisse arriver.
+              Même si tout est fait pour éviter que des données soient perdues, il n'est pas exclu que cela puisse
+              arriver.
             </p>
           </div>
         </div>
         <p class="h5">Le projet</p>
-        <p>
-          J'ai commencé ce projet pour offrir à mon fils de 11 ans la liberté d'échanger avec ses amis sur internet 
-          en toute sécurité, sans course aux likes, publicité et avec la possibilité d'effacer définitivement une image ou un post.
-          <br><br>Au fur et à mesure que j'avançais dans ce projet, j'ai réalisé qu'il pouvait aussi intéresser un public plus large.
-          C'est pourquoi j'ai créé l'application "Groups" qui offre un espace de discussion à tout le monde en évitant, autant que faire ce peux,
-          les travers des différents réseaux sociaux, dont principalement la captation des données personnelles.<br><br>
-          Cette application est en constante évolution. Toutes les suggestions et remarques sont les bienvenues.
-        </p>
+        <div class="pl-4">
+          <p>J'ai commencé ce projet pour offrir à mon fils de 11 ans la liberté d'échanger avec ses amis sur internet
+            en toute sécurité, sans course aux likes, publicité et avec la possibilité d'effacer définitivement une
+            image ou un post.
+          </p>
+          <p>Au fur et à mesure que j'avançais dans ce projet, j'ai réalisé qu'il pouvait aussi intéresser un public
+            plus large.
+            C'est pourquoi j'ai créé l'application "Groups" qui offre un espace de discussion à tout le monde en
+            évitant, autant que faire ce peux,
+            les travers des différents réseaux sociaux, dont principalement la captation des données personnelles.
+          </p>
+          <p>
+            Cette application est en constante évolution. Toutes les suggestions et remarques sont les bienvenues.
+          </p>
+        </div>
         <p class="h5">Qu'est-ce "Groups"?</p>
         <p>
           <ul>
             <li>"Groups" est une plateforme de groupes de discussions fermés respectueuse des données personnelles, du
               droit à l'oubli et sans publicité.</li>
-            <li>"Groups" n'est pas vraiment un réseau social: il n'y a pas de profil utilisateur. Les autres membres d'un groupe ne verront que votre
+            <li>"Groups" n'est pas vraiment un réseau social: il n'y a pas de profil utilisateur. Les autres membres
+              d'un groupe ne verront que votre
               pseudo et votre avatar.</li>
           </ul>
         </p>
@@ -55,7 +66,8 @@
               définitivement.
             </li>
             <li>
-              Les publications ne doivent pas porter atteinte aux autres utilisateurs. "Groups" se réserve un droit de regard sur tous les
+              Les publications ne doivent pas porter atteinte aux autres utilisateurs. "Groups" se réserve un droit de
+              regard sur tous les
               contenus publiés sur la plateforme.
             </li>
           </ul>
@@ -67,7 +79,8 @@
               stockées sur des serveurs situés en France.</li>
             <li>"Groups" n'utilise pas d'outils de fournisseurs tiers captant des données comme par exemple des outils
               d'analyse Google ou Facebook.</li>
-            <li>Vous pouvez connaître à tout moment le contenu des données vous concernant en en faisant la demande.</li>
+            <li>Vous pouvez connaître à tout moment le contenu des données vous concernant en en faisant la demande.
+            </li>
           </ul>
         </p>
         <p class="h5">Le droit à l'oubli:</p>
