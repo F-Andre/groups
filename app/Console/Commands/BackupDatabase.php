@@ -36,10 +36,10 @@ class BackupDatabase extends Command
         parent::__construct();
 
         $this->process = new Process(sprintf(
-            'mysqldump --user=%s --password=%s %s > %s',
-            env('DB_USERNAME'),
-            env('DB_PASSWORD'),
-            env('DB_DATABASE'),
+            'mysqldump -u%s -p%s %s > %s',
+            config('database.connections.mysql.username'),
+            config('database.connections.mysql.password'),
+            config('database.connections.mysql.database'),
             storage_path('app/backups/database-backup-' . Carbon::now()->timestamp .'.sql')
         ));
     }
