@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class BackupFtp extends Command
 {
@@ -40,19 +41,25 @@ class BackupFtp extends Command
   {
     $files = Storage::allFiles('/');
     $barFile = $this->output->createProgressBar(count($files));
+    $this->info('Démarrage de la sauvegarde');
+
     $barFile->start();
+    try {
+      foreach ($files as $key => $value) {
+        if (preg_match_all('/(\/\.|^\.)/', $files[$key]) == 0) {
+          $fileOk = Storage::get($files[$key]);
 
-    foreach ($files as $key => $value) {
-      if (preg_match_all('/(\/\.|^\.)/', $files[$key]) == 0) {
-        $fileOk = Storage::get($files[$key]);
-
-        if (!Storage::disk('ftp')->exists('backups_groups/' . $files[$key], $fileOk)) {
-          Storage::disk('ftp')->put('backups_groups/' . $files[$key], $fileOk);
+          if (!Storage::disk('ftp')->exists('backups_groups/' . $files[$key], $fileOk)) {
+            Storage::disk('ftp')->put('backups_groups/' . $files[$key], $fileOk);
+          }
         }
+        $barFile->advance();
       }
-      $barFile->advance();
+      $barFile->finish();
+      $this->info('');
+      $this->info('Sauvegarde terminée');
+    } catch (ProcessFailedException $exception) {
+      $this->info('La sauvegarde n\'a pas fonctionnée. Erreur: ' . $exception);
     }
-
-    $barFile->finish();
   }
 }
