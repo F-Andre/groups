@@ -12,7 +12,7 @@ class CleanBackup extends Command
    *
    * @var string
    */
-  protected $signature = 'clean:backup';
+  protected $signature = 'db:cleanbackup';
 
   /**
    * The console command description.
