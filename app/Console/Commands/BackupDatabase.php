@@ -36,7 +36,7 @@ class BackupDatabase extends Command
         parent::__construct();
 
         $this->process = new Process(sprintf(
-            'mysqldump -u%s -p%s %s > %s',
+            'mysqldump --user=%s --password=%s %s > %s',
             env('DB_USERNAME'),
             env('DB_PASSWORD'),
             env('DB_DATABASE'),
