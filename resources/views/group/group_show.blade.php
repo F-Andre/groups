@@ -109,6 +109,9 @@
           <div id="invitForm"></div>
         </form>
       </div>
+      @if (count($receiverIds) > 0)
+      @include('templates/modal_contact_template')
+      @endif
       @else
       <form id="joinDemandForm" method="POST"
         action="{{ route('group.joinDemand', ['groupName' => $group->name, 'userId' => auth()->user()->id]) }}"
@@ -117,9 +120,6 @@
         <input form="joinDemandForm" name="joinGroup" id="joinGroup" class="btn btn-success" type="submit"
           value="Rejoindre">
       </form>
-      @if (count($receiverIds) > 0)
-      @include('templates/modal_contact_template')
-      @endif
       @endif
     </div>
   </div>
