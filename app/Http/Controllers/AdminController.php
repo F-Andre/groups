@@ -236,7 +236,7 @@ class AdminController extends Controller
 
     $groupOnDemand = explode(",", $group->on_demand);
 
-    if ($request->join === true) {
+    if ($request->join == 'true') {
       $groupUsers = explode(",", $group->users_id);
       array_push($groupUsers, $user->id);
       $newGroupUsers = implode(",", $groupUsers);
@@ -260,7 +260,7 @@ class AdminController extends Controller
 
       $user->notify(new JoinGroupOk($user, $group));
 
-      return redirect(route('admin.index', $groupName))->with('ok', "l'utilisateur " . $user->name . " a bien été ajouté au groupe.");
+      return redirect(route('admin.index', $groupName))->with('ok', "L'utilisateur " . $user->name . " a bien été ajouté au groupe.");
 
     } else {
       $userDemandKey = array_search($user, $groupOnDemand);
