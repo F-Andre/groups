@@ -164,7 +164,7 @@ class postController extends Controller
     $group = Group::where('name', $groupName)->first();
     $groupAdmins = explode(",", $group->admins_id);
 
-    return view('post.edit', ['groupName' => $groupName, 'groupAdmins' => $groupAdmins, 'id' => $post->id, 'titre' => $post->titre, 'contenu' => $post->contenu, 'imageUrl' => $imageUrl]);
+    return view('post.edit', ['group' => $group, 'groupName' => $groupName, 'groupAdmins' => $groupAdmins, 'id' => $post->id, 'titre' => $post->titre, 'contenu' => $post->contenu, 'imageUrl' => $imageUrl]);
   }
 
   /**
