@@ -1,4 +1,9 @@
-<div class="accordion text-center" id="authAcc">
+<div class="text-center">
+  <a class="btn btn-outline-secondary" href="{{ route('group.index') }}">
+    <i class="fas fa-home mr-2"></i>Accueil
+  </a>
+</div>
+<div class="accordion text-center mt-4" id="authAcc">
   <a class="btn btn-secondary" id="headingAuth" href="#" role="button" data-toggle="collapse"
     data-target="#authDropdown" aria-expanded="true" aria-controls="authDropdown">
     <span class="avatar avatar-btn float-left"
@@ -23,7 +28,7 @@
 <div class="accordion text-center" id="groupAcc">
   <a id="headingGroup" class="btn btn-outline-success" href="#" role="button" data-toggle="collapse"
     data-target="#groupDropdown" aria-expanded="true" aria-controls="groupDropdown">
-    <span class="avatar avatar-btn float-left" style="background-image: url({{ Storage::url($group->avatar) }})"></span>
+    <span class="avatar avatar-btn" style="background-image: url({{ Storage::url($group->avatar) }})"></span>
     {{ $groupName }}
     <i class="ml-2 fas fa-caret-down"></i>
   </a>
@@ -38,11 +43,6 @@
     <a class="dropdown-item" href="{{ route('admin.index', $groupName) }}" role="button">Page admin</a>
     @endif
   </div>
-</div>
-<div class="mt-4 text-center">
-  <a class="btn btn-light" href="{{ route('group.index') }}">
-    Mes groupes
-  </a>
 </div>
 <div class="mt-4 text-center">
   <a class="btn btn-outline-primary" href={{ route('posts.create', $groupName) }} role="button">Ecrire un

@@ -48,14 +48,22 @@
           <!-- Left Side Of Navbar -->
           @auth
           <ul id="authBtn" class="navbar-nav ml-auto mt-2">
+            <li class="mt-2">
+              <a class="btn btn-outline-secondary form-control mb-2" href="{{ route('group.index') }}">
+                <i class="fas fa-home mr-2"></i>Accueil
+              </a>
+            </li>
             <li class="nav-item accordion" id="navAuthAcc">
-              <a class="btn btn-secondary form-control" id="navHeadingAuth" href="#" role="button" data-toggle="collapse" data-target="#navAuthDropdown"
-                aria-expanded="true" aria-controls="navAuthDropdown">
-                <span class="avatar avatar-btn float-left" style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></span>
+              <a class="btn btn-secondary form-control" id="navHeadingAuth" href="#" role="button"
+                data-toggle="collapse" data-target="#navAuthDropdown" aria-expanded="true"
+                aria-controls="navAuthDropdown">
+                <span class="avatar avatar-btn float-left"
+                  style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></span>
                 {{ Auth::user()->name }}
                 <i class="ml-2 fas fa-caret-down"></i>
               </a>
-              <div id="navAuthDropdown" class="collapse mt-2" aria-labelledby="navHeadingAuth" data-parent="#navAuthAcc">
+              <div id="navAuthDropdown" class="collapse mt-2" aria-labelledby="navHeadingAuth"
+                data-parent="#navAuthAcc">
                 <a class="dropdown-item" href="{{ route('user_page.index') }}">
                   Mon compte
                 </a>
@@ -71,13 +79,16 @@
             @isset($groupName)
             @isset($groupAdmins)
             <li class="nav-item accordion mt-2" id="navAccountAcc">
-              <a id="navHeadingGroup" class="btn btn-outline-success form-control" href="#" role="button" data-toggle="collapse"
-                data-target="#navGroupDropdown" aria-expanded="true" aria-controls="navGroupDropdown">
-                <span class="avatar avatar-btn float-left" style="background-image: url({{ Storage::url($group->avatar) }})"></span>
+              <a id="navHeadingGroup" class="btn btn-outline-success form-control" href="#" role="button"
+                data-toggle="collapse" data-target="#navGroupDropdown" aria-expanded="true"
+                aria-controls="navGroupDropdown">
+                <span class="avatar avatar-btn float-left"
+                  style="background-image: url({{ Storage::url($group->avatar) }})"></span>
                 {{ $groupName }}
                 <i class="ml-2 fas fa-caret-down"></i>
               </a>
-              <div id="navGroupDropdown" class="collapse mt-2" aria-labelledby="navHeadingGroup" data-parent="#navAccountAcc">
+              <div id="navGroupDropdown" class="collapse mt-2" aria-labelledby="navHeadingGroup"
+                data-parent="#navAccountAcc">
                 <a class="dropdown-item" href="{{ route('posts.index', $groupName) }}">
                   Fil du groupe
                 </a>
@@ -90,12 +101,8 @@
               </div>
             </li>
             <li class="mt-2">
-              <a class="btn btn-light form-control" href="{{ route('group.index') }}">
-                Mes groupes
-              </a>
-            </li>
-            <li class="mt-2">
-              <a class="btn btn-outline-primary form-control" href="{{ route('posts.create', $groupName) }}" role="button">Ecrire un
+              <a class="btn btn-outline-primary form-control" href="{{ route('posts.create', $groupName) }}"
+                role="button">Ecrire un
                 article</a>
             </li>
             @endisset
