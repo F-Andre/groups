@@ -51,7 +51,7 @@ class NewPost extends Notification
     $greeting = sprintf('Bonjour %s,', $notifiable->name);
     $line = sprintf('%s vient de poster un nouvel article: %s', $this->fromUser->name, $this->post->titre);
     return (new MailMessage)
-      ->subject('Nouveau post')
+      ->subject('Nouvel article')
       ->greeting($greeting)
       ->line($line)
       ->action('Voir l\'article', url($this->group->name . '/posts/#' . $this->post->id))
