@@ -1,0 +1,99 @@
+#app {
+  min-height: calc(100vh - 60px);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.image-blog {
+  max-height: 50vh;
+  max-width: 100%;
+}
+
+aside {
+  position: fixed !important;
+  top: 15vh;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 2px gainsboro;
+}
+
+aside a {
+  width: 90%;
+}
+
+@media only screen and (max-width: 1200px) {
+  aside {
+    visibility: hidden;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  #authBtn {
+    visibility: hidden;
+  }
+}
+
+.postIframe {
+  width: 100%;
+  height: 300px;
+  border: 2px solid gainsboro;
+  border-radius: 5px;
+}
+
+.comment {
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+.commentIframe {
+  width: 100%;
+  border: 2px solid gainsboro;
+  border-radius: 5px;
+}
+
+.card-text .emoji,
+.comment .emoji {
+  height: 1.2rem;
+  vertical-align: middle;
+}
+
+.edit-button {
+  border: none !important;
+}
+
+.comment small {
+  font-size: 0.8rem;
+}
+
+.post-titre {
+  word-break: break-word;
+}
+
+select option {
+  font-size: 1rem;
+}
+
+#help:hover {
+  cursor: pointer;
+}
+
+#helpModal {
+  color: black;
+}
+
+.scrollable-div {
+  position: relative;
+  top: 0;
+  max-height: 40vh;
+  overflow: hidden;
+}

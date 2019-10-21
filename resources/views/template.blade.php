@@ -79,7 +79,7 @@
             @isset($groupName)
             @isset($groupAdmins)
             <li class="nav-item accordion mt-2" id="navAccountAcc">
-              <a id="navHeadingGroup" class="btn btn-outline-secondary col-12 d-flex justify-content-center align-items-center flex-wrap mx-auto" href="#" role="button"
+              <a id="navHeadingGroup" class="btn btn-outline-groups col-12 d-flex justify-content-center align-items-center flex-wrap mx-auto" href="#" role="button"
                 data-toggle="collapse" data-target="#navGroupDropdown" aria-expanded="true"
                 aria-controls="navGroupDropdown">
                 <span class="avatar avatar-btn mx-2"

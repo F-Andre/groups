@@ -1,0 +1,12 @@
+$purple-group: hsl(255, 100%, 69%);
+
+.btn-outline-groups {
+  color: $purple-group;
+  border: 1px solid $purple-group;
+  border-radius: 5px;
+}
+
+.btn-outline-groups:hover {
+  color: white;
+  background-color: $purple-group;
+}
