@@ -242,7 +242,7 @@ class AdminController extends Controller
       $newGroupUsers = implode(",", $groupUsers);
 
       $userDemandKey = array_search($user, $groupOnDemand);
-      array_splice($groupOnDemand, $userDemandKey, 1);
+      array_splice($groupOnDemand, ($userDemandKey - 1), 1);
       $newOnDemand = implode(",", $groupOnDemand);
 
       $group->on_demand = $newOnDemand;
@@ -264,7 +264,7 @@ class AdminController extends Controller
 
     } else {
       $userDemandKey = array_search($user, $groupOnDemand);
-      array_splice($groupOnDemand, $userDemandKey, 1);
+      array_splice($groupOnDemand, ($userDemandKey - 1), 1);
       $newOnDemand = implode(",", $groupOnDemand);
 
       $group->on_demand = $newOnDemand;
