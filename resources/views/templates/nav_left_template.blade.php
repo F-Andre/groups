@@ -26,7 +26,7 @@
 </div>
 <hr>
 <div class="accordion text-center" id="groupAcc">
-  <a id="headingGroup" class="btn btn-outline-success d-flex justify-content-center align-items-center flex-wrap mx-auto" href="#" role="button" data-toggle="collapse"
+  <a id="headingGroup" class="btn btn-outline-secondary d-flex justify-content-center align-items-center flex-wrap mx-auto" href="#" role="button" data-toggle="collapse"
     data-target="#groupDropdown" aria-expanded="true" aria-controls="groupDropdown">
     <span class="avatar avatar-btn mx-2" style="background-image: url({{ Storage::url($group->avatar) }})"></span>
     {{ $groupName }}
