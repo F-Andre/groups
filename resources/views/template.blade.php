@@ -54,10 +54,10 @@
               </a>
             </li>
             <li class="nav-item accordion" id="navAuthAcc">
-              <a class="btn btn-secondary form-control" id="navHeadingAuth" href="#" role="button"
+              <a class="btn btn-secondary col-12 d-flex justify-content-center align-items-center flex-wrap mx-auto" id="navHeadingAuth" href="#" role="button"
                 data-toggle="collapse" data-target="#navAuthDropdown" aria-expanded="true"
                 aria-controls="navAuthDropdown">
-                <span class="avatar avatar-btn float-left"
+                <span class="avatar avatar-btn mx-2"
                   style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></span>
                 {{ Auth::user()->name }}
                 <i class="ml-2 fas fa-caret-down"></i>
@@ -79,10 +79,10 @@
             @isset($groupName)
             @isset($groupAdmins)
             <li class="nav-item accordion mt-2" id="navAccountAcc">
-              <a id="navHeadingGroup" class="btn btn-outline-success form-control" href="#" role="button"
+              <a id="navHeadingGroup" class="btn btn-outline-success col-12 d-flex justify-content-center align-items-center flex-wrap mx-auto" href="#" role="button"
                 data-toggle="collapse" data-target="#navGroupDropdown" aria-expanded="true"
                 aria-controls="navGroupDropdown">
-                <span class="avatar avatar-btn float-left"
+                <span class="avatar avatar-btn mx-2"
                   style="background-image: url({{ Storage::url($group->avatar) }})"></span>
                 {{ $groupName }}
                 <i class="ml-2 fas fa-caret-down"></i>

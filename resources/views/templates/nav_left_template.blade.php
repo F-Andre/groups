@@ -4,9 +4,9 @@
   </a>
 </div>
 <div class="accordion text-center mt-4" id="authAcc">
-  <a class="btn btn-secondary" id="headingAuth" href="#" role="button" data-toggle="collapse"
+  <a class="btn btn-secondary d-flex justify-content-center align-items-center flex-wrap mx-auto" id="headingAuth" href="#" role="button" data-toggle="collapse"
     data-target="#authDropdown" aria-expanded="true" aria-controls="authDropdown">
-    <span class="avatar avatar-btn float-left"
+    <span class="avatar avatar-btn mx-2"
       style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></span>
     {{ Auth::user()->name }}
     <i class="ml-2 fas fa-caret-down"></i>
@@ -26,9 +26,9 @@
 </div>
 <hr>
 <div class="accordion text-center" id="groupAcc">
-  <a id="headingGroup" class="btn btn-outline-success" href="#" role="button" data-toggle="collapse"
+  <a id="headingGroup" class="btn btn-outline-success d-flex justify-content-center align-items-center flex-wrap mx-auto" href="#" role="button" data-toggle="collapse"
     data-target="#groupDropdown" aria-expanded="true" aria-controls="groupDropdown">
-    <span class="avatar avatar-btn float-left" style="background-image: url({{ Storage::url($group->avatar) }})"></span>
+    <span class="avatar avatar-btn mx-2" style="background-image: url({{ Storage::url($group->avatar) }})"></span>
     {{ $groupName }}
     <i class="ml-2 fas fa-caret-down"></i>
   </a>
