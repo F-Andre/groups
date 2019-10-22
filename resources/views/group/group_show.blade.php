@@ -60,12 +60,11 @@
     </div>
     <div class="card-body">
       @if (in_array(auth()->user()->id, $usersId))
-      <div class="d-flex justify-content-between">
-        <p class="align-self-center m-0">Vous êtes membre de ce groupe</p>
+      <div class="d-flex justify-content-start">
         <div>
-          <a class="btn btn-outline-success" href={{ route('posts.index', ['groupName' => $group->name]) }}
+          <a class="btn btn-outline-groups" href={{ route('posts.index', ['groupName' => $group->name]) }}
             role="button">
-            Fil du groupe
+            Voir les articles
           </a>
         </div>
       </div>

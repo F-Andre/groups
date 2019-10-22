@@ -2,7 +2,7 @@
   min-height: calc(100vh - 60px);
 }
 
-.btn:disabled {
+.btn:disabled, .btn.disabled {
   cursor: not-allowed;
 }
 
