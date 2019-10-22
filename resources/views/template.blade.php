@@ -90,7 +90,7 @@
               <div id="navGroupDropdown" class="collapse mt-2" aria-labelledby="navHeadingGroup"
                 data-parent="#navAccountAcc">
                 <a class="dropdown-item" href="{{ route('posts.index', $groupName) }}">
-                  Fil du groupe
+                  Articles du groupe
                 </a>
                 <a class="dropdown-item" href="{{ route('group.show', $groupName) }}">
                   Infos du groupe

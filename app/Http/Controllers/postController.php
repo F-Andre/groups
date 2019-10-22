@@ -80,7 +80,7 @@ class postController extends Controller
    */
   public function store(PostRequest $request, $groupName)
   {
-    $retour = redirect(route('posts.index', $groupName))->withOk('Le post "' . $request->titre . '" est enregistré.');
+    $retour = redirect(route('posts.index', $groupName))->withOk('Votre article "' . $request->titre . '" est publié.');
     $group = Group::where('name', $groupName)->first();
     $groupUsers = explode(",", $group->users_id);
     $users = User::all();

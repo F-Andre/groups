@@ -34,7 +34,7 @@
   </a>
   <div id="groupDropdown" class="collapse mt-2 text-left" aria-labelledby="headingGroup" data-parent="#groupAcc">
     <a class="dropdown-item" href="{{ route('posts.index', $groupName) }}">
-      Fil du groupe
+      Articles du groupe
     </a>
     <a class="dropdown-item" href="{{ route('group.show', $groupName) }}">
       Infos du groupe
