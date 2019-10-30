@@ -33,8 +33,7 @@ class postController extends Controller
    */
   public function index($groupName)
   {
-    if (isset($groupName))
-    {
+    if (isset($groupName)) {
       $posts = $this->post->getCollectionOrdered();
 
       $group = Group::where('name', $groupName)->first();
@@ -44,17 +43,12 @@ class postController extends Controller
 
       $nbrPosts = $group->posts()->count();
 
-      if (in_array(auth()->user()->id, $groupUsers))
-      {
+      if (in_array(auth()->user()->id, $groupUsers)) {
         return view('blog', compact('posts', 'groupName', 'group', 'nbrPosts', 'groupAdmins', 'groupOnDemand'));
-      }
-      else
-      {
+      } else {
         return redirect(route('group.index'));
       }
-    } 
-    else
-    {
+    } else {
       return redirect(route('group.index'));
     }
   }
@@ -177,48 +171,52 @@ class postController extends Controller
   public function update(PostRequest $request, $groupName, $id)
   {
     $post = $this->post->getById($id);
-    $retour = redirect(route('posts.index', $groupName))->withOk('Le post "' . $request->titre . '" a été modifié');
 
-    if ($request->hasFile('image')) {
-      if ($request->image->isValid()) {
-        $oldImage = $post->image;
+    if ($request->validated()) {
+      $retour = redirect(route('posts.index', $groupName))->withOk('Le post "' . $request->titre . '" a été modifié');
+      if ($request->hasFile('image')) {
+        if ($request->image->isValid()) {
+          $oldImage = $post->image;
 
-        $fileExt = $request->image->getClientOriginalExtension();
-        $fileName = Str::random(15);
-        while (Storage::exists('public/images/' . $request->user()->id . '/' . $fileName . '.' . $fileExt)) {
+          $fileExt = $request->image->getClientOriginalExtension();
           $fileName = Str::random(15);
+          while (Storage::exists('public/images/' . $request->user()->id . '/' . $fileName . '.' . $fileExt)) {
+            $fileName = Str::random(15);
+          }
+
+          $path = 'public/images/' . $request->user()->id . '/' . $fileName . '.' . $fileExt;
+
+          $pathUrl = Storage::url($path);
+          $imageMake = Image::make($request->image);
+          $imageMake->widen(900, function ($constraint) {
+            $constraint->upsize();
+          })->save('.' . $pathUrl);
+
+          $inputs = array_merge($request->all(), ['image' => $path]);
+          $post->update($inputs);
+
+          Storage::delete($oldImage);
+
+          return $retour;
         }
+      }
 
-        $path = 'public/images/' . $request->user()->id . '/' . $fileName . '.' . $fileExt;
-
-        $pathUrl = Storage::url($path);
-        $imageMake = Image::make($request->image);
-        $imageMake->widen(900, function ($constraint) {
-          $constraint->upsize();
-        })->save('.' . $pathUrl);
-
-        $inputs = array_merge($request->all(), ['image' => $path]);
-        $post->update($inputs);
-
+      if (strlen($post->image) > 1 && $request->imageDeleted) {
+        $oldImage = $post->image;
         Storage::delete($oldImage);
+
+        $inputs = array_merge($request->all(), ['image' => 0]);
+        $post->update($inputs);
 
         return $retour;
       }
-    }
 
-    if (strlen($post->image) > 1 && $request->imageDeleted) {
-      $oldImage = $post->image;
-      Storage::delete($oldImage);
-
-      $inputs = array_merge($request->all(), ['image' => 0]);
-      $post->update($inputs);
+      $post->update($request->all());
 
       return $retour;
+    } else {
+      return redirect(route('posts.index', $groupName))->with('Error', 'Une erreur est survenue.');
     }
-
-    $post->update($request->all());
-
-    return $retour;
   }
 
   /**

@@ -29,7 +29,7 @@
 <div class="container-fluid col-lg-6 bx-auto mt-4">
   @if (session()->has('error'))
   <div class="col-lg-8 text-center mx-auto mt-4 alert alert-warning alert-dismissible fade show" role="alert">
-    <i class="fas fa-exclamation-triangle"></i>
+    <i class="fas fa-exclamation-triangle mr-2"></i>
     {{ session('error') }}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>

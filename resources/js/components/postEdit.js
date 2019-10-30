@@ -16,24 +16,6 @@ function ArticleTitre(props) {
     />
   );
 }
-
-function ArticleText(props) {
-  const contenuClass = props.value.length > 10 ? 'form-control' : props.value.length == 0 ? 'form-control' : 'form-control is-invalid'
-  const valueContenu = props.value.length > 0 ? props.value : ''
-  return (
-    <textarea
-      className={contenuClass}
-      name="contenu"
-      id="contenu"
-      rows="5"
-      onChange={props.onChange}
-      hidden
-    >
-      {valueContenu}
-    </textarea>
-  );
-}
-
 export default class ArticleForm extends Component {
   constructor(props) {
     super(props)
@@ -62,6 +44,10 @@ export default class ArticleForm extends Component {
         })
       }
     })
+  }
+
+  componentDidUpdate() {
+    twemoji.parse(document.body);
   }
 
   handleChangeTitre(event) {
@@ -115,14 +101,14 @@ export default class ArticleForm extends Component {
         </div>
         <div className="form-group">
           <label htmlFor="contenu">Ecrivez votre texte:</label>
-          <textarea className={contenuClass} name="contenu" id="contenu" value={this.state.textValue} hidden />
+          <textarea className={contenuClass} name="contenu" id="contenu" value={this.state.textValue} readOnly hidden />
           <iframe id="editor_iframe" className="postIframe" src="/editor_iframe.html" onLoad={this.handleLoad}></iframe>
           <div className="invalid-feedback">Ecrivez un texte d'au moins 10 caractères.</div>
         </div>
         <div id="divImage" className="form-group">
           <div className="col-12 text-center mt-2">
             <img className="img-fluid" src={this.state.imgSrc} />
-            <input id="imageDeleted" type="text" className="disabled" name="imageDeleted" value={this.state.imageDeleted} />
+            <input id="imageDeleted" type="text" className="disabled" name="imageDeleted" value={this.state.imageDeleted} readOnly/>
           </div>
           <input id="image" name="image" type="file" className={imageClass} accept=".JPG, .PNG, .SVG" ref={this.fileInput} onChange={this.handleChangeImage} />
           <div className="invalid-feedback">L'image doit être aux formats jpg, png ou svg et avoir une taille max de 20Mo.</div>

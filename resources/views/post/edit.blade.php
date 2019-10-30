@@ -2,6 +2,22 @@
 
 @section('content')
 <div class="container-fluid col-lg-6 bx-auto py-4">
+  @if (session()->has('ok'))
+  <div class="alert alert-success alert-dismissible fade show col-lg-8 ml-5" role="alert">
+    {{ session('ok') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  @endif
+  @if (session()->has('error'))
+  <div class="alert alert-warning alert-dismissible fade show col-lg-8 ml-5" role="alert">
+      <i class="fas fa-exclamation-triangle mr-2"></i>{{ session('error') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  @endif
   <div class="card">
     <div class="card-header d-flex justify-content-between">
       <div>Editer un article</div>

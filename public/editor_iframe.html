@@ -143,6 +143,10 @@
       height: 1.2rem;
       vertical-align: middle;
     }
+
+    #editContent br {
+      display: none;
+    }
   </style>
 </head>
 
@@ -189,35 +193,34 @@
   <div id="editContent" contenteditable="true"></div>
   <script>
     // addEventListener support for IE8
-    function bindEvent( element, eventName, eventHandler ) {
-      if ( element.addEventListener ) {
-        element.addEventListener( eventName, eventHandler, false );
-      } else if ( element.attachEvent ) {
-        element.attachEvent( 'on' + eventName, eventHandler );
+    function bindEvent(element, eventName, eventHandler) {
+      if (element.addEventListener) {
+        element.addEventListener(eventName, eventHandler, false);
+      } else if (element.attachEvent) {
+        element.attachEvent('on' + eventName, eventHandler);
       }
     }
 
-    function $( element ) {
-      return document.getElementById( element );
+    function $(element) {
+      return document.getElementById(element);
     }
 
-    function editCommand( comName, comArg = '' ) {
-      document.execCommand( comName, false, comArg );
-      $( 'editContent' ).focus();
+    function editCommand(comName, comArg = '') {
+      document.execCommand(comName, false, comArg);
+      $('editContent').focus();
     }
 
     function caretAtEnd() {
       let l = editContent.childNodes.length;
-      l > 0 ? document.getSelection().collapse( editContent, l ) : '';
-      window.setTimeout( function () {
+      l > 0 ? document.getSelection().collapse(editContent, l) : '';
+      window.setTimeout(function () {
         let l = editContent.childNodes.length;
-        l > 0 ? document.getSelection().collapse( editContent, l ) : '';
-      }, 1 );
+        l > 0 ? document.getSelection().collapse(editContent, l) : '';
+      }, 1);
     }
     // Send a message to the parent
-    var sendMessage = function ( msg ) {
-      // Make sure you are sending a string, and to stringify JSON
-      window.parent.postMessage( msg, '*' );
+    var sendMessage = function (msg) {
+      window.parent.postMessage(msg, '*');
     };
     var emojiFace = [
       ['1F642', '1F643', '1F609', '1F60A', '1F607', '1F600', '1F604', '1F606', '1F605', '1F923', '1F602'],
@@ -246,179 +249,189 @@
       ]
     ];
 
-    function splChars( array, parent ) {
-      array.forEach( char => {
-        if ( Array.isArray( char ) ) {
-          let subDiv = document.createElement( 'div' );
-          char.forEach( subGroup => {
-            let icon = document.createElement( 'span' );
+    function splChars(array, parent) {
+      array.forEach(char => {
+        if (Array.isArray(char)) {
+          let subDiv = document.createElement('div');
+          char.forEach(subGroup => {
+            let icon = document.createElement('span');
             icon.innerHTML = '&#x' + subGroup + ';';
             icon.value = '&#x' + subGroup + ';';
             icon.className = 'spl-char';
-            subDiv.appendChild( icon );
-            bindEvent( icon, 'click', function ( e ) {
-              $( 'editContent' ).innerHTML += icon.innerHTML;
-              sendMessage( $( 'editContent' ).innerHTML );
+            subDiv.appendChild(icon);
+            bindEvent(icon, 'click', function (e) {
+              if ($('editContent').lastChild.tagName == "BR") {
+                let brElem = $('editContent').lastChild;
+                $('editContent').removeChild(brElem);
+              }
+              $('editContent').innerHTML += icon.innerHTML;
+              let filterHtml = $('editContent').innerHTML.replace(/(<img.{1,90}[\/])/g, '&#x');
+              filterHtml = filterHtml.replace(/(\.png">)/g, ';');
+              sendMessage(filterHtml);
               caretAtEnd();
-            } );
-          } );
-          parent.appendChild( subDiv );
+            });
+          });
+          parent.appendChild(subDiv);
         } else {
-          let icon = document.createElement( 'span' );
+          let icon = document.createElement('span');
           icon.innerHTML = '&#x' + char + ';';
           icon.value = '&#x' + char + ';';
           icon.className = 'spl-char';
-          parent.appendChild( icon );
-          bindEvent( icon, 'click', function ( e ) {
-            $( 'editContent' ).innerHTML += icon.value;
-            sendMessage( $( 'editContent' ).innerHTML );
+          parent.appendChild(icon);
+          bindEvent(icon, 'click', function (e) {
+            $('editContent').innerHTML += icon.value;
+            sendMessage($('editContent').innerHTML);
             caretAtEnd();
-          } );
+          });
         }
-      } );
+      });
     }
-    splChars( emojiFace, $( 'emojis' ) );
-    splChars( mathSymbols, $( 'maths' ) );
-    splChars( greek, $( 'greek' ) );
-    twemoji.parse( document.body );
+    splChars(emojiFace, $('emojis'));
+    splChars(mathSymbols, $('maths'));
+    splChars(greek, $('greek'));
+    twemoji.parse($('toggleEmojis'));
+    setTimeout(() => {
+      twemoji.parse($('editContent'));
+    }, 200);
+    
 
-    function toggleMenu( element ) {
-      if ( element.getAttribute( 'hidden' ) == "true" ) {
-        let navButtons = document.getElementsByClassName( 'spl-chars-div' );
-        for ( let i = 0; i < navButtons.length; i++ ) {
-          if ( navButtons[i].getAttribute( 'hidden' ) == "false" ) {
-            navButtons[i].setAttribute( 'hidden', 'true' );
+    function toggleMenu(element) {
+      if (element.getAttribute('hidden') == "true") {
+        let navButtons = document.getElementsByClassName('spl-chars-div');
+        for (let i = 0; i < navButtons.length; i++) {
+          if (navButtons[i].getAttribute('hidden') == "false") {
+            navButtons[i].setAttribute('hidden', 'true');
             navButtons[i].style.display = 'none';
-            navButtons[i].parentNode.classList.contains( 'open' ) ? navButtons[i].parentNode.classList.remove( 'open' ) : '';
+            navButtons[i].parentNode.classList.contains('open') ? navButtons[i].parentNode.classList.remove('open') : '';
           }
         }
-        element.setAttribute( 'hidden', 'false' );
+        element.setAttribute('hidden', 'false');
         element.style.display = 'flex';
-        element.parentNode.classList.add( 'open' );
+        element.parentNode.classList.add('open');
       } else {
-        element.setAttribute( 'hidden', 'true' );
+        element.setAttribute('hidden', 'true');
         element.style.display = 'none';
-        element.parentNode.classList.remove( 'open' );
+        element.parentNode.classList.remove('open');
       }
     }
 
-    function toggleButton( elements ) {
-      for ( var i in elements ) {
-        if ( elements[i].classList ) {
-          elements[i].classList.contains( 'clicked' ) ? elements[i].classList.remove( 'clicked' ) : '';
+    function toggleButton(elements) {
+      for (var i in elements) {
+        if (elements[i].classList) {
+          elements[i].classList.contains('clicked') ? elements[i].classList.remove('clicked') : '';
         }
       }
     }
 
-    bindEvent( $( 'toggleEmojis' ), 'click', function () {
-      toggleMenu( $( 'emojis' ) );
-    } );
-    bindEvent( $( 'toggleMath' ), 'click', function () {
-      toggleMenu( $( 'maths' ) );
-    } );
-    bindEvent( $( 'toggleGreek' ), 'click', function () {
-      toggleMenu( $( 'greek' ) );
-    } );
-    bindEvent( $( 'bold' ), 'click', function () {
-      editCommand( 'bold' );
-      $( 'bold' ).classList.toggle( 'clicked' );
-    } );
-    bindEvent( $( 'italic' ), 'click', function () {
-      editCommand( 'italic' );
-      $( 'italic' ).classList.toggle( 'clicked' );
-    } );
-    bindEvent( $( 'underline' ), 'click', function () {
-      editCommand( 'underline' );
-      $( 'underline' ).classList.toggle( 'clicked' );
-    } );
-    var liste = document.getElementsByClassName( 'liste' );
-    bindEvent( $( 'unorderedList' ), 'click', function () {
-      editCommand( 'insertUnorderedList' );
-      $( 'orderedList' ).classList.contains( 'clicked' ) ? $( 'orderedList' ).classList.remove( 'clicked' ) : '';
-      $( 'unorderedList' ).classList.toggle( 'clicked' );
-    } );
-    bindEvent( $( 'orderedList' ), 'click', function () {
-      editCommand( 'insertOrderedList' );
-      $( 'unorderedList' ).classList.contains( 'clicked' ) ? $( 'unorderedList' ).classList.remove( 'clicked' ) : '';
-      $( 'orderedList' ).classList.toggle( 'clicked' );
-    } );
-    var indice = document.getElementsByClassName( 'indice' );
-    bindEvent( $( 'superscript' ), 'click', function () {
-      editCommand( 'superscript' );
-      $( 'subscript' ).classList.contains( 'clicked' ) ? $( 'subscript' ).classList.remove( 'clicked' ) : '';
-      $( 'superscript' ).classList.toggle( 'clicked' );
-    } );
-    bindEvent( $( 'subscript' ), 'click', function () {
-      editCommand( 'subscript' );
-      $( 'superscript' ).classList.contains( 'clicked' ) ? $( 'superscript' ).classList.remove( 'clicked' ) : '';
-      $( 'subscript' ).classList.toggle( 'clicked' );
-    } );
-    var align = document.getElementsByClassName( 'align' );
-    bindEvent( $( 'left' ), 'click', function () {
-      editCommand( 'justifyLeft' );
-      toggleButton( align );
-      $( 'left' ).classList.toggle( 'clicked' );
-    } );
-    bindEvent( $( 'center' ), 'click', function () {
-      editCommand( 'justifyCenter' );
-      toggleButton( align );
-      $( 'center' ).classList.toggle( 'clicked' );
-    } );
-    bindEvent( $( 'right' ), 'click', function () {
-      editCommand( 'justifyRight' );
-      toggleButton( align );
-      $( 'right' ).classList.toggle( 'clicked' );
-    } );
-    bindEvent( $( 'justify' ), 'click', function () {
-      editCommand( 'justifyFull' );
-      toggleButton( align );
-      $( 'justify' ).classList.toggle( 'clicked' );
-    } );
+    bindEvent($('toggleEmojis'), 'click', function () {
+      toggleMenu($('emojis'));
+    });
+    bindEvent($('toggleMath'), 'click', function () {
+      toggleMenu($('maths'));
+    });
+    bindEvent($('toggleGreek'), 'click', function () {
+      toggleMenu($('greek'));
+    });
+    bindEvent($('bold'), 'click', function () {
+      editCommand('bold');
+      $('bold').classList.toggle('clicked');
+    });
+    bindEvent($('italic'), 'click', function () {
+      editCommand('italic');
+      $('italic').classList.toggle('clicked');
+    });
+    bindEvent($('underline'), 'click', function () {
+      editCommand('underline');
+      $('underline').classList.toggle('clicked');
+    });
+    var liste = document.getElementsByClassName('liste');
+    bindEvent($('unorderedList'), 'click', function () {
+      editCommand('insertUnorderedList');
+      $('orderedList').classList.contains('clicked') ? $('orderedList').classList.remove('clicked') : '';
+      $('unorderedList').classList.toggle('clicked');
+    });
+    bindEvent($('orderedList'), 'click', function () {
+      editCommand('insertOrderedList');
+      $('unorderedList').classList.contains('clicked') ? $('unorderedList').classList.remove('clicked') : '';
+      $('orderedList').classList.toggle('clicked');
+    });
+    var indice = document.getElementsByClassName('indice');
+    bindEvent($('superscript'), 'click', function () {
+      editCommand('superscript');
+      $('subscript').classList.contains('clicked') ? $('subscript').classList.remove('clicked') : '';
+      $('superscript').classList.toggle('clicked');
+    });
+    bindEvent($('subscript'), 'click', function () {
+      editCommand('subscript');
+      $('superscript').classList.contains('clicked') ? $('superscript').classList.remove('clicked') : '';
+      $('subscript').classList.toggle('clicked');
+    });
+    var align = document.getElementsByClassName('align');
+    bindEvent($('left'), 'click', function () {
+      editCommand('justifyLeft');
+      toggleButton(align);
+      $('left').classList.toggle('clicked');
+    });
+    bindEvent($('center'), 'click', function () {
+      editCommand('justifyCenter');
+      toggleButton(align);
+      $('center').classList.toggle('clicked');
+    });
+    bindEvent($('right'), 'click', function () {
+      editCommand('justifyRight');
+      toggleButton(align);
+      $('right').classList.toggle('clicked');
+    });
+    bindEvent($('justify'), 'click', function () {
+      editCommand('justifyFull');
+      toggleButton(align);
+      $('justify').classList.toggle('clicked');
+    });
 
-    bindEvent( $( 'editContent' ), 'click', function () {
-      let splChars = document.getElementsByClassName( 'spl-chars-div' );
-      for ( let i in splChars ) {
-        if ( splChars[i].nodeType == 1 ) {
+    bindEvent($('editContent'), 'click', function () {
+      let splChars = document.getElementsByClassName('spl-chars-div');
+      for (let i in splChars) {
+        if (splChars[i].nodeType == 1) {
           let element = splChars[i];
-          if ( element.getAttribute( 'hidden' ) == 'false' ) {
-            element.setAttribute( 'hidden', true );
+          if (element.getAttribute('hidden') == 'false') {
+            element.setAttribute('hidden', true);
             element.style.display = 'none';
-            element.parentNode.classList.remove( 'open' );
+            element.parentNode.classList.remove('open');
           }
         }
       }
-    } );
+    });
 
-    bindEvent( $( 'editContent' ), 'input', function () {
-      sendMessage( $( 'editContent' ).innerHTML );
+    bindEvent($('editContent'), 'input', function (e) {
+      sendMessage($('editContent').innerHTML);
       let select = window.getSelection();
-      let deco = document.getElementsByClassName( 'deco' );
-      let indice = document.getElementsByClassName( 'indice' );
-      if ( select.focusNode.innerHTML == '' ) {
-        if ( select.focusNode !== $( 'editContent' ) ) {
-          select.focusNode.parentElement.removeChild( select.focusNode );
+      let deco = document.getElementsByClassName('deco');
+      let indice = document.getElementsByClassName('indice');
+      if (select.focusNode.innerHTML == '') {
+        if (select.focusNode !== $('editContent')) {
+          select.focusNode.parentElement.removeChild(select.focusNode);
         }
       }
-      for ( let i in deco ) {
-        if ( deco[i].classList ) {
-          if ( select.focusNode.parentElement == $( 'editContent' ) && deco[i].classList.contains( 'clicked' ) ) {
-            deco[i].classList.remove( 'clicked' );
+      for (let i in deco) {
+        if (deco[i].classList) {
+          if (select.focusNode.parentElement == $('editContent') && deco[i].classList.contains('clicked')) {
+            deco[i].classList.remove('clicked');
           }
         }
       }
-      for ( let i in indice ) {
-        if ( indice[i].classList ) {
-          if ( select.focusNode.parentElement == $( 'editContent' ) && indice[i].classList.contains( 'clicked' ) ) {
-            indice[i].classList.remove( 'clicked' );
+      for (let i in indice) {
+        if (indice[i].classList) {
+          if (select.focusNode.parentElement == $('editContent') && indice[i].classList.contains('clicked')) {
+            indice[i].classList.remove('clicked');
           }
         }
       }
-    } );
+    });
 
-    bindEvent( window, 'message', function ( e ) {
-      $( 'editContent' ).innerHTML = e.data;
+    bindEvent(window, 'message', function (e) {
+      $('editContent').innerHTML = e.data;
       caretAtEnd();
-    } );
+    });
   </script>
 </body>
 
