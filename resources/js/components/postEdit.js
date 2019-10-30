@@ -105,15 +105,17 @@ export default class ArticleForm extends Component {
           <iframe id="editor_iframe" className="postIframe" src="/editor_iframe.html" onLoad={this.handleLoad}></iframe>
           <div className="invalid-feedback">Ecrivez un texte d'au moins 10 caractères.</div>
         </div>
-        <div id="divImage" className="form-group">
-          <div className="col-12 text-center mt-2">
+        <div id="divImage" className="form-group d-flex flex-column">
+          <div className="align-self-center">
             <img className="img-fluid" src={this.state.imgSrc} />
-            <input id="imageDeleted" type="text" className="disabled" name="imageDeleted" value={this.state.imageDeleted} readOnly/>
           </div>
+          <input id="imageDeleted" type="text" className="disabled" name="imageDeleted" value={this.state.imageDeleted} readOnly hidden />
           <input id="image" name="image" type="file" className={imageClass} accept=".JPG, .PNG, .SVG" ref={this.fileInput} onChange={this.handleChangeImage} />
           <div className="invalid-feedback">L'image doit être aux formats jpg, png ou svg et avoir une taille max de 20Mo.</div>
-          <label htmlFor="image" className="btn btn-secondary m-0">Modifier l'image</label>
-          <a id="btnDeleteImage" className={disableDelete} onClick={this.handleDeleteImage}>Effacer l'image</a>
+          <div className="d-flex justify-content-between flex-wrap">
+            <label htmlFor="image" className="btn btn-secondary mb-2">Modifier l'image</label>
+            <a id="btnDeleteImage" className={disableDelete} onClick={this.handleDeleteImage}>Effacer l'image</a>
+          </div>
         </div>
         <LoadModal />
         <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disableState}>Enregistrer</button>

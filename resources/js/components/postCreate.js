@@ -78,11 +78,11 @@ export default class ArticleForm extends Component {
     const imageClass = this.state.imgSize > imageSizeMax ? 'form-control is-invalid' : 'form-control'
     const disabledState = this.state.titreValue.length <= 6 ? true : this.state.textValue.length <= 10 ? true : this.state.imgSize > imageSizeMax ? true : false
     const submitClass = !disabledState ? "btn btn-primary" : "btn btn-secondary disabled"
-    const disableDelete = this.state.imgSrc.length > 1 ? "btn btn-danger float-right" : "btn btn-danger float-right disabled"
+    const disableDelete = this.state.imgSrc.length > 1 ? "btn btn-danger" : "btn btn-danger disabled"
     const contenuClass = this.state.textValue.length > 10 ? 'form-control' : this.state.textValue.length == 0 ? 'form-control' : 'form-control is-invalid'
 
     return (
-      <div className="form-group">
+      <div>
         <div className="form-group">
           <label htmlFor="titre">Titre:</label>
           <ArticleTitre value={this.state.titreValue} onChange={this.handleChangeTitre} />
@@ -90,17 +90,21 @@ export default class ArticleForm extends Component {
         </div>
         <div className="form-group">
           <label htmlFor="contenu">Ecrivez votre texte:</label>
-          <textarea className={contenuClass} name="contenu" id="contenu" value={this.state.textValue} hidden />
+          <textarea className={contenuClass} name="contenu" id="contenu" value={this.state.textValue} readOnly hidden />
           <iframe id="editor_iframe" className="postIframe" src="/editor_iframe.html"></iframe>
           <div className="invalid-feedback">Ecrivez un texte d'au moins 10 caractères.</div>
         </div>
-        <div id="divImage" className="form-group">
-          <img className="img-fluid text-center" src={this.state.imgSrc} />
-          <input id="imageDeleted" type="text" className="disabled" name="imageDeleted" value={this.state.imageDeleted} />
+        <div id="divImage" className="form-group d-flex flex-column">
+          <div className="align-self-center">
+            <img className="img-fluid text-center" src={this.state.imgSrc} />
+          </div>
+          <input id="imageDeleted" type="text" name="imageDeleted" value={this.state.imageDeleted} readOnly hidden />
           <input id="image" name="image" type="file" className={imageClass} accept=".JPG, .PNG, .SVG" ref={this.fileInput} onChange={this.handleChangeImage} />
           <div className="invalid-feedback">L'image doit être aux formats jpg, png ou svg et avoir une taille max de 20Mo.</div>
-          <label className="btn btn-success" htmlFor="image">{this.state.buttonName}</label>
-          <a id="btnDeleteImage" className={disableDelete} onClick={this.handleDeleteImage}>Effacer l'image</a>
+          <div className="d-flex justify-content-between flex-wrap">
+            <label className="btn btn-success" htmlFor="image">{this.state.buttonName}</label>
+            <a id="btnDeleteImage" className={disableDelete} onClick={this.handleDeleteImage}>Effacer l'image</a>
+          </div>
         </div>
         <LoadModal />
         <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Poster l'article</button>
