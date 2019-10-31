@@ -172,7 +172,7 @@
     function caretAtEnd() {
       let l = editContent.childNodes.length;
       l > 0 ? document.getSelection().collapse(editContent, l) : '';
-      window.setTimeout(function () {
+      window.setTimeout(() => {
         let l = editContent.childNodes.length;
         l > 0 ? document.getSelection().collapse(editContent, l) : '';
       }, 1);
@@ -220,10 +220,6 @@
             icon.className = 'spl-char';
             subDiv.appendChild(icon);
             bindEvent(icon, 'click', function (e) {
-              if ($('editContent').lastChild.tagName == "BR") {
-                let brElem = $('editContent').lastChild;
-                $('editContent').removeChild(brElem);
-              }
               $('editContent').innerHTML += icon.innerHTML;
               let filterHtml = $('editContent').innerHTML.replace(/(<img.{1,90}[\/])/g, '&#x');
               filterHtml = filterHtml.replace(/(\.png">)/g, ';');
@@ -250,9 +246,20 @@
     splChars(mathSymbols, $('maths'));
     splChars(greek, $('greek'));
     twemoji.parse($('toggleEmojis'));
-    setTimeout(() => {
+
+    let testContentInterval
+    let testContent = new Promise((resolve, reject) => {
+      testContentInterval = setInterval(() => {
+        if ($('editContent').innerHTML.length > 0) {
+          resolve();
+        }
+      }, 20)
+    });
+
+    testContent.then(() => {
+      clearInterval(testContentInterval);
       twemoji.parse($('editContent'));
-    }, 200);
+    })
 
     function toggleMenu(element) {
       if (element.getAttribute('hidden') == "true") {
@@ -282,17 +289,17 @@
       }
     }
 
-    bindEvent($('toggleEmojis'), 'click', function () {
+    bindEvent($('toggleEmojis'), 'click', () => {
       toggleMenu($('emojis'));
     });
-    bindEvent($('toggleMath'), 'click', function () {
+    bindEvent($('toggleMath'), 'click', () => {
       toggleMenu($('maths'));
     });
-    bindEvent($('toggleGreek'), 'click', function () {
+    bindEvent($('toggleGreek'), 'click', () => {
       toggleMenu($('greek'));
     });
 
-    bindEvent($('editContent'), 'click', function () {
+    bindEvent($('editContent'), 'click', () => {
       let splChars = document.getElementsByClassName('spl-chars-div');
       for (let i in splChars) {
         if (splChars[i].nodeType == 1) {
@@ -306,7 +313,17 @@
       }
     });
 
-    bindEvent($('editContent'), 'input', function () {
+    bindEvent($('editContent'), 'keypress', (e) => {
+      if (e.code == "Enter") {
+        e.preventDefault();
+        $('editContent').innerHTML += "<br>&#8203;";
+        caretAtEnd();
+      }
+      if (e.code == "Space") {
+        e.preventDefault();
+        $('editContent').innerHTML += "&nbsp;";
+        caretAtEnd();
+      }
       sendMessage($('editContent').innerHTML);
       let select = window.getSelection();
       if (select.focusNode.innerHTML == '') {
@@ -316,7 +333,7 @@
       }
     });
 
-    bindEvent(window, 'message', function (e) {
+    bindEvent(window, 'message', (e) => {
       $('editContent').innerHTML = e.data;
       caretAtEnd();
     });

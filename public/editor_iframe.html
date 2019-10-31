@@ -143,10 +143,6 @@
       height: 1.2rem;
       vertical-align: middle;
     }
-
-    #editContent br {
-      display: none;
-    }
   </style>
 </head>
 
@@ -213,7 +209,7 @@
     function caretAtEnd() {
       let l = editContent.childNodes.length;
       l > 0 ? document.getSelection().collapse(editContent, l) : '';
-      window.setTimeout(function () {
+      window.setTimeout(() => {
         let l = editContent.childNodes.length;
         l > 0 ? document.getSelection().collapse(editContent, l) : '';
       }, 1);
@@ -260,10 +256,6 @@
             icon.className = 'spl-char';
             subDiv.appendChild(icon);
             bindEvent(icon, 'click', function (e) {
-              if ($('editContent').lastChild.tagName == "BR") {
-                let brElem = $('editContent').lastChild;
-                $('editContent').removeChild(brElem);
-              }
               $('editContent').innerHTML += icon.innerHTML;
               let filterHtml = $('editContent').innerHTML.replace(/(<img.{1,90}[\/])/g, '&#x');
               filterHtml = filterHtml.replace(/(\.png">)/g, ';');
@@ -290,10 +282,20 @@
     splChars(mathSymbols, $('maths'));
     splChars(greek, $('greek'));
     twemoji.parse($('toggleEmojis'));
-    setTimeout(() => {
+
+    let testContentInterval
+    let testContent = new Promise((resolve, reject) => {
+      testContentInterval = setInterval(() => {
+        if ($('editContent').innerHTML.length > 0) {
+          resolve();
+        }
+      }, 20)
+    });
+
+    testContent.then(() => {
+      clearInterval(testContentInterval);
       twemoji.parse($('editContent'));
-    }, 200);
-    
+    })
 
     function toggleMenu(element) {
       if (element.getAttribute('hidden') == "true") {
@@ -323,72 +325,72 @@
       }
     }
 
-    bindEvent($('toggleEmojis'), 'click', function () {
+    bindEvent($('toggleEmojis'), 'click', () => {
       toggleMenu($('emojis'));
     });
-    bindEvent($('toggleMath'), 'click', function () {
+    bindEvent($('toggleMath'), 'click', () => {
       toggleMenu($('maths'));
     });
-    bindEvent($('toggleGreek'), 'click', function () {
+    bindEvent($('toggleGreek'), 'click', () => {
       toggleMenu($('greek'));
     });
-    bindEvent($('bold'), 'click', function () {
+    bindEvent($('bold'), 'click', () => {
       editCommand('bold');
       $('bold').classList.toggle('clicked');
     });
-    bindEvent($('italic'), 'click', function () {
+    bindEvent($('italic'), 'click', () => {
       editCommand('italic');
       $('italic').classList.toggle('clicked');
     });
-    bindEvent($('underline'), 'click', function () {
+    bindEvent($('underline'), 'click', () => {
       editCommand('underline');
       $('underline').classList.toggle('clicked');
     });
     var liste = document.getElementsByClassName('liste');
-    bindEvent($('unorderedList'), 'click', function () {
+    bindEvent($('unorderedList'), 'click', () => {
       editCommand('insertUnorderedList');
       $('orderedList').classList.contains('clicked') ? $('orderedList').classList.remove('clicked') : '';
       $('unorderedList').classList.toggle('clicked');
     });
-    bindEvent($('orderedList'), 'click', function () {
+    bindEvent($('orderedList'), 'click', () => {
       editCommand('insertOrderedList');
       $('unorderedList').classList.contains('clicked') ? $('unorderedList').classList.remove('clicked') : '';
       $('orderedList').classList.toggle('clicked');
     });
     var indice = document.getElementsByClassName('indice');
-    bindEvent($('superscript'), 'click', function () {
+    bindEvent($('superscript'), 'click', () => {
       editCommand('superscript');
       $('subscript').classList.contains('clicked') ? $('subscript').classList.remove('clicked') : '';
       $('superscript').classList.toggle('clicked');
     });
-    bindEvent($('subscript'), 'click', function () {
+    bindEvent($('subscript'), 'click', () => {
       editCommand('subscript');
       $('superscript').classList.contains('clicked') ? $('superscript').classList.remove('clicked') : '';
       $('subscript').classList.toggle('clicked');
     });
     var align = document.getElementsByClassName('align');
-    bindEvent($('left'), 'click', function () {
+    bindEvent($('left'), 'click', () => {
       editCommand('justifyLeft');
       toggleButton(align);
       $('left').classList.toggle('clicked');
     });
-    bindEvent($('center'), 'click', function () {
+    bindEvent($('center'), 'click', () => {
       editCommand('justifyCenter');
       toggleButton(align);
       $('center').classList.toggle('clicked');
     });
-    bindEvent($('right'), 'click', function () {
+    bindEvent($('right'), 'click', () => {
       editCommand('justifyRight');
       toggleButton(align);
       $('right').classList.toggle('clicked');
     });
-    bindEvent($('justify'), 'click', function () {
+    bindEvent($('justify'), 'click', () => {
       editCommand('justifyFull');
       toggleButton(align);
       $('justify').classList.toggle('clicked');
     });
 
-    bindEvent($('editContent'), 'click', function () {
+    bindEvent($('editContent'), 'click', () => {
       let splChars = document.getElementsByClassName('spl-chars-div');
       for (let i in splChars) {
         if (splChars[i].nodeType == 1) {
@@ -402,7 +404,17 @@
       }
     });
 
-    bindEvent($('editContent'), 'input', function (e) {
+    bindEvent($('editContent'), 'keypress', function (e) {
+      if (e.code == "Enter") {
+        e.preventDefault();
+        $('editContent').innerHTML += "<br>&#8203;";
+        caretAtEnd();
+      }
+      if (e.code == "Space") {
+        e.preventDefault();
+        $('editContent').innerHTML += "&nbsp;";
+        caretAtEnd();
+      }
       sendMessage($('editContent').innerHTML);
       let select = window.getSelection();
       let deco = document.getElementsByClassName('deco');

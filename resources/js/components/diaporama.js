@@ -22,7 +22,7 @@ function openModal(target) {
     fond.appendChild(main);
     document.body.appendChild(fond);
 
-    setTimeout(function () {
+    setTimeout(() => {
       fond.style.opacity = '100';
     }, 100);
   } else {
@@ -71,7 +71,7 @@ function closeModal() {
   for (var i = 0; i < imgList.length; i++) {
     imgList[i].removeAttribute('displaying');
   }
-  setTimeout(function () {
+  setTimeout(() => {
     document.body.removeChild(document.querySelector('#modal-fond'));
   }, 500);
 }

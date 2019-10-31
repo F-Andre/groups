@@ -56,7 +56,7 @@ function initImg() {
   }
 }
 
-window.addEventListener('load', function () {
+window.addEventListener('load', () => {
   initImg();
   rafScroll();
 });
