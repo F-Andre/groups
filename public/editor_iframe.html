@@ -214,6 +214,25 @@
         l > 0 ? document.getSelection().collapse(editContent, l) : '';
       }, 1);
     }
+
+    if (!String.prototype.splice) {
+      /**
+       * {JSDoc}
+       *
+       * The splice() method changes the content of a string by removing a range of
+       * characters and/or adding new characters.
+       *
+       * @this {String}
+       * @param {number} start Index at which to start changing the string.
+       * @param {number} delCount An integer indicating the number of old chars to remove.
+       * @param {string} newSubStr The String that is spliced in.
+       * @return {string} A new string with the spliced substring.
+       */
+      String.prototype.splice = function (start, delCount, newSubStr) {
+        return this.slice(0, start) + newSubStr + this.slice(start + Math.abs(delCount));
+      };
+    }
+
     // Send a message to the parent
     var sendMessage = function (msg) {
       window.parent.postMessage(msg, '*');
@@ -407,13 +426,23 @@
     bindEvent($('editContent'), 'keypress', function (e) {
       if (e.code == "Enter") {
         e.preventDefault();
-        $('editContent').innerHTML += "<br>&#8203;";
-        caretAtEnd();
+        let caretPos = window.getSelection();
+        let offset = caretPos.anchorOffset;
+        $('editContent').innerHTML = $('editContent').textContent.splice(offset, caretPos.focusOffset - offset, "<br>&#8203;");
+        caretPos = window.getSelection();
+        offset = caretPos.anchorOffset;
+        caretPos.collapse($('editContent').lastChild, offset);
       }
       if (e.code == "Space") {
         e.preventDefault();
-        $('editContent').innerHTML += "&nbsp;";
-        caretAtEnd();
+        let caretPos = window.getSelection();
+        console.log(caretPos);
+        
+        let offset = caretPos.anchorOffset;
+        let text = caretPos.anchorNode;
+        text.textContent = text.textContent.splice(offset, caretPos.focusOffset - offset, "&nbsp");
+        console.log(caretPos.anchorNode);
+        caretPos.collapse(text, offset + 1);
       }
       sendMessage($('editContent').innerHTML);
       let select = window.getSelection();
