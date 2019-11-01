@@ -46,8 +46,8 @@ if (document.querySelectorAll('.post')) {
     if (asyLoadElmt[i].children[1].childElementCount == 3) {
       let img = asyLoadElmt[i].children[1].children[1].children[0];
       let imgSrc = img.getAttribute('data-src');
-
-      if ((parseInt(window.scrollY) + 10) >= asyLoadElmt[i].offsetTop) {
+      console.log((parseInt(window.scrollY) + 50) + ' / ' + asyLoadElmt[i].offsetTop)
+      if ((parseInt(window.scrollY) + 50) >= asyLoadElmt[i].offsetTop) {
         img.src = imgSrc;
       }
     }
