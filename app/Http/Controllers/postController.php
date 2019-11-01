@@ -172,7 +172,7 @@ class postController extends Controller
   public function update(PostRequest $request, $groupName, $id)
   {
     $post = $this->post->getById($id);
-
+    
     if ($request->validated()) {
       $retour = redirect(route('posts.index', [$groupName, '#' . $post->id]))->withOk('Le post "' . $request->titre . '" a été modifié');
       if ($request->hasFile('image')) {
