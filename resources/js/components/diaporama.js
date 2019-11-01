@@ -1,7 +1,7 @@
 var imgClass = document.querySelectorAll('.image-blog');
 
 imgClass.forEach(img => {
-  img.addEventListener('click', function (e) {
+  img.addEventListener('click', (e) => {
     openModal(e.target);
   });
 });
@@ -47,7 +47,7 @@ function openModal(target) {
 
   closeBtn.addEventListener('click', closeModal);
 
-  document.addEventListener('keydown', function (e) {
+  document.addEventListener('keydown', (e) => {
     if (e.defaultPrevented) {
       return;
     }
