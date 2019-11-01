@@ -28,4 +28,15 @@ require('./components/scrollContent.js');
 /***
  * Global JS
  */
-
+if (document.querySelectorAll('.post')) {
+  var asyLoadElmt = document.querySelectorAll('.post');
+  for (let i = 0, aLoadElLength = asyLoadElmt.length; i < aLoadElLength; i++) {
+    if (asyLoadElmt[i].children[1].childElementCount == 3) {
+      let img = asyLoadElmt[i].children[1].children[1].children[0];
+      let imgSrc = img.getAttribute('data-src');
+      if ((parseInt(window.scrollY) + 10) >= asyLoadElmt[i].offsetTop) {
+        img.src = imgSrc;
+      }
+    }
+  }
+}

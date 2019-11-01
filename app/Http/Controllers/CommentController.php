@@ -63,7 +63,7 @@ class CommentController extends Controller
       $poster->notify(new CommentNotification($commenter, $post, $group));
     }
 
-    return redirect(route('posts.index', [$groupName, '#' . $post->id],));
+    return redirect(route('posts.index', [$groupName, '#' . $post->id]));
   }
 
   /**

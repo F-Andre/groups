@@ -215,24 +215,6 @@
       }, 1);
     }
 
-    if (!String.prototype.splice) {
-      /**
-       * {JSDoc}
-       *
-       * The splice() method changes the content of a string by removing a range of
-       * characters and/or adding new characters.
-       *
-       * @this {String}
-       * @param {number} start Index at which to start changing the string.
-       * @param {number} delCount An integer indicating the number of old chars to remove.
-       * @param {string} newSubStr The String that is spliced in.
-       * @return {string} A new string with the spliced substring.
-       */
-      String.prototype.splice = function (start, delCount, newSubStr) {
-        return this.slice(0, start) + newSubStr + this.slice(start + Math.abs(delCount));
-      };
-    }
-
     // Send a message to the parent
     var sendMessage = function (msg) {
       window.parent.postMessage(msg, '*');
@@ -423,35 +405,18 @@
       }
     });
 
-    bindEvent($('editContent'), 'keypress', function (e) {
-      if (e.code == "Enter") {
-        let caretPos = window.getSelection();
-        if (caretPos.anchorNode == $('editContent')) {
-          e.preventDefault();
-          $('editContent').innerHTML += "<br>&#8203;";
-          caretAtEnd();
-        }
+    bindEvent($('editContent'), 'keydown', function (e) {
+      if (e.key == "Enter") {
+        e.preventDefault();
+        editCommand('insertHTML', '<br>&#8203;');
       }
-      if (e.code == "Space") {
+      if (e.key == " " || e.key == "Spacebar") {
         let caretPos = window.getSelection();
         console.log(caretPos);
         let text = caretPos.anchorNode;
         e.preventDefault();
-        offset = caretPos.focusOffset;
-        text.textContent = text.textContent.splice(caretPos.anchorOffset, caretPos.focusOffset - caretPos.anchorOffset, " ");
-        caretPos.collapse(text, offset + 1);
+        editCommand('insertHTML', '&nbsp;&#8203;');
       }
-      /*let divs = $('editContent').getElementsByTagName('DIV');
-      let divLength = divs.length;
-      console.log(divs);
-      for (let i = 0; i < divLength; i++) {
-        if (i == divLength - 1) {
-          console.log(divs[i]);
-          divs[i].tagName = "BR";
-          $('editContent').innerHTML = $('editContent').innerHTML.replace(/(<div>)|(<\/div>)/g, '');
-          caretAtEnd();
-        }
-      }*/
       let filterHtml = $('editContent').innerHTML.replace(/(<img.{1,90}[\/])/g, '&#x');
       filterHtml = filterHtml.replace(/(\.png">)/g, ';');
       sendMessage(filterHtml);

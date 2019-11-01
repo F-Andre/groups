@@ -174,7 +174,7 @@ class postController extends Controller
     $post = $this->post->getById($id);
 
     if ($request->validated()) {
-      $retour = redirect(route('posts.index', $groupName))->withOk('Le post "' . $request->titre . '" a été modifié');
+      $retour = redirect(route('posts.index', [$groupName, '#' . $post->id]))->withOk('Le post "' . $request->titre . '" a été modifié');
       if ($request->hasFile('image')) {
         if ($request->image->isValid()) {
           $oldImage = $post->image;

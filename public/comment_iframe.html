@@ -177,11 +177,11 @@
         l > 0 ? document.getSelection().collapse(editContent, l) : '';
       }, 1);
     }
-    // Send a message to the parent
+
     var sendMessage = function (msg) {
-      // Make sure you are sending a string, and to stringify JSON
       window.parent.postMessage(msg, '*');
     };
+    
     var emojiFace = [
       ['1F642', '1F643', '1F609', '1F60A', '1F607', '1F600', '1F604', '1F606', '1F605', '1F923', '1F602'],
       ['1F970', '1F60D', '1F929', '1F618', '1F617', '1F61A', '1F619'],
@@ -316,15 +316,18 @@
     bindEvent($('editContent'), 'keypress', (e) => {
       if (e.code == "Enter") {
         e.preventDefault();
-        $('editContent').innerHTML += "<br>&#8203;";
-        caretAtEnd();
+        editCommand('insertHTML', '<br>&#8203;');
       }
       if (e.code == "Space") {
+        let caretPos = window.getSelection();
+        console.log(caretPos);
+        let text = caretPos.anchorNode;
         e.preventDefault();
-        $('editContent').innerHTML += "&nbsp;";
-        caretAtEnd();
+        editCommand('insertHTML', '&nbsp;&#8203;');
       }
-      sendMessage($('editContent').innerHTML);
+      let filterHtml = $('editContent').innerHTML.replace(/(<img.{1,90}[\/])/g, '&#x');
+      filterHtml = filterHtml.replace(/(\.png">)/g, ';');
+      sendMessage(filterHtml);
       let select = window.getSelection();
       if (select.focusNode.innerHTML == '') {
         if (select.focusNode !== $('editContent')) {
