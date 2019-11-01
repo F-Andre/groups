@@ -14,9 +14,27 @@
       margin: 0;
     }
 
+    nav {
+      position: fixed;
+      width: 100%;
+      display: flex;
+      justify-content: start;
+      min-height: 32px;
+      border-bottom: 2px solid gainsboro;
+      padding-top: 1px;
+      overflow-x: auto;
+      z-index: 999;
+      background-color: white;
+    }
+
+    nav .emoji {
+      height: 22px;
+      width: 22px;
+    }
+
     #editContent {
       position: relative;
-      top: 0;
+      top: 35px;
       left: 0;
       height: calc(100vh - 75px);
       border-bottom-right-radius: 5px;
@@ -25,21 +43,6 @@
       color: #495057;
       font-size: 1.2rem;
       z-index: 900;
-    }
-
-    nav {
-      display: flex;
-      justify-content: start;
-      min-height: 32px;
-      border-bottom: 2px solid gainsboro;
-      padding-top: 1px;
-      overflow-x: auto;
-      z-index: 999;
-    }
-
-    nav .emoji {
-      height: 22px;
-      width: 22px;
     }
 
     .separator {

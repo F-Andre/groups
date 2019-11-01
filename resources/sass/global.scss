@@ -97,3 +97,8 @@ select option {
   max-height: 40vh;
   overflow: hidden;
 }
+
+.post .card-text {
+  max-height: 50vh;
+  overflow-y: scroll;
+}
