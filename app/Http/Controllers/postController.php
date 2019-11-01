@@ -154,6 +154,7 @@ class postController extends Controller
   public function edit($groupName, $id)
   {
     $post = $this->post->getById($id);
+    $post->contenu = preg_replace('/(<div>)|(<\/div>)/', '',$post->contenu);
     $imageUrl = Storage::url($post->image);
     $group = Group::where('name', $groupName)->first();
     $groupAdmins = explode(",", $group->admins_id);

@@ -425,26 +425,36 @@
 
     bindEvent($('editContent'), 'keypress', function (e) {
       if (e.code == "Enter") {
-        e.preventDefault();
         let caretPos = window.getSelection();
-        let offset = caretPos.anchorOffset;
-        $('editContent').innerHTML = $('editContent').textContent.splice(offset, caretPos.focusOffset - offset, "<br>&#8203;");
-        caretPos = window.getSelection();
-        offset = caretPos.anchorOffset;
-        caretPos.collapse($('editContent').lastChild, offset);
+        if (caretPos.anchorNode == $('editContent')) {
+          e.preventDefault();
+          $('editContent').innerHTML += "<br>&#8203;";
+          caretAtEnd();
+        }
       }
       if (e.code == "Space") {
-        e.preventDefault();
         let caretPos = window.getSelection();
         console.log(caretPos);
-        
-        let offset = caretPos.anchorOffset;
         let text = caretPos.anchorNode;
-        text.textContent = text.textContent.splice(offset, caretPos.focusOffset - offset, "&nbsp");
-        console.log(caretPos.anchorNode);
+        e.preventDefault();
+        offset = caretPos.focusOffset;
+        text.textContent = text.textContent.splice(caretPos.anchorOffset, caretPos.focusOffset - caretPos.anchorOffset, " ");
         caretPos.collapse(text, offset + 1);
       }
-      sendMessage($('editContent').innerHTML);
+      /*let divs = $('editContent').getElementsByTagName('DIV');
+      let divLength = divs.length;
+      console.log(divs);
+      for (let i = 0; i < divLength; i++) {
+        if (i == divLength - 1) {
+          console.log(divs[i]);
+          divs[i].tagName = "BR";
+          $('editContent').innerHTML = $('editContent').innerHTML.replace(/(<div>)|(<\/div>)/g, '');
+          caretAtEnd();
+        }
+      }*/
+      let filterHtml = $('editContent').innerHTML.replace(/(<img.{1,90}[\/])/g, '&#x');
+      filterHtml = filterHtml.replace(/(\.png">)/g, ';');
+      sendMessage(filterHtml);
       let select = window.getSelection();
       let deco = document.getElementsByClassName('deco');
       let indice = document.getElementsByClassName('indice');
