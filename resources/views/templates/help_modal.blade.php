@@ -30,7 +30,7 @@
           <p>Au fur et à mesure que j'avançais dans ce projet, j'ai réalisé qu'il pouvait aussi intéresser un public
             plus large.
             C'est pourquoi j'ai créé l'application "Groups" qui offre un espace de discussion à tout le monde en
-            évitant, autant que faire ce peux,
+            évitant, autant que faire se peut,
             les travers des différents réseaux sociaux, dont principalement la captation des données personnelles.
           </p>
           <p>

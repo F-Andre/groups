@@ -1,4 +1,21 @@
 @extends('template')
+
+@section('script')
+<script>
+if (document.querySelectorAll('.post')) {
+  let posts = document.querySelectorAll('.post .card-text');
+  let postsLength = posts.length;
+  
+  for (let i = 0; i < postsLength; i++) {
+    let postVh = posts[i].clientHeight / window.innerHeight;
+    if (postVh >= 0.4) {
+      posts[i].style.overflowY = 'scroll';
+    }
+  }
+}
+</script>
+@endsection
+
 @section('content')
 <aside class="col-2 ml-5 py-4">
   @include('templates/nav_left_template')
