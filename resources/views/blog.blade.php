@@ -5,7 +5,6 @@
 if (document.querySelectorAll('.post')) {
   let posts = document.querySelectorAll('.post .card-text');
   let postsLength = posts.length;
-  
   for (let i = 0; i < postsLength; i++) {
     let postVh = posts[i].clientHeight / window.innerHeight;
     if (postVh >= 0.4) {
@@ -45,7 +44,6 @@ if (document.querySelectorAll('.post')) {
   @if ($post->group_id == $group->id)
   @include('templates/post_complete_template')
   @endif
-  <br>
   @endforeach
   @else
   <div class="mt-5 text-center">

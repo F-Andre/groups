@@ -98,7 +98,15 @@ select option {
   overflow: hidden;
 }
 
-.post .card-text {
+.post .post-text {
   max-height: 40vh;
   background-color: white;
+}
+
+.post .card-header, .post .card-footer {
+  background-color: $group-bg;
+}
+
+.comments-div {
+  max-height: 40vh;
 }
