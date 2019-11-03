@@ -19,7 +19,7 @@
   </div>
   @endif
   <div class="card">
-    <div class="card-header d-flex justify-content-between">
+    <div class="card-header group-bg d-flex justify-content-between">
       <div>Editer un article</div>
       <div>
         <a class="btn btn-sm btn-danger" href={{ route('posts.index', $groupName) }} role="button">Annuler</a>

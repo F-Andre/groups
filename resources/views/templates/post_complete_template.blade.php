@@ -1,21 +1,26 @@
 <div class="card post mb-5" id="{{ $post->id }}">
-  <div class="card-header">
+  <div class="card-header group-bg">
     <div class="d-flex flex-row justify-content-between align-items-center">
       <div>
         <p class="h4 post-titre">{{ $post->titre }}</p>
         <small>
           Par <b>{{ $post->user->name }}</b>
-          @if (time() - $post->created_at->timestamp < 172800) {{ Date::parse($post->created_at)->diffForHumans() }} @if ($post->created_at
-            != $post->updated_at)
-            @if (time() - $post->updated_at->timestamp < 172800) | Modifié {{ Date::parse($post->updated_at)->diffForHumans() }} @else |
-              Modifié le: {{ Date::parse($post->updated_at)->format('d F Y') }} à {{ Date::parse($post->updated_at)->format('H:i') }} @endif
-              @endif @else le {{ Date::parse($post->created_at)->format('l d F Y') }} à {{ Date::parse($post->created_at)->format('H:i') }}
-              @if ($post->created_at != $post->updated_at)
-              @if (time() - $post->updated_at->timestamp < 172800) | Modifié {{ Date::parse($post->updated_at)->diffForHumans() }} @else |
-                Modifié le {{ Date::parse($post->updated_at)->format('d F Y') }} à {{ Date::parse($post->updated_at)->format('H:i')}} @endif
-                @endif @endif </small> </div> <div>
-                <span class="avatar avatar_icon"
-                  style="background-image: url({{ Storage::url(DB::table('users')->where('id', $post->user_id)->first()->avatar) }})"></span>
+          @if (time() - $post->created_at->timestamp < 172800) {{ Date::parse($post->created_at)->diffForHumans() }}
+            @if ($post->created_at!= $post->updated_at)
+              @if (time() - $post->updated_at->timestamp < 172800) | Modifié {{ Date::parse($post->updated_at)->diffForHumans() }}
+              @else | Modifié le: {{ Date::parse($post->updated_at)->format('d F Y') }} à {{ Date::parse($post->updated_at)->format('H:i') }}
+              @endif
+            @endif
+          @else le {{ Date::parse($post->created_at)->format('l d F Y') }} à {{ Date::parse($post->created_at)->format('H:i') }}
+            @if ($post->created_at != $post->updated_at)
+              @if (time() - $post->updated_at->timestamp < 172800) | Modifié {{ Date::parse($post->updated_at)->diffForHumans() }}
+              @else | Modifié le {{ Date::parse($post->updated_at)->format('d F Y') }} à {{ Date::parse($post->updated_at)->format('H:i')}} @endif
+              @endif
+            @endif
+          </small>
+        </div>
+        <div>
+      <span class="avatar avatar_icon" style="background-image: url({{ Storage::url(DB::table('users')->where('id', $post->user_id)->first()->avatar) }})"></span>
       </div>
     </div>
   </div>
@@ -73,10 +78,13 @@
             style="background-image: url({{ Storage::url(DB::table('users')->where('id', $comment->user_id)->first()->avatar) }})"></span>
           <small class="align-self-end">
             <b>{{ $comment->user->name }}</b>
-            @if (time() - $comment->created_at->timestamp < 172800) {{ Date::parse($comment->created_at)->diffForHumans() }} @else le
-              {{ Date::parse($comment->created_at)->format('l d F Y') }} à {{ Date::parse($comment->created_at)->format('H:i') }} @endif
-              </small> </div> <div class="my-3">
-              {!! $comment->comment !!}
+            @if (time() - $comment->created_at->timestamp < 172800) {{ Date::parse($comment->created_at)->diffForHumans() }}
+            @else le {{ Date::parse($comment->created_at)->format('l d F Y') }} à {{ Date::parse($comment->created_at)->format('H:i') }}
+            @endif
+          </small>
+        </div>
+        <div class="my-3">
+          {!! $comment->comment !!}
         </div>
         <div class="text-right">
           @auth

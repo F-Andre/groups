@@ -11,7 +11,7 @@
 @endif
 <article class="col-lg-8 mx-auto pb-4">
   <div class="card my-4">
-    <div class="card-header">
+    <div class="card-header group-bg">
       <p class="h4 text-center">{{ $user->name }}</p>
     </div>
     <div class="card-body">

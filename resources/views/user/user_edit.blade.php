@@ -13,7 +13,7 @@
   @endif
   <article class="col-lg-8 mx-auto mt-4">
     <div class="card">
-      <div class="card-header">
+      <div class="card-header group-bg">
         <p class="h4 text-center">Modifier vos informations:</p>
       </div>
       <div class="card-body">

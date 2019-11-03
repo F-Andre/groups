@@ -5,7 +5,7 @@
 <div id="loadModal"></div>
 <div class="container-fluid col-lg-6 bx-auto py-4">
   <div class="card">
-    <div class="card-header">
+    <div class="card-header group-bg">
       Edition du groupe "{{ $group->name }}"
     </div>
     <div class="card-body">

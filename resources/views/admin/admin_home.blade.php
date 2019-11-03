@@ -23,7 +23,7 @@ $groupName = $group->name;
 @endif
 <div class="col-lg-10">
   <div class="card mb-4">
-    <div class="card-header d-flex flex-wrap-reverse justify-content-between align-items-center">
+    <div class="card-header group-bg d-flex flex-wrap-reverse justify-content-between align-items-center">
       <div>
         <p class="h3">{{ $group->name }}</p>
         <p>{{ $group->description }}</p>
@@ -45,7 +45,7 @@ $groupName = $group->name;
 </div>
 <div class="col-lg-10">
   <div class="card mb-4">
-    <p class="h4 card-header">Demandes d'adhésion:</p>
+    <p class="h4 card-header group-bg">Demandes d'adhésion:</p>
     <div class="card-body">
       @if (strlen($groupOnDemand[0]) > 0)
       <table class="table table-striped table-inverse table-responsive text-nowrap">
@@ -90,7 +90,7 @@ $groupName = $group->name;
 </div>
 <div class="col-lg-10">
   <div class="card mb-3">
-    <p class="card-header h4">Membres du groupe:</p>
+    <p class="card-header group-bg h4">Membres du groupe:</p>
     <div class="card-body">
       <table class="table table-striped table-inverse table-responsive text-nowrap">
         <thead class="thead-dark">

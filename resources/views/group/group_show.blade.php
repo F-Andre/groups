@@ -50,7 +50,7 @@
   </div>
   @endif
   <div class="card">
-    <div class="card-header d-flex flex-wrap-reverse justify-content-between align-items-center">
+    <div class="card-header group-bg d-flex flex-wrap-reverse justify-content-between align-items-center">
       <div>
         <p class="h3">{{ $group->name }}</p>
         <p>{{ $group->description }}</p>

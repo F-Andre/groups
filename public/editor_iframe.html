@@ -259,16 +259,15 @@
             icon.value = '&#x' + subGroup + ';';
             icon.className = 'spl-char';
             subDiv.appendChild(icon);
-            bindEvent(icon, 'click', (e) => {
-              let select = document.getSelection();
-              $('editContent').innerHTML += icon.innerHTML;
+            bindEvent(icon, 'click', () => {
+              let select = window.getSelection();
+              editCommand('insertHTML', '&#x2021;');
               if ($('editContent').lastChild.previousSibling.tagName == "BR" && !select.anchorNode.length) {
                 $('editContent').removeChild($('editContent').lastChild.previousSibling);
               }
               let filterHtml = $('editContent').innerHTML.replace(/(<img.{1,90}[\/])/g, '&#x');
               filterHtml = filterHtml.replace(/(\.png">)/g, ';');
               sendMessage(filterHtml);
-              caretAtEnd();
             });
           });
           parent.appendChild(subDiv);
@@ -278,10 +277,9 @@
           icon.value = '&#x' + char + ';';
           icon.className = 'spl-char';
           parent.appendChild(icon);
-          bindEvent(icon, 'click', (e) => {
-            $('editContent').innerHTML += icon.value;
+          bindEvent(icon, 'click', () => {
+            editCommand('insertHTML', icon.innerHTML);
             sendMessage($('editContent').innerHTML);
-            caretAtEnd();
           });
         }
       });
