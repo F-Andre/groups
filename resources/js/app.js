@@ -28,24 +28,3 @@ require('./components/scrollContent.js');
 /***
  * Global JS
  */
-if (document.querySelectorAll('.post')) {
-  let posts = document.querySelectorAll('.post .card-text');
-  let postsLength = posts.length;
-  for (let i = 0; i < postsLength; i++) {
-    let postVh = posts[i].clientHeight / window.innerHeight;
-    if (postVh >= 0.4) {
-      posts[i].style.overflowY = 'scroll';
-    }
-  }
-}
-
-if (document.getElementsByClassName('comments-div')) {
-  let comments = document.getElementsByClassName('comments-div');
-  let commentsLength = comments.length;
-  for (let i = 0; i < commentsLength; i++) {
-    let commentsVh = comments[i].clientHeight / window.innerHeight;
-    if (commentsVh >= 0.4) {
-      comments[i].style.overflowY = 'scroll';
-    }
-  }
-}

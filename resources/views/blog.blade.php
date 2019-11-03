@@ -7,7 +7,7 @@
   <p class="mt-3 mx-0 px-0 text-center"><small>{{ count($groupOnDemand) }} demande(s) d'adhésion en attente</small></p>
   @endif
 </aside>
-<article class="offset-xl-3 col-xl-6 py-4">
+<article id="posts" class="offset-xl-3 col-xl-6 py-4">
   @if (session()->has('ok'))
   <div class="alert alert-success alert-dismissible fade show" role="alert">
     {{ session('ok') }}
@@ -39,4 +39,29 @@
   </div>
   @endif
 </article>
+<script>
+let posts = document.querySelectorAll('.post .post-text');
+let postsLength = posts.length;
+for (let i = 0; i < postsLength; i++) {
+
+  let article = posts[i].children;
+  let articleLength = article.length;
+
+  for (let j = 0; j < articleLength; j++) {
+    let postVh = article[j].clientHeight / window.innerHeight;
+    if (postVh >= 0.4) {
+      posts[i].style.overflowY = 'scroll';
+    }
+  }
+}
+
+let comments = document.getElementsByClassName('comments-div');
+let commentsLength = comments.length;
+for (let i = 0; i < commentsLength; i++) {
+  let commentsVh = comments[i].clientHeight / window.innerHeight;
+  if (commentsVh >= 0.38) {
+    comments[i].style.overflowY = 'scroll';
+  }
+}
+</script>
 @endsection

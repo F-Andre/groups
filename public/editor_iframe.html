@@ -249,6 +249,13 @@
       ]
     ];
 
+    var clickPosition = [];
+
+    bindEvent($('editContent'), 'click', () => {
+      let select = window.getSelection();
+      clickPosition = [select.anchorNode, select.anchorOffset];
+    })
+
     function splChars(array, parent) {
       array.forEach(char => {
         if (Array.isArray(char)) {
@@ -259,9 +266,11 @@
             icon.value = '&#x' + subGroup + ';';
             icon.className = 'spl-char';
             subDiv.appendChild(icon);
-            bindEvent(icon, 'click', () => {
+            bindEvent(icon, 'click', (e) => {
+              $('editContent').focus();
               let select = window.getSelection();
-              editCommand('insertHTML', '&#x2021;');
+              select.collapse(clickPosition[0], clickPosition[1]);
+              editCommand('insertHTML', icon.innerHTML);
               if ($('editContent').lastChild.previousSibling.tagName == "BR" && !select.anchorNode.length) {
                 $('editContent').removeChild($('editContent').lastChild.previousSibling);
               }
@@ -278,6 +287,9 @@
           icon.className = 'spl-char';
           parent.appendChild(icon);
           bindEvent(icon, 'click', () => {
+            $('editContent').focus();
+            let select = window.getSelection();
+            select.collapse(clickPosition[0], clickPosition[1]);
             editCommand('insertHTML', icon.innerHTML);
             sendMessage($('editContent').innerHTML);
           });
@@ -331,13 +343,16 @@
       }
     }
 
-    bindEvent($('toggleEmojis'), 'click', () => {
+    bindEvent($('toggleEmojis'), 'click', (e) => {
+      e.preventDefault();
       toggleMenu($('emojis'));
     });
-    bindEvent($('toggleMath'), 'click', () => {
+    bindEvent($('toggleMath'), 'click', (e) => {
+      e.preventDefault();
       toggleMenu($('maths'));
     });
-    bindEvent($('toggleGreek'), 'click', () => {
+    bindEvent($('toggleGreek'), 'click', (e) => {
+      e.preventDefault();
       toggleMenu($('greek'));
     });
     bindEvent($('bold'), 'click', () => {
