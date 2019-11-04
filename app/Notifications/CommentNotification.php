@@ -50,7 +50,7 @@ class CommentNotification extends Notification
   public function toMail($notifiable)
   {
     $greeting = sprintf('Bonjour %s,', $notifiable->name);
-    $line = sprintf('%s vient de commenter votre article : %s.', $this->user->name, $this->post->titre);
+    $line = sprintf('%s vient de commenter l\'article "%s" du groupe "%s".', $this->user->name, $this->post->titre, $this->group->name);
     return (new MailMessage)
       ->subject('Nouveau commentaire')
       ->greeting($greeting)

@@ -252,7 +252,7 @@ class AdminController extends Controller
       foreach($groupUsers as $groupUserId)
       {
         $groupUser = $this->user->getById($groupUserId);
-        if ($groupUser->notifs)
+        if ($groupUser->notifs == "true")
         {
           $groupUser->notify(new NewMember($user, $group));
         }

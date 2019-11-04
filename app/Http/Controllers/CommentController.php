@@ -51,6 +51,7 @@ class CommentController extends Controller
     $post = Post::where('id', $request->post_id)->first();
     $poster = User::where('id', $post->user_id)->first();
     $commenter = User::where('id', $request->user_id)->first();
+    $otherPostComments = $this->comment->getComments($post->id);
     $group = Group::where('id', $post->group_id)->first();
     $groupName = $group->name;
 
@@ -58,9 +59,15 @@ class CommentController extends Controller
 
     $this->comment->store($inputs);
 
-    if ($poster->id != $commenter->id)
-    {
+    if ($poster->id != $commenter->id && $poster->notifs == 'true') {
       $poster->notify(new CommentNotification($commenter, $post, $group));
+    }
+
+    foreach ($otherPostComments as $comment) {
+      $user = User::where('id', $comment->user_id)->first();
+      if ($user->id !== $poster->id && $user->notifs == 'true') {
+        $user->notify(new CommentNotification($commenter, $post, $group));
+      }
     }
 
     return redirect(route('posts.index', [$groupName, '#' . $post->id]));
