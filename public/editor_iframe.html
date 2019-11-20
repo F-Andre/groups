@@ -158,20 +158,24 @@
     </div>
     <span class="separator"></span>
     <div id="text-position" class="group-button">
-      <button id="left" class="mef align clicked" title="Texte à gauche"><i class="fas fa-align-left"></i></button>
-      <button id="center" class="mef align" title="Texte centré"><i class="fas fa-align-center"></i></button>
-      <button id="right" class="mef align" title="Texte à droite"><i class="fas fa-align-right"></i></button>
-      <button id="justify" class="mef align" title="Texte justifié"><i class="fas fa-align-justify"></i></button>
+      <button id="left" class="mef align clicked" title="Texte à gauche"><i class="fas fa-fw fa-align-left"></i></button>
+      <button id="center" class="mef align" title="Texte centré"><i class="fas fa-fw fa-align-center"></i></button>
+      <button id="right" class="mef align" title="Texte à droite"><i class="fas fa-fw fa-align-right"></i></button>
+      <button id="justify" class="mef align" title="Texte justifié"><i class="fas fa-fw fa-align-justify"></i></button>
     </div>
     <span class="separator"></span>
     <div id="text-list" class="group-button">
-      <button id="unorderedList" class="mef liste" title="Liste à puces"><i class="fas fa-list-ul"></i></button>
-      <button id="orderedList" class="mef liste" title="Liste ordonnée"><i class="fas fa-list-ol"></i></button>
+      <button id="unorderedList" class="mef liste" title="Liste à puces"><i class="fas fa-fw fa-list-ul"></i></button>
+      <button id="orderedList" class="mef liste" title="Liste ordonnée"><i class="fas fa-fw fa-list-ol"></i></button>
+    </div>
+    <span class="separator"></span>
+    <div id="text-link" class="group-button">
+      <button id="add-link" class="mef link" title="Créer un lien à partir de la sélection"><i class="fas fa-fw fa-link"></i></button>
     </div>
     <span class="separator"></span>
     <div id="text-indice" class="group-button">
-      <button id="superscript" class="mef indice" title="Exposant"><i class="fas fa-superscript"></i></button>
-      <button id="subscript" class="mef indice" title="Subscription"><i class="fas fa-subscript"></i></button>
+      <button id="superscript" class="mef indice" title="Exposant"><i class="fas fa-fw fa-superscript"></i></button>
+      <button id="subscript" class="mef indice" title="Subscription"><i class="fas fa-fw fa-subscript"></i></button>
     </div>
     <span class="separator"></span>
     <div id="special-chars" class="group-button">
@@ -367,7 +371,7 @@
       editCommand('underline');
       $('underline').classList.toggle('clicked');
     });
-    var liste = document.getElementsByClassName('liste');
+
     bindEvent($('unorderedList'), 'click', () => {
       editCommand('insertUnorderedList');
       $('orderedList').classList.contains('clicked') ? $('orderedList').classList.remove('clicked') : '';
@@ -378,7 +382,12 @@
       $('unorderedList').classList.contains('clicked') ? $('unorderedList').classList.remove('clicked') : '';
       $('orderedList').classList.toggle('clicked');
     });
-    var indice = document.getElementsByClassName('indice');
+
+    bindEvent($('add-link'), 'click', () => {
+      let link = window.getSelection();
+      editCommand('createLink', link);
+    });
+
     bindEvent($('superscript'), 'click', () => {
       editCommand('superscript');
       $('subscript').classList.contains('clicked') ? $('subscript').classList.remove('clicked') : '';
@@ -389,6 +398,7 @@
       $('superscript').classList.contains('clicked') ? $('superscript').classList.remove('clicked') : '';
       $('subscript').classList.toggle('clicked');
     });
+
     var align = document.getElementsByClassName('align');
     bindEvent($('left'), 'click', () => {
       editCommand('justifyLeft');
@@ -430,6 +440,7 @@
         e.preventDefault();
         editCommand('insertHTML', '<br>&#8203;');
       }
+      editCommand('unlink');
       let filterHtml = $('editContent').innerHTML.replace(/(<img.{1,90}[\/])/g, '&#x');
       filterHtml = filterHtml.replace(/(\.png">)/g, ';');
       sendMessage(filterHtml);
