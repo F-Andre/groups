@@ -166,6 +166,7 @@ class AdminController extends Controller
   {
     $group = Group::where('name', $groupName)->first();
     $groupAdmins = explode(",", $group->admins_id);
+    $groupUsers = explode(",", $group->users_id);
 
     if ($this->user->search($result->user) != false) {
       $user = $this->user->search($result->user);
@@ -173,11 +174,11 @@ class AdminController extends Controller
       if ($user instanceof Collection) {
         $users = $user;        
 
-        return view('admin.admin_home', compact('users', 'group', 'groupName', 'groupAdmins'));
+        return view('admin.admin_home', compact('users', 'group', 'groupName', 'groupAdmins', 'groupUsers'));
       }
 
       $posts = $this->user->nbrePosts($user->id);
-      return view('admin.admin_user', compact('user', 'posts', 'group', 'groupName', 'groupAdmins'));
+      return view('admin.admin_user', compact('user', 'posts', 'group', 'groupName', 'groupAdmins', 'groupUsers'));
     }
 
     return redirect(route('admin.index', compact('groupName')))->with("error", "L'utilisateur recherché n'existe pas: " . $result->user);

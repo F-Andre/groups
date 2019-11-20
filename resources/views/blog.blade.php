@@ -4,7 +4,15 @@
 <aside class="col-2 ml-5 py-4">
   @include('templates/nav_left_template')
   @if (in_array(auth()->user()->id, $groupAdmins) && count($groupOnDemand) > 0 && strlen($groupOnDemand[0] > 0))
-  <p class="mt-3 mx-0 px-0 text-center"><small>{{ count($groupOnDemand) }} demande(s) d'adhésion en attente</small></p>
+  <p class="mt-3 mx-0 px-0 text-center">
+    <small>
+      @if (count($groupOnDemand) == 1)
+      <a href="{{ route('admin.index', $groupName) }}">une demande d'adhésion en attente</a>
+      @else
+      <a href="{{ route('admin.index', $groupName) }}">{{ count($groupOnDemand) }} demandes d'adhésion en </a>
+      @endif
+    </small>
+  </p>
   @endif
 </aside>
 <article id="posts" class="offset-xl-3 col-xl-6 py-4">
@@ -40,7 +48,7 @@
   @endif
 </article>
 <script>
-let posts = document.querySelectorAll('.post .post-text');
+  let posts = document.querySelectorAll('.post .post-text');
 let postsLength = posts.length;
 for (let i = 0; i < postsLength; i++) {
 

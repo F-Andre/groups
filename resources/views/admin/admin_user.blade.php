@@ -76,6 +76,7 @@
         </form>
       </div>
     </div>
+    @include('templates/modal_contact_template')
     <hr class="hr">
     @endif
     @endif
@@ -145,5 +146,4 @@
   window.history.back()
 </script>
 @endif
-@include('templates/modal_contact_template')
 @endsection
