@@ -39,8 +39,11 @@ export default class GroupEditForm extends Component {
       imgSize: 0,
       modified: false,
       avatarDeleted: '',
+      hiddenGroup: true,
     }
     this.handleChangeDesc = this.handleChangeDesc.bind( this );
+    this.handleChangeHidden = this.handleChangeHidden.bind(this);
+
     this.handleChangeAvatar = this.handleChangeAvatar.bind( this );
     this.handleDeleteAvatar = this.handleDeleteAvatar.bind( this );
     this.fileInput = React.createRef();
@@ -51,6 +54,14 @@ export default class GroupEditForm extends Component {
       descValue: event.target.value,
       modified: true
     } )
+  }
+
+  handleChangeHidden() {
+    if (this.state.hiddenGroup == true) {
+      this.setState({ hiddenGroup: false, modified: true })
+    } else {
+      this.setState({ hiddenGroup: true, modified: true })
+    }
   }
 
   handleChangeAvatar () {
@@ -85,6 +96,7 @@ export default class GroupEditForm extends Component {
       backgroundImage: 'url(' + this.state.imgSrc + ')',
     };
     const imageClass = this.state.imgSize > imageSizeMax ? 'form-control is-invalid' : 'form-control'
+    document.querySelector('#masked') ? console.log(document.querySelector('#masked').checked) : ''
 
     return (
       <div>
@@ -105,7 +117,11 @@ export default class GroupEditForm extends Component {
             <input id="avatar" name="avatar" className={imageClass} type="file" accept=".JPG, .PNG, .SVG" ref={this.fileInput} onChange={this.handleChangeAvatar} />
             <div className="invalid-feedback">L'image doit être aux formats jpg, png ou svg at avoir une taille max de 20Mo.</div>
           </div>
-          <input id="avatarDeleted" type="text" className="disabled" name="avatarDeleted" value={this.state.imageDeleted} />
+          <input id="avatarDeleted" type="text" className="disabled" name="avatarDeleted" value={this.state.imageDeleted} readOnly />
+        </div>
+        <div className="custom-control custom-switch mb-4">
+          <input type="checkbox" className="custom-control-input" id="masked" name="hidden" value={this.state.hiddenGroup} checked={this.state.hiddenGroup} onChange={this.handleChangeHidden} />
+          <label className="custom-control-label" htmlFor="masked">Groupe caché</label>
         </div>
         <LoadModal />
         <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Appliquer les modifications</button>

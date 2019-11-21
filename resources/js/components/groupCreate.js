@@ -42,9 +42,12 @@ export default class GroupForm extends Component {
       nameClass: 'form-control is-invalid',
       descClass: 'form-control is-invalid',
       disabledState: true,
+      hiddenGroup: 0,
     }
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeDesc = this.handleChangeDesc.bind(this);
+    this.handleChangeHidden = this.handleChangeHidden.bind(this);
+
     this.handleChangeAvatar = this.handleChangeAvatar.bind(this);
     this.handleDeleteAvatar = this.handleDeleteAvatar.bind(this);
     this.fileInput = React.createRef();
@@ -61,6 +64,14 @@ export default class GroupForm extends Component {
 
   handleChangeDesc(event) {
     this.setState({ descValue: event.target.value })
+  }
+
+  handleChangeHidden() {
+    if (this.state.hiddenGroup == 0) {
+      this.setState({ hiddenGroup: 1 })
+    } else {
+      this.setState({ hiddenGroup: 0 })
+    }
   }
 
   handleChangeAvatar() {
@@ -115,7 +126,11 @@ export default class GroupForm extends Component {
             <input id="avatar" name="avatar" className={imageClass} type="file" accept=".JPG, .PNG, .SVG" ref={this.fileInput} onChange={this.handleChangeAvatar} />
             <div className="invalid-feedback">L'image doit être aux formats jpg, png ou svg et avoir une taille max de 20Mo.</div>
           </div>
-          <input id="avatarDeleted" type="text" className="disabled" name="avatarDeleted" value={this.state.avatarDeleted} />
+          <input id="avatarDeleted" type="text" className="disabled" name="avatarDeleted" value={this.state.avatarDeleted} readOnly />
+        </div>
+        <div className="custom-control custom-switch mb-4">
+          <input type="checkbox" className="custom-control-input" id="customSwitch1" name="hidden" onChange={this.handleChangeHidden} />
+          <label className="custom-control-label" htmlFor="customSwitch1">Groupe caché</label>
         </div>
         <LoadModal />
         <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Créer le groupe</button>
