@@ -37,7 +37,7 @@ class InvitNewMember extends Mailable
   public function build()
   {
     $subject = sprintf('%s vous invite à rejoindre son groupe', $this->user->name);
-    $actionUrl = url('/');
+    $actionUrl = url('/group/'. $this->group->name);
 
     return $this->from('no-reply@fabienandre.com','Groups')
       ->to($this->mail_to)

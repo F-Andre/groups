@@ -17,7 +17,13 @@
     $adminsArray = explode(",", $group->admins_id);
     @endphp
     @if (count($onDemandArray) > 0 && strlen($onDemandArray[0] > 0) && in_array(auth()->user()->id, $adminsArray))
-    <span class="badge badge-pill badge-primary">{{ count($onDemandArray) }}</span>
+    <span class="badge badge-pill badge-danger">
+      @if (count($onDemandArray) == 1)
+      {{ count($onDemandArray) }} demande d'adhésion
+      @else
+      {{ count($onDemandArray) }} demandes d'adhésion
+      @endif
+    </span>
     @endif
     <a class="btn btn-outline-success btn-sm float-right" href={{ route('group.show', $group->name) }} role="button">Infos</a>
   </div>

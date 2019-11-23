@@ -23,7 +23,7 @@ class CreateGroupsTable extends Migration
             $table->char('users_warned', 255)->default('');
             $table->string('avatar')->default('public/default/default-group.svg');
             $table->dateTime('active_at');
-            $table->char('hidden', 5)->default('off');
+            $table->char('masked', 6)->default('false');
             $table->timestamps();
         });
     }

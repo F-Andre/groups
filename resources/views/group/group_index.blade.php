@@ -94,7 +94,7 @@
           H:i');
           @endphp
 
-          @if (!in_array(auth()->user()->id, $userArray) && $group->hidden == false)
+          @if (!in_array(auth()->user()->id, $userArray) && $group->masked == false)
           @include('templates/group_list_template')
           @endif
           @endforeach

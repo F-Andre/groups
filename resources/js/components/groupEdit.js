@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import LoadModal from './loadModal';
 
-function Name ( props ) {
+function Name (props) {
   return (
     <input
       type="text"
@@ -15,7 +15,7 @@ function Name ( props ) {
   );
 }
 
-function Desc ( props ) {
+function Desc (props) {
   return (
     <input
       type="text"
@@ -29,9 +29,20 @@ function Desc ( props ) {
   );
 }
 
+function Masked (props) {
+  return (
+    <input
+      type="checkbox"
+      value={props.value}
+      checked={props.value}
+      onChange={props.onChange}
+    />
+  );
+}
+
 export default class GroupEditForm extends Component {
-  constructor( props ) {
-    super( props )
+  constructor (props) {
+    super(props)
     this.state = {
       nameValue: name,
       descValue: desc,
@@ -39,52 +50,51 @@ export default class GroupEditForm extends Component {
       imgSize: 0,
       modified: false,
       avatarDeleted: '',
-      hiddenGroup: true,
+      masked: masked,
     }
-    this.handleChangeDesc = this.handleChangeDesc.bind( this );
-    this.handleChangeHidden = this.handleChangeHidden.bind(this);
+    this.handleChangeDesc = this.handleChangeDesc.bind(this);
+    this.handleChangeMasked = this.handleChangeMasked.bind(this);
 
-    this.handleChangeAvatar = this.handleChangeAvatar.bind( this );
-    this.handleDeleteAvatar = this.handleDeleteAvatar.bind( this );
+    this.handleChangeAvatar = this.handleChangeAvatar.bind(this);
+    this.handleDeleteAvatar = this.handleDeleteAvatar.bind(this);
     this.fileInput = React.createRef();
   }
 
-  handleChangeDesc ( event ) {
-    this.setState( {
+  handleChangeDesc (event) {
+    this.setState({
       descValue: event.target.value,
       modified: true
-    } )
+    })
   }
 
-  handleChangeHidden() {
-    if (this.state.hiddenGroup == true) {
-      this.setState({ hiddenGroup: false, modified: true })
-    } else {
-      this.setState({ hiddenGroup: true, modified: true })
-    }
+  handleChangeMasked () {
+    this.setState({
+      masked: event.target.checked,
+      modified: true
+    })
   }
 
   handleChangeAvatar () {
     const reader = new FileReader();
     let file = this.fileInput.current.files[0];
     let fileSrc = '', fileSize = file.size;
-    reader.onload = ( e ) => {
+    reader.onload = (e) => {
       fileSrc = e.target.result;
-      this.setState( {
+      this.setState({
         imgSrc: fileSrc,
         imgSize: fileSize,
         modified: true
-      } );
+      });
     };
-    reader.readAsDataURL( file );
+    reader.readAsDataURL(file);
   }
 
   handleDeleteAvatar () {
-    this.setState( {
+    this.setState({
       imgSrc: defaultAvatar,
       modified: true,
       imageDeleted: true,
-    } )
+    })
   }
 
   render () {
@@ -102,7 +112,7 @@ export default class GroupEditForm extends Component {
       <div>
         <div className="form-group">
           <label htmlFor="nom">Nom:</label>
-          <Name value={this.state.nameValue} onChange={this.handleChangeName}/>
+          <Name value={this.state.nameValue} onChange={this.handleChangeName} />
         </div>
         <div className="form-group">
           <label htmlFor="titre">Description:</label>
@@ -119,9 +129,13 @@ export default class GroupEditForm extends Component {
           </div>
           <input id="avatarDeleted" type="text" className="disabled" name="avatarDeleted" value={this.state.imageDeleted} readOnly />
         </div>
-        <div className="custom-control custom-switch mb-4">
-          <input type="checkbox" className="custom-control-input" id="masked" name="hidden" value={this.state.hiddenGroup} checked={this.state.hiddenGroup} onChange={this.handleChangeHidden} />
-          <label className="custom-control-label" htmlFor="masked">Groupe caché</label>
+        <div className="form-group">
+          <label htmlFor='masked-switch'>Groupe masqué: </label>
+          <label className="switch ml-3">
+            <Masked name="masked-switch" value={this.state.masked} onChange={this.handleChangeMasked} />
+            <span className="slider round"></span>
+          </label>
+          <input name="masked" type="text" value={this.state.masked} hidden />
         </div>
         <LoadModal />
         <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Appliquer les modifications</button>
@@ -130,6 +144,6 @@ export default class GroupEditForm extends Component {
   }
 }
 
-if ( document.getElementById( 'groupEditForm' ) ) {
-  ReactDOM.render( <GroupEditForm />, document.getElementById( 'groupEditForm' ) );
+if (document.getElementById('groupEditForm')) {
+  ReactDOM.render(<GroupEditForm />, document.getElementById('groupEditForm'));
 }

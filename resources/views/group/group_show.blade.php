@@ -66,6 +66,12 @@
             role="button">
             Voir les articles
           </a>
+          @if (in_array(auth()->user()->id, $adminsId))
+          <a class="btn btn-outline-dark" href={{ route('admin.index', ['groupName' => $group->name]) }}
+            role="button">
+            Page admin
+          </a>
+          @endif
         </div>
       </div>
       <hr class="hr">

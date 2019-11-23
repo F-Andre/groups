@@ -29,6 +29,17 @@ function GroupDesc(props) {
   );
 }
 
+function Masked (props) {
+  return (
+    <input
+      type="checkbox"
+      value={props.value}
+      checked={props.value}
+      onChange={props.onChange}
+    />
+  );
+}
+
 export default class GroupForm extends Component {
   constructor(props) {
     super(props)
@@ -42,11 +53,11 @@ export default class GroupForm extends Component {
       nameClass: 'form-control is-invalid',
       descClass: 'form-control is-invalid',
       disabledState: true,
-      hiddenGroup: 0,
+      masked: false,
     }
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeDesc = this.handleChangeDesc.bind(this);
-    this.handleChangeHidden = this.handleChangeHidden.bind(this);
+    this.handleChangeMasked = this.handleChangeMasked.bind(this);
 
     this.handleChangeAvatar = this.handleChangeAvatar.bind(this);
     this.handleDeleteAvatar = this.handleDeleteAvatar.bind(this);
@@ -66,12 +77,11 @@ export default class GroupForm extends Component {
     this.setState({ descValue: event.target.value })
   }
 
-  handleChangeHidden() {
-    if (this.state.hiddenGroup == 0) {
-      this.setState({ hiddenGroup: 1 })
-    } else {
-      this.setState({ hiddenGroup: 0 })
-    }
+  handleChangeMasked () {
+    this.setState({
+      masked: event.target.checked,
+      modified: true
+    })
   }
 
   handleChangeAvatar() {
@@ -128,9 +138,13 @@ export default class GroupForm extends Component {
           </div>
           <input id="avatarDeleted" type="text" className="disabled" name="avatarDeleted" value={this.state.avatarDeleted} readOnly />
         </div>
-        <div className="custom-control custom-switch mb-4">
-          <input type="checkbox" className="custom-control-input" id="customSwitch1" name="hidden" onChange={this.handleChangeHidden} />
-          <label className="custom-control-label" htmlFor="customSwitch1">Groupe caché</label>
+        <div className="form-group">
+          <label htmlFor='masked-switch'>Groupe masqué: </label>
+          <label className="switch ml-3">
+            <Masked name="masked-switch" value={this.state.masked} onChange={this.handleChangeMasked} />
+            <span className="slider round"></span>
+          </label>
+          <input name="masked" type="text" value={this.state.masked} hidden />
         </div>
         <LoadModal />
         <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Créer le groupe</button>

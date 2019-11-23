@@ -10,7 +10,7 @@ class Group extends Model
     use Notifiable;
 
     protected $fillable = [
-        'name', 'description', 'users_id', 'admins_id', 'on_demand', 'users_warned', 'avatar', 'active_at', 'hidden'
+        'name', 'description', 'users_id', 'admins_id', 'on_demand', 'users_warned', 'avatar', 'active_at', 'masked'
     ];
 
     protected $sortable = [
