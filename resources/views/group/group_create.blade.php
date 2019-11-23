@@ -2,7 +2,7 @@
 
 @section('content')
 <div id="loadModal"></div>
-<div class="container-fluid col-lg-6 bx-auto py-4">
+<div class="container-fluid col-xl-6 py-4">
   <div class="card">
     <div class="card-header group-bg">
       Créer un groupe

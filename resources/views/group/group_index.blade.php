@@ -26,7 +26,7 @@
   </div>
 </aside>
 @endauth
-<div class="container-fluid col-lg-6 bx-auto mt-4">
+<div class="col-xl-9 mr-xl-5 ml-auto mt-4">
   @if (session()->has('error'))
   <div class="col-lg-8 text-center mx-auto mt-4 alert alert-warning alert-dismissible fade show" role="alert">
     <i class="fas fa-exclamation-triangle mr-2"></i>

@@ -31,7 +31,7 @@
   @endif
 </aside>
 @endauth
-<div class="container-fluid col-lg-6 bx-auto mt-4">
+<div class="col-xl-9 mr-xl-5 ml-auto mt-4">
   @if (session()->has('ok'))
   <div class="col-lg-10 mx-auto mt-4 alert alert-success alert-dismissible fade show" role="alert">
     {{ session('ok') }}
