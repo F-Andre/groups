@@ -74,7 +74,7 @@
               @php
               $userArraySeach = explode(",", $group->users_id);
               @endphp
-              @if (!in_array(auth()->user()->id, $userArraySeach))
+              @if (!in_array(auth()->user()->id, $userArraySeach) && $group->masked == 'false')
               <option value="{{ $group->name }}">
               @endif
               @endforeach
@@ -94,7 +94,7 @@
           H:i');
           @endphp
 
-          @if (!in_array(auth()->user()->id, $userArray) && $group->masked == false)
+          @if (!in_array(auth()->user()->id, $userArray) && $group->masked == 'false')
           @include('templates/group_list_template')
           @endif
           @endforeach
