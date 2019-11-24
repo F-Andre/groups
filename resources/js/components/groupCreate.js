@@ -29,17 +29,6 @@ function GroupDesc(props) {
   );
 }
 
-function Masked (props) {
-  return (
-    <input
-      type="checkbox"
-      value={props.value}
-      checked={props.value}
-      onChange={props.onChange}
-    />
-  );
-}
-
 export default class GroupForm extends Component {
   constructor(props) {
     super(props)
@@ -141,10 +130,10 @@ export default class GroupForm extends Component {
         <div className="form-group">
           <label htmlFor='masked-switch'>Groupe masqué: </label>
           <label className="switch ml-3">
-            <Masked name="masked-switch" value={this.state.masked} onChange={this.handleChangeMasked} />
+            <input type="checkbox" id="masked-switch" checked={this.state.masked} onChange={this.handleChangeMasked} />
             <span className="slider round"></span>
           </label>
-          <input name="masked" type="text" value={this.state.masked} hidden />
+          <input name="masked" type="text" value={this.state.masked} hidden readOnly />
         </div>
         <LoadModal />
         <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Créer le groupe</button>

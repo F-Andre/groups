@@ -29,17 +29,6 @@ function Desc (props) {
   );
 }
 
-function Masked (props) {
-  return (
-    <input
-      type="checkbox"
-      value={props.value}
-      checked={props.value}
-      onChange={props.onChange}
-    />
-  );
-}
-
 export default class GroupEditForm extends Component {
   constructor (props) {
     super(props)
@@ -50,7 +39,7 @@ export default class GroupEditForm extends Component {
       imgSize: 0,
       modified: false,
       avatarDeleted: '',
-      masked: masked,
+      masked: Boolean(masked),
     }
     this.handleChangeDesc = this.handleChangeDesc.bind(this);
     this.handleChangeMasked = this.handleChangeMasked.bind(this);
@@ -67,7 +56,7 @@ export default class GroupEditForm extends Component {
     })
   }
 
-  handleChangeMasked () {
+  handleChangeMasked (event) {
     this.setState({
       masked: event.target.checked,
       modified: true
@@ -98,6 +87,7 @@ export default class GroupEditForm extends Component {
   }
 
   render () {
+    console.log(this.state.masked)
     const imageSizeMax = 20971520
     const disabledState = !this.state.modified ? true : this.state.imgSize > imageSizeMax ? true : false
     const submitClass = !disabledState ? "btn btn-success btn-lg" : "btn btn-success btn-lg disabled"
@@ -106,7 +96,6 @@ export default class GroupEditForm extends Component {
       backgroundImage: 'url(' + this.state.imgSrc + ')',
     };
     const imageClass = this.state.imgSize > imageSizeMax ? 'form-control is-invalid' : 'form-control'
-    document.querySelector('#masked') ? console.log(document.querySelector('#masked').checked) : ''
 
     return (
       <div>
@@ -132,10 +121,10 @@ export default class GroupEditForm extends Component {
         <div className="form-group">
           <label htmlFor='masked-switch'>Groupe masqué: </label>
           <label className="switch ml-3">
-            <Masked name="masked-switch" value={this.state.masked} onChange={this.handleChangeMasked} />
+            <input type="checkbox" id="masked-switch" checked={this.state.masked} onChange={this.handleChangeMasked} />
             <span className="slider round"></span>
           </label>
-          <input name="masked" type="text" value={this.state.masked} hidden />
+          <input name="masked" type="text" value={this.state.masked} hidden readOnly />
         </div>
         <LoadModal />
         <button type="submit" data-toggle="modal" data-target="#loadModalDiv" className={submitClass} disabled={disabledState}>Appliquer les modifications</button>

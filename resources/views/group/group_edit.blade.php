@@ -32,6 +32,7 @@
         var avatar = {!! json_encode($avatarUrl) !!};
         var defaultAvatar = {!! json_encode($defaultAvatar) !!};
         var masked = {!! json_encode($group->masked) !!}
+        masked == 'true' ? masked = 1 : masked = 0;
       </script>
       <form method="POST" action="{{ route('group.update', $group->id) }}" enctype="multipart/form-data">
         @csrf
