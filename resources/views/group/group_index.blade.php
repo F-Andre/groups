@@ -44,7 +44,7 @@
       <div>
         @isset($groups)
         <p class="h5">Mes groupes:</p>
-        <div class="card-deck scrollable-div">
+        <div class="d-flex flex-wrap justify-content-between scrollable-div">
           @foreach ($groups as $group)
 
           @php
