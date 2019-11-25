@@ -100,7 +100,7 @@ class AdminController extends Controller
       } elseif ($_GET['tri'] == 'updated-asc') {
         $orderValue = 'updated_at';
         $ord = 'asc';
-      } elseif ($_GET['tri'] == 'created-desc') {
+      } elseif ($_GET['tri'] == 'updated-desc') {
         $orderValue = 'updated_at';
         $ord = 'desc';
       }
