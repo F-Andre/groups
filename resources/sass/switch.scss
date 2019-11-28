@@ -36,7 +36,7 @@
 }
 
 .switch input:checked+.slider {
-  background-color: #2196F3;
+  background-color: $purple-group;
 }
 
 .switch input:focus+.slider {
