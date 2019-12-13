@@ -33,9 +33,9 @@ class UserController extends Controller
   {
     $user = auth()->user();
     $userGroups = explode(',', $user->groups_id);
-    $groups = Group::whereIn('id', $userGroups);
+    $groups = Group::whereIn('id', $userGroups)->get();
 
-    return view('user.user_home', compact('user', 'userGroups'));
+    return view('user.user_home', compact('user', 'userGroups', 'groups'));
   }
 
   /**

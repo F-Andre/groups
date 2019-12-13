@@ -17,9 +17,9 @@
     <div class="card-body">
       <div class="my-4">
         <p class="h2">Mes groupes</p>
-        @if (count($userGroups) > 0)
+        @if (count($groups) > 0)
         <div class="card-deck mt-4">
-          @foreach ($userGroups as $group)
+          @foreach ($groups as $group)
           @php
           $userArray = explode(",", $group->users_id);
           $avatarUrl = Storage::url($group->avatar);
