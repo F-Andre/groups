@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Group;
 use App\Post;
 use App\User;
+use App\Comment;
 use App\Repositories\GroupRepository;
 use App\Http\Requests\GroupSearchRequest;
 
@@ -18,16 +19,19 @@ use Illuminate\Support\Facades\Mail;
 use App\Notifications\JoinGroupDemand;
 use App\Notifications\ContactAdmin;
 use App\Mail\InvitNewMember;
+use App\Repositories\UserRepository;
 
 class GroupController extends Controller
 {
 
   protected $group;
+  protected $user;
 
-  public function __construct(GroupRepository $group)
+  public function __construct(GroupRepository $group, UserRepository $user)
   {
     $this->middleware('auth');
     $this->group = $group;
+    $this->user = $user;
   }
 
   /**
@@ -94,6 +98,13 @@ class GroupController extends Controller
       }
     }
 
+    $user = $this->user->getById($request->id);
+    $userGroupsArray = explode(',', $user->groups_id);
+    array_push($userGroupsArray, $group->id);
+    $userGroup = implode(',', $userGroupsArray);
+
+    $user->update(['groups_id' => $userGroup]);
+
     return redirect(route('group.index'));
   }
 
@@ -108,7 +119,7 @@ class GroupController extends Controller
     $group = $this->group->getByName($groupName);
     $usersId = explode(",", $group->users_id);
     $adminsId = explode(",", $group->admins_id);
-    $users = User::all();
+    $users = User::whereIn('id', $usersId)->get();
     $dateCreation = Carbon::parse($group->created_at)->locale('fr')->timezone('Europe/Paris')->format('d M Y à H:i');
 
     return view('group.group_show', compact('group', 'usersId', 'dateCreation', 'users', 'adminsId'));

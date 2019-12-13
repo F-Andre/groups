@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->integer('postsQty')->default('0');
             $table->string('notifs', 6)->default('true');
             $table->integer('last_group_id')->default(0);
+            $table->string('groups_id')->nullable();
             $table->integer('admin')->default('0');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

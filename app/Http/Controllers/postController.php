@@ -77,7 +77,7 @@ class postController extends Controller
     $retour = redirect(route('posts.index', $groupName))->withOk('Votre article "' . $request->titre . '" est publié.');
     $group = Group::where('name', $groupName)->first();
     $groupUsers = explode(",", $group->users_id);
-    $users = User::all();
+    $users = User::whereIn('id', $groupUsers)->get();
 
     if ($request->hasFile('image')) {
       if ($request->image->isValid()) {

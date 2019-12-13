@@ -32,16 +32,8 @@ class UserController extends Controller
   public function index()
   {
     $user = auth()->user();
-    $groups = Group::all();
-    $userGroups = [];
-
-    foreach ($groups as $group) {
-      $usersArray = explode(",", $group->users_id);
-
-      if (in_array(auth()->user()->id, $usersArray)) {
-        array_push($userGroups, $group);
-      }
-    }
+    $userGroups = explode(',', $user->groups_id);
+    $groups = Group::whereIn('id', $userGroups);
 
     return view('user.user_home', compact('user', 'userGroups'));
   }
