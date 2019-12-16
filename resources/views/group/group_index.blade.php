@@ -42,23 +42,17 @@
     </div>
     <div class="card-body">
       <div>
-        @isset($groups)
+        @isset($userGroups)
         <p class="h5">Mes groupes:</p>
         <div class="d-flex flex-wrap justify-content-between scrollable-div">
-          @foreach ($groups as $group)
-
+          @foreach ($userGroups as $group)
           @php
-          $userArray = explode(",", $group->users_id);
-          $onDemandArray = explode(",", $group->on_demand);
-          $adminsArray = explode(",", $group->admins_id);
           $avatarUrl = Storage::url($group->avatar);
           $updated = Carbon\Carbon::parse($group->active_at)->locale('fr')->format('d M Y à
           H:i');
           @endphp
 
-          @if (in_array(auth()->user()->id, $userArray))
           @include('templates/group_list_template')
-          @endif
           @endforeach
         </div>
         <hr>
@@ -70,11 +64,11 @@
             <input class="form-control mr-sm-2" list="groups" name="groupSearch" id="groupSearch" type="text"
               placeholder="Entrez le nom d'un groupe" autocomplete="off" />
             <datalist id="groups">
-              @foreach ($groups as $group)
+              @foreach ($notUserGroups as $group)
               @php
               $userArraySeach = explode(",", $group->users_id);
               @endphp
-              @if (!in_array(auth()->user()->id, $userArraySeach) && $group->masked == 'false')
+              @if ($group->masked == 'false')
               <option value="{{ $group->name }}">
               @endif
               @endforeach
@@ -85,7 +79,7 @@
         <hr class="hr">
         <p class="h5">Tous les groupes:</p>
         <div class="card-deck mt-4 scrollable-div">
-          @foreach ($groups as $group)
+          @foreach ($notUserGroups as $group)
 
           @php
           $userArray = explode(",", $group->users_id);
@@ -94,7 +88,7 @@
           H:i');
           @endphp
 
-          @if (!in_array(auth()->user()->id, $userArray) && $group->masked == 'false')
+          @if ($group->masked == 'false')
           @include('templates/group_list_template')
           @endif
           @endforeach

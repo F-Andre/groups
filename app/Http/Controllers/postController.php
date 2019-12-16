@@ -34,12 +34,12 @@ class postController extends Controller
   public function index($groupName)
   {
     if (isset($groupName)) {
-      $posts = $this->post->getCollectionOrdered();
-
       $group = Group::where('name', $groupName)->first();
       $groupUsers = explode(",", $group->users_id);
       $groupAdmins = explode(",", $group->admins_id);
       $groupOnDemand = explode(",", $group->on_demand);
+
+      $posts = Group::find($group->id)->posts;
 
       $nbrPosts = $group->posts()->count();
 

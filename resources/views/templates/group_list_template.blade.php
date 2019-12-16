@@ -1,6 +1,6 @@
 <div class="card m-2 flex-fill">
   <div class="card-body d-flex group-card-body">
-    @if (in_array(auth()->user()->id, $userArray))
+    @if (in_array($group->id, explode(',', auth()->user()->groups_id)))
     <a id={{ $group->name }} style="display: none;" href={{ route('posts.index', $group->name) }}></a>
     @else
     <a id={{ $group->name }} style="display: none;" href={{ route('group.show', $group->name) }}></a>

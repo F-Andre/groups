@@ -36,6 +36,26 @@ abstract class DataRepository
         return $this->model->findOrFail($id);
     }
 
+    public function getIncludesIds(Array $ids)
+    {
+        return $this->model->whereIn('id', $ids)->get();
+    }
+
+    public function getIncludesIdsByName(Array $ids)
+    {
+        return $this->model->whereIn('id', $ids)->orderBy('name')->get();
+    }
+
+    public function getNotIncludesIds(Array $ids)
+    {
+        return $this->model->whereNotIn('id', $ids)->get();
+    }
+
+    public function getNotIncludesIdsByName(Array $ids)
+    {
+        return $this->model->whereNotIn('id', $ids)->orderBy('name')->get();
+    }
+
     public function dropForeign($id)
     {
         $this->model->dropForeign($id);

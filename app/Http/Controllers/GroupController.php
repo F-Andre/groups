@@ -41,9 +41,11 @@ class GroupController extends Controller
    */
   public function index()
   {
-    $groups = $this->group->getOrderedByName();
+    $user = auth()->user();
+    $userGroups = $this->group->getIncludesIdsByName(explode(',', $user->groups_id));
+    $notUserGroups = $this->group->getNotIncludesIdsByName(explode(',', $user->groups_id));
 
-    return view('group.group_index', compact('groups'));
+    return view('group.group_index', compact('userGroups', 'notUserGroups'));
   }
 
   /**
