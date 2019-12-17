@@ -13,17 +13,20 @@ use App\User;
 use App\Group;
 use Carbon\Carbon;
 use App\Post;
+use App\Repositories\GroupRepository;
 
 class postController extends Controller
 {
   protected $post;
+  protected $group;
   protected $nbrPerPage = 10;
 
-  public function __construct(PostRepository $post)
+  public function __construct(PostRepository $post, GroupRepository $group)
   {
     $this->middleware('auth');
 
     $this->post = $post;
+    $this->group = $group;
   }
 
   /**
@@ -39,7 +42,7 @@ class postController extends Controller
       $groupAdmins = explode(",", $group->admins_id);
       $groupOnDemand = explode(",", $group->on_demand);
 
-      $posts = Group::find($group->id)->posts;
+      $posts = $group->posts()->orderBy('id', 'desc')->get();
 
       $nbrPosts = $group->posts()->count();
 

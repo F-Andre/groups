@@ -13,12 +13,12 @@ class GroupRepository extends DataRepository
 
   public function findPost($id)
   {
-    return $this->model->find($id)->post;
+    return $this->model->posts()->where('id', $id)->first();
   }
 
   public function findUser($id)
   {
-    return $this->model->where('users_id', $id)->first();
+    return $this->model->users()->where('id', $id)->first();
   }
 
   public function findAdmin($id)
