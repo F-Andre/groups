@@ -31,6 +31,6 @@
         "@fortawesome/free-solid-svg-icons": "^5.10.1",
         "@fortawesome/react-fontawesome": "^0.1.4",
         "i": "^0.3.6",
-        "npm": "^6.10.3"
+        "npm": "^6.13.6"
     }
 }

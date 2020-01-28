@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class BackupDatabase extends Command
 {
@@ -21,7 +22,7 @@ class BackupDatabase extends Command
      *
      * @var string
      */
-    protected $description = 'Backup the database';
+    protected $description = 'Database backup';
 
 
     protected $process;
@@ -54,9 +55,9 @@ class BackupDatabase extends Command
         try {
             $this->process->mustRun();
 
-            $this->info('The backup has been proceed successfully.');
+            $this->info('La sauvegarde de ' . config('database.connections.mysql.database') . ' a réussie - ' . Carbon::now());
         } catch (ProcessFailedException $exception) {
-            $this->error('The backup process has been failed.');
+            $this->error('La sauvegarde de ' . config('database.connections.mysql.database') . ' a échouée - ' . Carbon::now());
         }
     }
 }
