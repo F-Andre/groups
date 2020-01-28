@@ -49,8 +49,8 @@ class BackupS3 extends Command
         if (preg_match_all('/(\/\.|^\.)/', $files[$key]) == 0) {
           $fileOk = Storage::get($files[$key]);
 
-          if (!Storage::disk('s3')->exists('backups/' . $files[$key], $fileOk)) {
-            Storage::disk('s3')->put('backups/' . $files[$key], $fileOk);
+          if (!Storage::disk('s3')->exists(preg_replace('/\s/', '_', config('app.name')) . '/' . $files[$key], $fileOk)) {
+            Storage::disk('s3')->put(preg_replace('/\s/', '_', config('app.name')) . '/' . $files[$key], $fileOk);
           }
         }
         $barFile->advance();
