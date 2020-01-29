@@ -40,22 +40,19 @@ class BackupS3 extends Command
   public function handle()
   {
     $files = Storage::allFiles('/');
-    $barFile = $this->output->createProgressBar(count($files));
-    $this->info('Démarrage de la sauvegarde');
+    $this->info('Démarrage de la sauvegarde des fichiers de "' . config('app.name') . '"');
 
-    $barFile->start();
     try {
+      if (Storage::disk('s3')->exists(preg_replace('/\s/', '_', config('app.name')))) {
+        Storage::disk('s3')->deleteDirectory(preg_replace('/\s/', '_', config('app.name')));
+      }
       foreach ($files as $key => $value) {
         if (preg_match_all('/(\/\.|^\.)/', $files[$key]) == 0) {
           $fileOk = Storage::get($files[$key]);
-
-          if (!Storage::disk('s3')->exists(preg_replace('/\s/', '_', config('app.name')) . '/' . $files[$key], $fileOk)) {
-            Storage::disk('s3')->put(preg_replace('/\s/', '_', config('app.name')) . '/' . $files[$key], $fileOk);
-          }
+          Storage::disk('s3')->put(preg_replace('/\s/', '_', config('app.name')) . '/' . $files[$key], $fileOk);
         }
-        $barFile->advance();
+        $this->info($files[$key]);
       }
-      $barFile->finish();
       $this->info('');
       $this->info('Sauvegarde des fichiers de "' . config('app.name') . '" terminée');
     } catch (ProcessFailedException $exception) {
