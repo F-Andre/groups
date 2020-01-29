@@ -40,7 +40,8 @@ class BackupS3 extends Command
   public function handle()
   {
     $files = Storage::allFiles('/');
-    $this->info('Démarrage de la sauvegarde des fichiers de "' . config('app.name') . '"');
+    $this->info('Démarrage de la sauvegarde des fichiers de "' . config('app.name') . '": ');
+    $this->info('');
 
     try {
       if (Storage::disk('s3')->exists(preg_replace('/\s/', '_', config('app.name')))) {
@@ -51,7 +52,7 @@ class BackupS3 extends Command
           $fileOk = Storage::get($files[$key]);
           Storage::disk('s3')->put(preg_replace('/\s/', '_', config('app.name')) . '/' . $files[$key], $fileOk);
         }
-        $this->info($files[$key]);
+        $this->info('   ' . $files[$key]);
       }
       $this->info('');
       $this->info('Sauvegarde des fichiers de "' . config('app.name') . '" terminée');
