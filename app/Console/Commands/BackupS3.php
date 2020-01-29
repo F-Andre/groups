@@ -57,9 +57,9 @@ class BackupS3 extends Command
       }
       $barFile->finish();
       $this->info('');
-      $this->info('Sauvegarde terminée');
+      $this->info('Sauvegarde des fichiers de "' . config('app.name') . '" terminée');
     } catch (ProcessFailedException $exception) {
-      $this->info('La sauvegarde n\'a pas fonctionnée. Erreur: ' . $exception);
+      $this->info('La sauvegarde des fichiers de "' . config('app.name') . '" n\'a pas fonctionnée. Erreur: ' . $exception);
     }
   }
 }
