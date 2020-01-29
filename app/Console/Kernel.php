@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\CleanBackup::class,
-        Commands\BackupS3::class
+        Commands\BackupS3::class,
+        Commands\BackupDatabase::class
     ];
 
     /**
