@@ -1,3 +1,3 @@
 #GROUPS
 ***
-Application de discussion de groupes
+Application Laravel de discussion de groupes
