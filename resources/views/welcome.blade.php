@@ -34,7 +34,7 @@
       <div class="title m-b-md">
         {{ config('app.name')}}
       </div>
-      <h1 class="mb-4">Plateforme de discussion qui respecte la vie privée</h1>
+      {{--<h1 class="mb-4">Plateforme de discussion qui respecte la vie privée</h1>--}}
       <div class="links d-flex justify-content-center flex-wrap">
         <div class="flex-fill mb-3">
           <a href="{{ route('login') }}">S'identifier</a>
@@ -43,14 +43,14 @@
           <a href="{{ route('register') }}">Créer un compte</a>
         </div>
       </div>
-      <div class="d-flex justify-content-center mt-5">
+      {{--<div class="d-flex justify-content-center mt-5">
         <button type="button" class="btn" data-toggle="modal" data-target="#helpModal">
           <i id="help" class="far fa-question-circle fa-3x"></i>
         </button>
-      </div>
+      </div>--}}
     </div>
   </div>
-  @include('templates/help_modal')
+  {{--@include('templates/help_modal')--}}
 </body>
 
 </html>

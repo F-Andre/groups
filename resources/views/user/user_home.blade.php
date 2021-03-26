@@ -38,7 +38,7 @@
       <div>
         <p class="h2">Mes infos</p>
         <p class="avatar" style={{"background-image:url(".Storage::url($user->avatar).")"}}></p>
-        <p class="card-text">Compte créé le: {{ Date::parse($user->created_at)->format('d F Y') }}</p>
+        <p class="card-text">Compte créé le: {!! \Carbon\Carbon::parse($user->updated_at)->locale('fr')->isoFormat('dddd D MMMM YYYY \à HH:mm') !!}</p>
         <p class="card-text">Votre adresse e-mail: {{ $user->email }}</p>
         @if ($user->notifs == 'true')
         <p class="card-text">Vous recevez les notifications par mail</p>

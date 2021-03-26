@@ -28,9 +28,9 @@
         src="{{ Storage::url(DB::table('users')->where('id', $comment->user_id)->first()->avatar) }}" />
       <small class="d-block col-8 float-right text-right">Commentaire de {{ $comment->user->name }}
         @if (time() - $comment->created_at->timestamp < 172800)
-          {{ Date::parse($comment->created_at)->diffForHumans() }}
+          {!! \Carbon\Carbon::parse($comment->created_at)->locale('fr')->diffForHumans() !!}
         @else
-          le {{ Date::parse($comment->created_at)->format('l d F Y') }} à {{ Date::parse($comment->created_at)->format('H:i') }}
+          le {!! \Carbon\Carbon::parse($comment->created_at)->locale('fr')->isoFormat('dddd D MMMM YYYY \à HH:mm') !!}
         @endif
       </small>
       <hr>

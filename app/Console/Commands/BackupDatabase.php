@@ -36,13 +36,13 @@ class BackupDatabase extends Command
     {
         parent::__construct();
 
-        $this->process = new Process(sprintf(
-            'mysqldump -u%s -p%s %s > %s',
+        $this->process = sprintf(
+            'mysqldump --user=%s --password=%s %s > %s',
             config('database.connections.mysql.username'),
             config('database.connections.mysql.password'),
             config('database.connections.mysql.database'),
-            storage_path('app/backups/database-backup-' . Carbon::now()->timestamp .'.sql')
-        ));
+            storage_path('app/backups/database-backup-' . now()->timestamp . '.sql')
+        );
     }
 
     /**
@@ -52,12 +52,12 @@ class BackupDatabase extends Command
      */
     public function handle()
     {
+        Storage::directories('backups/') ? '' : Storage::makeDirectory('backups');
         try {
-            $this->process->mustRun();
-
-            $this->info('La sauvegarde de ' . config('database.connections.mysql.database') . ' a réussie - ' . Carbon::now());
+            exec($this->process);
+            $this->info('La sauvegarde de la bdd "' . config('database.connections.mysql.database') . '" a réussie - ' . Carbon::now());
         } catch (ProcessFailedException $exception) {
-            $this->error('La sauvegarde de ' . config('database.connections.mysql.database') . ' a échouée - ' . Carbon::now());
+            $this->error('La sauvegarde de la bdd "' . config('database.connections.mysql.database') . '" a échouée - ' . Carbon::now());
         }
     }
 }

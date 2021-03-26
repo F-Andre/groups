@@ -104,8 +104,7 @@
         @if ($post->group_id == $group->id)
         <tr>
           <td>{{ $post->titre }}</td>
-          <td class="text-center">le {{ Date::parse($post->created_at)->format('d F Y') }} à
-            {{ Date::parse($post->created_at)->format('H:i') }}</td>
+          <td class="text-center">le {!! \Carbon\Carbon::parse($post->created_at)->locale('fr')->isoFormat('dddd D MMMM YYYY \à HH:mm') !!}</td>
           <td class="text-center">{{ $post->comments()->count() }}</td>
           <td class="text-right"><a class="btn btn-success btn-sm" href={{ route('posts.index', [$groupName, '#' . $post->id]) }}>Voir
               l'article</a></td>

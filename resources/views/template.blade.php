@@ -131,14 +131,14 @@
     <main class="pb-5">
       @yield('content')
     </main>
-    @include('templates/help_modal')
+   {{-- @include('templates/help_modal')--}}
   </div>
   <footer>
     <div class="d-flex justify-content-between align-items-center">
       <p><small>Tous droits réservés - 2019</small></p>
-      <button type="button" class="btn mx-xl-auto" data-toggle="modal" data-target="#helpModal">
+     {{-- <button type="button" class="btn mx-xl-auto" data-toggle="modal" data-target="#helpModal">
         <i id="help" class="far fa-question-circle fa-2x"></i>
-      </button>
+      </button>--}}
     </div>
   </footer>
   <!-- Optional JavaScript -->

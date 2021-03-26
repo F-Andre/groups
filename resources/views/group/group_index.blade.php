@@ -48,8 +48,7 @@
           @foreach ($userGroups as $group)
           @php
           $avatarUrl = Storage::url($group->avatar);
-          $updated = Carbon\Carbon::parse($group->active_at)->locale('fr')->format('d M Y à
-          H:i');
+          $updated = \Carbon\Carbon::parse($group->active_at)->locale('fr')->format('d M Y à H:i');
           @endphp
 
           @include('templates/group_list_template')
@@ -84,8 +83,7 @@
           @php
           $userArray = explode(",", $group->users_id);
           $avatarUrl = Storage::url($group->avatar);
-          $updated = Carbon\Carbon::parse($group->active_at)->locale('fr')->format('d M Y à
-          H:i');
+          $updated = \Carbon\Carbon::parse($group->active_at)->locale('fr')->format('d M Y à H:i');
           @endphp
 
           @if ($group->masked == 'false')

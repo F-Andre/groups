@@ -39,9 +39,9 @@
         <tr>
           <td scope="row">{{ $groupName }}</td>
           <td scope="row">{{ $post->titre }}</td>
-          <td>{{ Date::parse($post->created_at)->format('d M Y') }} à {{ Date::parse($post->created_at)->format('H:i') }}
+          <td>{!! \Carbon\Carbon::parse($post->created_at)->locale('fr')->isoFormat('dddd D MMMM YYYY \à HH:mm') !!}
           </td>
-          <td>{{ Date::parse($post->updated_at)->format('d M Y') }} à {{ Date::parse($post->updated_at)->format('H:i') }}
+          <td>{!! \Carbon\Carbon::parse($post->updated_at)->locale('fr')->isoFormat('dddd D MMMM YYYY \à HH:mm') !!}
           </td>
           <td class="text-center">{{ $post->comments()->count() }}</td>
           <td>
